@@ -1,0 +1,175 @@
+[
+    {
+        "race": "Dwarf",
+        "description": "Bold and hardy, dwarves are known as skilled warriors, miners, and workers of stone and metal. Though they stand well under 5 feet tall, dwarves are so broad and compact that they can weigh as much as a human standing nearly two feet taller. Their courage and endurance are also easily a match for any of the larger folk.  Dwarven skin ranges from deep brown to a paler hue tinged with red, but the most com m on shades are light brown or deep tan, like certain tones of earth.  Their hair, w orn long but in simple styles, is usually black, gray, or brown, though paler dwarves often have red hair. Male dwarves value their beards highly and groom them carefully.",
+        "names": {
+            "description": "A dwarf\u2019s name is granted by a clan elder, in accordance with tradition. Every proper dwarven name has been used and reused down through the generations. A dwarf\u2019s name belongs to the clan, not to the individual.  A dwarf who misuses or brings shame to a clan name is stripped of the name and forbidden by law to use any dwarven name in its place.",
+            "child": [],
+            "male": [
+                "Adrik",
+                "Alberich",
+                "Baern",
+                "Barendd",
+                "Brottor",
+                "Bruenor",
+                "Dain",
+                "Darrak",
+                "Delg",
+                "Eberk",
+                "Einkil",
+                "Fargrim",
+                "Flint",
+                "Gardain",
+                "Harbek",
+                "Kildrak",
+                "Morgran",
+                "Orsik",
+                "Oskar",
+                "Rangrim",
+                "Rurik",
+                "Taklinn",
+                "Thoradin",
+                "Thorin",
+                "Tordek",
+                "Traubon",
+                "Travok",
+                "Ulfgar",
+                "Veit",
+                "Vondal"
+            ],
+            "female": [
+                "Amber",
+                "Artin",
+                "Audhild",
+                "Bardryn",
+                "Dagnal",
+                "Diesa",
+                "Eldeth",
+                "Falkrunn",
+                "Finellen",
+                "Gunnloda",
+                "Gurdis",
+                "Helja",
+                "Hlin",
+                "Kathra",
+                "Kristryd",
+                "Ilde",
+                "Liftrasa",
+                "Mardred",
+                "Riswynn",
+                "Sannl",
+                "Torbera",
+                "Torgga",
+                "Vistra"
+            ],
+            "clan": [
+                "Balderk",
+                "Battlehammer",
+                "Brawnanvil",
+                "Dankil",
+                "Fireforge",
+                "Frostbeard",
+                "Gorunn",
+                "Holderhek",
+                "Ironfist",
+                "Loderr",
+                "Lutgehr",
+                "Rumnaheim",
+                "Strakeln",
+                "Torunn",
+                "Ungart"
+            ]
+        },
+        "ability_score_increase": {
+            "description": "",
+            "abilities": {
+                "strength": 0,
+                "dexterity": 0,
+                "constitution": 2,
+                "intellect": 0,
+                "wisdom": 0
+            }
+        },
+        "age": {
+            "description": "Dwarves mature at the same rate as humans, but they\u2019re considered young until they reach the age of 50.  On average, they live about 350 years.",
+            "adulthood": 50,
+            "lifespan": 350
+        },
+        "alignment": {
+            "description": "Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order",
+            "alignent": "LG"
+        },
+        "size": {
+            "description": "Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.",
+            "lower": 4.0,
+            "upper": 5.0,
+            "class": "Medium"
+        },
+        "speed": {
+            "description": "Your base walking speed is 25 feet. Your speed is not reduced by wearing heavy armor.",
+            "speed": 25
+        },
+        "modifiers": [
+            {
+                "modifier": "Darkvision",
+                "description": "Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can\u2019t discern color in darkness, only shades of gray."
+            },
+            {
+                "modifier": "Dwarven Resilience",
+                "description": "You have advantage on saving throws against poison, and you have resistance against poison damage (explained in chapter 9)."
+            },
+            {
+                "modifier": "Dwarven Combat Training",
+                "description": "You have proficiency with the battleaxe, handaxe, throwing hammer, and warhammer."
+            },
+            {
+                "modifier": "Tool Proficiency",
+                "description": "You gain proficiency with the artisan\u2019s tools of your choice: smith\u2019s tools, brew er\u2019s supplies, or mason\u2019s tools."
+            },
+            {
+                "modifier": "Stonecunning",
+                "description": "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus."
+            }
+        ],
+        "languages": [
+            "Common",
+            "Dwarvish"
+        ],
+        "subraces": [
+            {
+                "sub_race": "Hill Dwarf",
+                "description": "As a hill dwarf, you have keen senses, deep intuition, and remarkable resilience. The gold dwarves of Faerun in their mighty southern kingdom are hill dwarves, as are the exiled Neidar and the debased Klar of Krynn in the Dragonlance setting.",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "intellect": 0,
+                    "wisdom": 1
+                },
+                "modifiers": [
+                    {
+                        "modifier": "Dwarven Toughness",
+                        "description": "Your hit point maximum increases by 1, and it increases by 1 every time you gain a level."
+                    }
+                ]
+            },
+            {
+                "sub_race": "Mountain Dwarf",
+                "description": "As a mountain dwarf, you're strong and hardy, accustomed to a difficult life in rugged terrain. You\u2019re probably on the tall side (for a dwarf), and tend toward lighter coloration. The shield dwarves of northern Faerun, as well as the ruling Hylar clan and the noble Daewar clan of Dragonlance, are mountain dwarves.",
+                "ability_score_increase": {
+                    "strength": 2,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "Dwarven Armer Training",
+                        "description": "You have proficiency with light and medium armor."
+                    }
+                ]
+            }
+        ]
+    }
+]
