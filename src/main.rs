@@ -47,7 +47,7 @@ impl Default for Alignment {
 #[derive(Serialize, Deserialize, Debug, Default)]
 struct RaceAlignment {
     description: String,
-    alignent: Alignment,
+    alignment: Alignment,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -77,6 +77,7 @@ struct RaceNames {
     male: Vec<String>,
     female: Vec<String>,
     clan: Vec<String>,
+    nickname: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -95,6 +96,7 @@ struct RaceModifier {
 struct SubRace {
     sub_race: String,
     description: String,
+    names: RaceNames,
     ability_score_increase: Abilities,
     modifiers: Vec<RaceModifier>,
 }
