@@ -7,6 +7,7 @@ use serde_json::Result;
 struct Abilities {
     strength: u32,
     dexterity: u32,
+    charisma: u32,
     constitution: u32,
     intellect: u32,
     wisdom: u32,

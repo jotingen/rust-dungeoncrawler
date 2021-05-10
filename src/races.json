@@ -86,6 +86,7 @@
                 "strength": 0,
                 "dexterity": 0,
                 "constitution": 2,
+                "charisma": 0,
                 "intellect": 0,
                 "wisdom": 0
             }
@@ -143,6 +144,7 @@
                     "strength": 0,
                     "dexterity": 0,
                     "constitution": 0,
+                    "charisma": 0,
                     "intellect": 0,
                     "wisdom": 1
                 },
@@ -160,6 +162,7 @@
                     "strength": 2,
                     "dexterity": 0,
                     "constitution": 0,
+                    "charisma": 0,
                     "intellect": 0,
                     "wisdom": 0
                 },
@@ -167,6 +170,1075 @@
                     {
                         "modifier": "Dwarven Armer Training",
                         "description": "You have proficiency with light and medium armor."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "race": "Elf",
+        "description": "Elves are a magical people of otherworldly grace, living in the world but not entirely part of it. They live in places of ethereal beauty, in the midst of ancient forests or in silvery spires glittering with faerie light, where soft music drifts through the air and gentle fragrances waft on the breeze. Elves love nature and magic, art and artistry, music and poetry, and the good things of the world.",
+        "names": {
+            "description": "Elves are considered children until they declare themselves adults, sometime after the hundredth birthday, and before this period they are called by child names.  On declaring adulthood, an elf selects an adult name, although those who knew him or her as a youngster might continue to use the child name. Each elf\u2019s adult name is a unique creation, though it might reflect the names of respected individuals or other family members. Little distinction exists between male names and female names; the groupings here reflect only general tendencies. In addition, every elf bears a family name, typically a combination of other Elvish words. Some elves traveling among humans translate their family names into Common, but others retain the Elvish version.",
+            "child": [
+                "Ara",
+                "Bryn",
+                "Del",
+                "Eryn",
+                "Faen",
+                "Innil",
+                "Lael",
+                "Mella",
+                "Naill",
+                "Naeris",
+                "Phann",
+                "Rael",
+                "Rinn",
+                "Sai",
+                "Syllin",
+                "Thia",
+                "Vall"
+            ],
+            "male": [
+                "Adran",
+                "Aelar",
+                "Aramil",
+                "Arannis",
+                "Aust",
+                "Beiro",
+                "Berrian",
+                "Carric ",
+                "Enialis",
+                "Erdan",
+                "Erevan",
+                "Galinndan",
+                "Hadarai",
+                "Heian",
+                "Himo",
+                "Immeral",
+                "Ivellios",
+                "Laucian",
+                "Mindartis",
+                "Paelias",
+                "Peren",
+                "Quarion",
+                "Riardon",
+                "Rolen",
+                "Soveliss",
+                "Thamior",
+                "Tharivol",
+                "Theren",
+                "Varis"
+            ],
+            "female": [
+                "Adrie",
+                "Althaea",
+                "Anastrianna",
+                "Andraste",
+                "Antinua",
+                "Bethrynna",
+                "Birel",
+                "Caelynn",
+                "Drusilia",
+                "Enna",
+                "Felosial",
+                "Ielenia",
+                "Jelenneth",
+                "Keyleth",
+                "Leshanna",
+                "Lia",
+                "Meriele",
+                "Mialee",
+                "Naivara",
+                "Quelenna",
+                "Quillathe",
+                "Sariel",
+                "Shanairra",
+                "Shava",
+                "Silaqui",
+                "Theirastra",
+                "Thia",
+                "Vadania",
+                "Valanthe",
+                "Xanaphia"
+            ],
+            "clan": [
+                "Amakiir (Gemflower)",
+                "Amastacia (Starflower)",
+                "Galanodel (Moonwhisper)",
+                "Holimion (Diam onddew)",
+                "Ilphelkiir (Gem blossom )",
+                "Liadon (Silverfrond)",
+                "Meliamne (Oakenheel)",
+                "Na\u00eflo (Nightbreeze)",
+                "Siannodel (Moonbrook)",
+                "Xiloscient (Goldpetal)"
+            ]
+        },
+        "ability_score_increase": {
+            "description": "",
+            "abilities": {
+                "strength": 0,
+                "dexterity": 2,
+                "constitution": 0,
+                "charisma": 0,
+                "intellect": 0,
+                "wisdom": 0
+            }
+        },
+        "age": {
+            "description": "Although elves reach physical maturity at about the same age as humans, the elven understanding of adulthood goes beyond physical growth to encompass worldly experience. An elf typically claims adulthood and an adult name around the age of 100 and can live to be 750 years old.",
+            "adulthood": 100,
+            "lifespan": 750
+        },
+        "alignment": {
+            "description": "Elves love freedom, variety, and selfexpression, so they lean strongly toward the gentler aspects of chaos. They value and protect others' freedom as well as their own, and they are more often good than not. The drow are an exception; their exile into the Underdark has made them vicious and dangerous. Drow are more often evil than not.",
+            "alignent": "CG"
+        },
+        "size": {
+            "description": "Elves range from under 5 to over 6 feet tall and have slender builds. Your size is Medium.",
+            "lower": 5.0,
+            "upper": 6.0,
+            "class": "Medium"
+        },
+        "speed": {
+            "description": "Your base walking speed is 30 feet.",
+            "speed": 30
+        },
+        "modifiers": [
+            {
+                "modifier": "Darkvision",
+                "description": "Accustomed to twilit forests and the night sky, you have superior vision in dark and dim conditions.  You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light.  You can\u2019t discern color in darkness, only shades of gray"
+            },
+            {
+                "modifier": "Keen Senses",
+                "description": "You have proficiency in the Perception skill."
+            },
+            {
+                "modifier": "Fey Ancestry",
+                "description": "You have advantage on saving throws against being charmed, and magic can\u2019t put you to sleep."
+            },
+            {
+                "modifier": "Trance",
+                "description": " Elves don\u2019t need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day. (The Common word for such meditation is \u201ctrance.\u201d) While meditating, you can dream after a fashion; such dreams are actually mental exercises that have become reflexive through years of practice. After resting in this way, you gain the same benefit that a human does from 8 hours of sleep."
+            }
+        ],
+        "languages": [
+            "Common",
+            "Elvish"
+        ],
+        "subraces": [
+            {
+                "sub_race": "High Elf",
+                "description": "As a high elf, you have a keen mind and a mastery of at least the basics of magic. In many of the worlds of D&D, there are two kinds of high elves. One type (which includes the gray elves and valley elves of Greyhawk, the Silvanesti of Dragonlance, and the sun elves of the Forgotten Realms) is haughty and reclusive, believing themselves to be superior to non-elves and even other elves. The other type (including the high elves of Greyhawk. the Qualinesti of Dragonlance, and the moon elves of the Forgotten Realms) are more common and more friendly, and often encountered among humans and other races.\n The sun elves of Faerun (also called gold elves or sunrise elves) have bronze skin and hair of copper, black, or golden blond. Their eyes are golden, silver, or black. Moon elves (also called silver elves or gray elves) are much paler, with alabaster skin som etim es tinged with blue.  They often have hair of silver-white, black, or blue, but various shades of blond, brown, and red are not uncommon. Their eyes are blue or green and flecked with gold.",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 1,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "Elf Weapon Training",
+                        "description": "You have proficiency with the longsword, shortsword, shortbow, and longbow."
+                    },
+                    {
+                        "modifier": "Cantrip",
+                        "description": "You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it"
+                    },
+                    {
+                        "modifier": "Extra Language",
+                        "description": "You can speak, read, and write one extra language of your choice."
+                    }
+                ]
+            },
+            {
+                "sub_race": "Wood Elf",
+                "description": "As a wood elf, you have keen senses and intuition, and your fleet feet carry you quickly and stealthily through your native forests. This category includes the wild elves (grugach) of Greyhawk and the Kagonesti of Dragonlance, as well as the races called wood elves in Greyhawk and the Forgotten Realms. In Faerun, wood elves (also called wild elves, green elves, or forest elves) are reclusive and distrusting of non-elves.  Wood elves\u2019 skin tends to be copperish in hue, sometimes with traces of green. Their hair tends toward browns and blacks, but it is occasionally blond or copper-colored. Their eyes are green, brown, or hazel.",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 1
+                },
+                "modifiers": [
+                    {
+                        "modifier": "Elf Weapon Training",
+                        "description": "You have proficiency with the longsword, shortsword, shortbow, and longbow."
+                    },
+                    {
+                        "modifier": "Fleet of Foot",
+                        "description": "Your base walking speed increases to 35 feet."
+                    },
+                    {
+                        "modifier": "Mask of the Wild",
+                        "description": "You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena."
+                    }
+                ]
+            },
+            {
+                "sub_race": "Dark Elf (Drow)",
+                "description": "Descended from an earlier subrace of dark-skinned elves, the drow were banished from the surface world for following the goddess Lolth down the path to evil and corruption. Now they have built their own civilization in the depths of the Underdark, patterned after the Way of Lolth. Also called dark elves, the drow have black skin that resem bles polished obsidian and stark white or pale yellow hair. They commonly have very pale eyes (so pale as to be mistaken for white) in shades of lilac, silver, pink, red, and blue. They tend to be smaller and thinner than most elves.",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 1,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "Superior Darkvision",
+                        "description": "Your darkvision has a radius of 120 feet."
+                    },
+                    {
+                        "modifier": "Sunlight Sensitivity",
+                        "description": "You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight."
+                    },
+                    {
+                        "modifier": "Drow Magic",
+                        "description": "You know the dancing lights cantrip.  When you reach 3rd level, you can cast the faerie fire spell once per day. When you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spells."
+                    },
+                    {
+                        "modifier": "Drow Weapon Training",
+                        "description": "You have proficiency with rapiers, shortswords, and hand crossbows."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "race": "",
+        "description": "",
+        "names": {
+            "description": "",
+            "child": [],
+            "male": [],
+            "female": [],
+            "clan": []
+        },
+        "ability_score_increase": {
+            "description": "",
+            "abilities": {
+                "strength": 0,
+                "dexterity": 0,
+                "constitution": 0,
+                "charisma": 0,
+                "intellect": 0,
+                "wisdom": 0
+            }
+        },
+        "age": {
+            "description": "",
+            "adulthood": 50,
+            "lifespan": 350
+        },
+        "alignment": {
+            "description": "",
+            "alignent": "LG"
+        },
+        "size": {
+            "description": "",
+            "lower": 4.0,
+            "upper": 5.0,
+            "class": "Medium"
+        },
+        "speed": {
+            "description": "",
+            "speed": 25
+        },
+        "modifiers": [
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            }
+        ],
+        "languages": [
+            "Common"
+        ],
+        "subraces": [
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            },
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "race": "",
+        "description": "",
+        "names": {
+            "description": "",
+            "child": [],
+            "male": [],
+            "female": [],
+            "clan": []
+        },
+        "ability_score_increase": {
+            "description": "",
+            "abilities": {
+                "strength": 0,
+                "dexterity": 0,
+                "constitution": 0,
+                "charisma": 0,
+                "intellect": 0,
+                "wisdom": 0
+            }
+        },
+        "age": {
+            "description": "",
+            "adulthood": 50,
+            "lifespan": 350
+        },
+        "alignment": {
+            "description": "",
+            "alignent": "LG"
+        },
+        "size": {
+            "description": "",
+            "lower": 4.0,
+            "upper": 5.0,
+            "class": "Medium"
+        },
+        "speed": {
+            "description": "",
+            "speed": 25
+        },
+        "modifiers": [
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            }
+        ],
+        "languages": [
+            "Common"
+        ],
+        "subraces": [
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            },
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "race": "",
+        "description": "",
+        "names": {
+            "description": "",
+            "child": [],
+            "male": [],
+            "female": [],
+            "clan": []
+        },
+        "ability_score_increase": {
+            "description": "",
+            "abilities": {
+                "strength": 0,
+                "dexterity": 0,
+                "constitution": 0,
+                "charisma": 0,
+                "intellect": 0,
+                "wisdom": 0
+            }
+        },
+        "age": {
+            "description": "",
+            "adulthood": 50,
+            "lifespan": 350
+        },
+        "alignment": {
+            "description": "",
+            "alignent": "LG"
+        },
+        "size": {
+            "description": "",
+            "lower": 4.0,
+            "upper": 5.0,
+            "class": "Medium"
+        },
+        "speed": {
+            "description": "",
+            "speed": 25
+        },
+        "modifiers": [
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            }
+        ],
+        "languages": [
+            "Common"
+        ],
+        "subraces": [
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            },
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "race": "",
+        "description": "",
+        "names": {
+            "description": "",
+            "child": [],
+            "male": [],
+            "female": [],
+            "clan": []
+        },
+        "ability_score_increase": {
+            "description": "",
+            "abilities": {
+                "strength": 0,
+                "dexterity": 0,
+                "constitution": 0,
+                "charisma": 0,
+                "intellect": 0,
+                "wisdom": 0
+            }
+        },
+        "age": {
+            "description": "",
+            "adulthood": 50,
+            "lifespan": 350
+        },
+        "alignment": {
+            "description": "",
+            "alignent": "LG"
+        },
+        "size": {
+            "description": "",
+            "lower": 4.0,
+            "upper": 5.0,
+            "class": "Medium"
+        },
+        "speed": {
+            "description": "",
+            "speed": 25
+        },
+        "modifiers": [
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            }
+        ],
+        "languages": [
+            "Common"
+        ],
+        "subraces": [
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            },
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "race": "",
+        "description": "",
+        "names": {
+            "description": "",
+            "child": [],
+            "male": [],
+            "female": [],
+            "clan": []
+        },
+        "ability_score_increase": {
+            "description": "",
+            "abilities": {
+                "strength": 0,
+                "dexterity": 0,
+                "constitution": 0,
+                "charisma": 0,
+                "intellect": 0,
+                "wisdom": 0
+            }
+        },
+        "age": {
+            "description": "",
+            "adulthood": 50,
+            "lifespan": 350
+        },
+        "alignment": {
+            "description": "",
+            "alignent": "LG"
+        },
+        "size": {
+            "description": "",
+            "lower": 4.0,
+            "upper": 5.0,
+            "class": "Medium"
+        },
+        "speed": {
+            "description": "",
+            "speed": 25
+        },
+        "modifiers": [
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            }
+        ],
+        "languages": [
+            "Common"
+        ],
+        "subraces": [
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            },
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "race": "",
+        "description": "",
+        "names": {
+            "description": "",
+            "child": [],
+            "male": [],
+            "female": [],
+            "clan": []
+        },
+        "ability_score_increase": {
+            "description": "",
+            "abilities": {
+                "strength": 0,
+                "dexterity": 0,
+                "constitution": 0,
+                "charisma": 0,
+                "intellect": 0,
+                "wisdom": 0
+            }
+        },
+        "age": {
+            "description": "",
+            "adulthood": 50,
+            "lifespan": 350
+        },
+        "alignment": {
+            "description": "",
+            "alignent": "LG"
+        },
+        "size": {
+            "description": "",
+            "lower": 4.0,
+            "upper": 5.0,
+            "class": "Medium"
+        },
+        "speed": {
+            "description": "",
+            "speed": 25
+        },
+        "modifiers": [
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            }
+        ],
+        "languages": [
+            "Common"
+        ],
+        "subraces": [
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            },
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "race": "",
+        "description": "",
+        "names": {
+            "description": "",
+            "child": [],
+            "male": [],
+            "female": [],
+            "clan": []
+        },
+        "ability_score_increase": {
+            "description": "",
+            "abilities": {
+                "strength": 0,
+                "dexterity": 0,
+                "constitution": 0,
+                "charisma": 0,
+                "intellect": 0,
+                "wisdom": 0
+            }
+        },
+        "age": {
+            "description": "",
+            "adulthood": 50,
+            "lifespan": 350
+        },
+        "alignment": {
+            "description": "",
+            "alignent": "LG"
+        },
+        "size": {
+            "description": "",
+            "lower": 4.0,
+            "upper": 5.0,
+            "class": "Medium"
+        },
+        "speed": {
+            "description": "",
+            "speed": 25
+        },
+        "modifiers": [
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            }
+        ],
+        "languages": [
+            "Common"
+        ],
+        "subraces": [
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            },
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "race": "",
+        "description": "",
+        "names": {
+            "description": "",
+            "child": [],
+            "male": [],
+            "female": [],
+            "clan": []
+        },
+        "ability_score_increase": {
+            "description": "",
+            "abilities": {
+                "strength": 0,
+                "dexterity": 0,
+                "constitution": 0,
+                "charisma": 0,
+                "intellect": 0,
+                "wisdom": 0
+            }
+        },
+        "age": {
+            "description": "",
+            "adulthood": 50,
+            "lifespan": 350
+        },
+        "alignment": {
+            "description": "",
+            "alignent": "LG"
+        },
+        "size": {
+            "description": "",
+            "lower": 4.0,
+            "upper": 5.0,
+            "class": "Medium"
+        },
+        "speed": {
+            "description": "",
+            "speed": 25
+        },
+        "modifiers": [
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            },
+            {
+                "modifier": "",
+                "description": ""
+            }
+        ],
+        "languages": [
+            "Common"
+        ],
+        "subraces": [
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
+                    }
+                ]
+            },
+            {
+                "sub_race": "",
+                "description": "",
+                "ability_score_increase": {
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "charisma": 0,
+                    "intellect": 0,
+                    "wisdom": 0
+                },
+                "modifiers": [
+                    {
+                        "modifier": "",
+                        "description": ""
                     }
                 ]
             }
