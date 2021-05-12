@@ -34,13 +34,23 @@ fn main() {
     //Load races
     let races: Races = Races::new();
     //races.print();
-    let race_list = races.list_races();
-    for r in race_list.iter() {
-        println!("{:#?}", r);
-        for sr in races.list_subraces(r) {
-            println!("  {:#?}", sr);
+    let mut race_list: Vec<String> = Vec::new();
+    let mut count: u32 = 0;
+    for r in races.list_races() {
+        if races.list_subraces(&r).is_empty() {
+            println!("{:>2}) {}", count, r);
+            race_list.push(r);
+            count += 1;
+        } else {
+            for sr in races.list_subraces(&r) {
+                println!("{:>2}) {} - {}", count, r, sr);
+                count += 1;
+                race_list.push(sr);
+            }
         }
     }
+
+    println!("{}", races.details(&race_list[1]));
 
     //races::load();
     //races::print();
