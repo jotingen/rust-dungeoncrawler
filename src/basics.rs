@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Default)]
+#[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct Abilities {
     pub strength: u32,
     pub dexterity: u32,
@@ -10,7 +10,7 @@ pub struct Abilities {
     pub wisdom: u32,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub enum Alignment {
     LG, //Lawful good
     NG, //Neutral good

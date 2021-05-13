@@ -165,7 +165,7 @@
                     "male": [],
                     "nickname": []
                 },
-                "sub_race": "Hill Dwarf"
+                "race": "Hill Dwarf"
             },
             {
                 "ability_score_increase": {
@@ -194,7 +194,7 @@
                     "male": [],
                     "nickname": []
                 },
-                "sub_race": "Mountain Dwarf"
+                "race": "Mountain Dwarf"
             }
         ]
     },
@@ -387,7 +387,7 @@
                     "male": [],
                     "nickname": []
                 },
-                "sub_race": "High Elf"
+                "race": "High Elf"
             },
             {
                 "ability_score_increase": {
@@ -424,7 +424,7 @@
                     "male": [],
                     "nickname": []
                 },
-                "sub_race": "Wood Elf"
+                "race": "Wood Elf"
             },
             {
                 "ability_score_increase": {
@@ -465,7 +465,7 @@
                     "male": [],
                     "nickname": []
                 },
-                "sub_race": "Dark Elf (Drow)"
+                "race": "Dark Elf"
             }
         ]
     },
@@ -604,7 +604,7 @@
                     "male": [],
                     "nickname": []
                 },
-                "sub_race": "Lightfoot"
+                "race": "Lightfoot"
             },
             {
                 "ability_score_increase": {
@@ -633,7 +633,7 @@
                     "male": [],
                     "nickname": []
                 },
-                "sub_race": "Stout"
+                "race": "Stout"
             }
         ]
     },
@@ -736,7 +736,7 @@
                     ],
                     "nickname": []
                 },
-                "sub_race": "Calishite"
+                "race": "Calishite"
             },
             {
                 "ability_score_increase": {
@@ -793,7 +793,7 @@
                     ],
                     "nickname": []
                 },
-                "sub_race": "Chondathan"
+                "race": "Chondathan"
             },
             {
                 "ability_score_increase": {
@@ -852,7 +852,7 @@
                     ],
                     "nickname": []
                 },
-                "sub_race": "Damaran"
+                "race": "Damaran"
             },
             {
                 "ability_score_increase": {
@@ -909,7 +909,7 @@
                     ],
                     "nickname": []
                 },
-                "sub_race": "Illuskan"
+                "race": "Illuskan"
             },
             {
                 "ability_score_increase": {
@@ -966,7 +966,7 @@
                     ],
                     "nickname": []
                 },
-                "sub_race": "Mulan"
+                "race": "Mulan"
             },
             {
                 "ability_score_increase": {
@@ -1020,7 +1020,7 @@
                     ],
                     "nickname": []
                 },
-                "sub_race": "Rashemi"
+                "race": "Rashemi"
             },
             {
                 "ability_score_increase": {
@@ -1085,7 +1085,7 @@
                     ],
                     "nickname": []
                 },
-                "sub_race": "Shou"
+                "race": "Shou"
             },
             {
                 "ability_score_increase": {
@@ -1142,7 +1142,7 @@
                     ],
                     "nickname": []
                 },
-                "sub_race": "Thethyrian"
+                "race": "Thethyrian"
             },
             {
                 "ability_score_increase": {
@@ -1199,7 +1199,7 @@
                     ],
                     "nickname": []
                 },
-                "sub_race": "Turami"
+                "race": "Turami"
             }
         ]
     },
@@ -1486,7 +1486,7 @@
                     "male": [],
                     "nickname": []
                 },
-                "sub_race": "Forest Gnome"
+                "race": "Forest Gnome"
             },
             {
                 "ability_score_increase": {
@@ -1519,7 +1519,7 @@
                     "male": [],
                     "nickname": []
                 },
-                "sub_race": "Rock Gnome"
+                "race": "Rock Gnome"
             }
         ]
     },

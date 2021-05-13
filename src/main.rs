@@ -36,21 +36,13 @@ fn main() {
     //races.print();
     let mut race_list: Vec<String> = Vec::new();
     let mut count: u32 = 0;
-    for r in races.list_races() {
-        if races.list_subraces(&r).is_empty() {
-            println!("{:>2}) {}", count, r);
-            race_list.push(r);
-            count += 1;
-        } else {
-            for sr in races.list_subraces(&r) {
-                println!("{:>2}) {} - {}", count, r, sr);
-                count += 1;
-                race_list.push(sr);
-            }
-        }
+    for r in races.races() {
+        println!("{:>2}) {}", count, races.race_type(&r));
+        race_list.push(r);
+        count += 1;
     }
 
-    println!("{}", races.details(&race_list[1]));
+    println!("{}", races.race_details(&race_list[1]));
 
     //races::load();
     //races::print();
