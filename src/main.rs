@@ -1,54 +1,141 @@
 mod basics;
+mod character;
 mod races;
 
 use crate::basics::{Abilities, Alignment};
+use crate::character::Character;
 use crate::races::Races;
 use rand::Rng;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
+use std::io::{stdin, stdout, Read, Write};
+
+fn pause() {
+    let mut stdout = stdout();
+    print!("Press Enter to continue...");
+    stdout.flush().unwrap();
+    stdin().read_exact(&mut [0]).unwrap();
+}
 
 fn main() {
-    #[derive(Serialize, Deserialize, Debug, Default)]
-    struct Character {
-        name: String,
-        //race: Race,
-        age: u32,
-        alignment: Alignment,
-        ability_score_base: Abilities,
-    }
+    //Load races
+    let races: Races = Races::new();
+    let mut character: Character;
 
     println!("Hello, world!");
 
-    //Stats
-    let mut rolls: [u8; 6] = [15, 14, 13, 12, 10, 8];
-    println!("Default stats are {:?}", rolls);
-    let mut roll_my_own = String::new();
-    println!("Roll your own stats? Y/n");
-    std::io::stdin().read_line(&mut roll_my_own).unwrap();
-    let re_yes = Regex::new(r"^\s*[yY]\s*$").unwrap();
-    if re_yes.is_match(&roll_my_own) {
-        roll_stats(&mut rolls);
-    }
-    println!("Using stats {:?}", rolls);
-
-    //Load races
-    let races: Races = Races::new();
     //races.print();
-    let mut race_list: Vec<String> = Vec::new();
-    let mut count: u32 = 0;
-    for r in races.races() {
-        println!("{:>2}) {}", count, races.race_type(&r));
-        race_list.push(r);
-        count += 1;
-    }
-
-    println!("{}", races.race_details(&race_list[1]));
 
     //races::load();
     //races::print();
     //let race_json = include_str!("races.json");
     //let races: Vec<Race> = serde_json::from_str(&race_json).unwrap();
     //println!("{:#?}", races)
+
+    #[derive(Debug, PartialEq)]
+    enum StateMain {
+        Init,
+        Load,
+        CharacterCreation,
+        Game,
+        Exit,
+    }
+
+    let mut state_main = StateMain::Init;
+    while state_main != StateMain::Exit {
+        println!("StateMain:{:#?}", state_main);
+        match state_main {
+            StateMain::Init => {
+                println!("Dungeon Crawler\n\n");
+                state_main = StateMain::Load;
+            }
+            StateMain::Load => {
+                println!("No savegame found, starting new game\n\n");
+                state_main = StateMain::CharacterCreation;
+            }
+            StateMain::CharacterCreation => {
+                character = character_creation(&races);
+                state_main = StateMain::Game;
+            }
+            StateMain::Game => {
+                state_main = StateMain::Exit;
+            }
+            StateMain::Exit => {
+                state_main = StateMain::Exit;
+            }
+        }
+    }
+}
+
+fn character_creation(races: &Races) -> Character {
+    let mut character: Character = Character::new();
+    #[derive(Debug, PartialEq)]
+    enum State {
+        Init,
+        Stats,
+        Pick,
+        Details,
+        Summary,
+        Exit,
+    }
+    let mut state = State::Init;
+    while state != State::Exit {
+        println!("StateCharacter:{:#?}", state);
+        match state {
+            State::Init => {
+                println!("Character Creation\n\n");
+                state = State::Stats;
+            }
+            State::Stats => {
+                println!("Stats\n");
+
+                let mut rolls: [u8; 6] = [15, 14, 13, 12, 10, 8];
+
+                println!("Default stats are {:?}", rolls);
+
+                if pick_yes_or_no("Roll your own stats?") {
+                    roll_stats(&mut rolls);
+                }
+
+                println!("Using stats {:?}", rolls);
+
+                pause();
+
+                state = State::Pick;
+            }
+            State::Pick => {
+                println!("Choose race:");
+
+                for (count, r) in races.races().iter().enumerate() {
+                    println!("{:>2}) {}", count + 1, races.race_type(&r));
+                }
+
+                let number = pick_number(1, (races.races().len() as u32)) - 1;
+                println!("{}", races.race_details(&races.races()[number as usize]));
+
+                if pick_yes_or_no("Use this race?") {
+                    state = State::Details;
+                } else {
+                    state = State::Pick;
+                }
+            }
+            State::Details => {
+                pause();
+
+                state = State::Summary;
+            }
+            State::Summary => {
+                pause();
+
+                state = State::Exit;
+            }
+            State::Exit => {
+                state = State::Exit;
+            }
+        }
+    }
+
+    character
 }
 
 fn roll_stats(rolls: &mut [u8; 6]) {
@@ -68,4 +155,35 @@ fn roll_stats(rolls: &mut [u8; 6]) {
     }
     rolls.sort_unstable();
     rolls.reverse();
+}
+
+fn pick_yes_or_no(msg: &str) -> bool {
+    println!("{} Y/n", msg);
+    let mut my_yes_or_no_str = String::new();
+    stdin().read_line(&mut my_yes_or_no_str).unwrap();
+
+    //regex for empty/y*/Y*
+    let re_yes = Regex::new(r"^(?i)\s*y(es)?\s*$").unwrap();
+    if re_yes.is_match(&my_yes_or_no_str) || my_yes_or_no_str.trim().is_empty() {
+        return true;
+    }
+    false
+}
+
+fn pick_number(low: u32, high: u32) -> u32 {
+    loop {
+        println!("{}-{}", low, high);
+        let mut my_number_str = String::new();
+        stdin().read_line(&mut my_number_str).unwrap();
+
+        println!("{} {} {}", my_number_str, low, high);
+        if my_number_str.trim().parse::<u32>().is_ok() {
+            let my_number: u32 = my_number_str.trim().parse().unwrap();
+            println!("{} {} {}", my_number, low, high);
+            if my_number >= low && my_number <= high {
+                println!("OK - {} {} {}", my_number, low, high);
+                return my_number;
+            }
+        }
+    }
 }
