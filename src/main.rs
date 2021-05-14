@@ -10,6 +10,14 @@ use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::io::{stdin, stdout, Read, Write};
 
+fn d(num: u8) -> u8 {
+    if num == 0 {
+        return 0;
+    }
+    let mut rng = rand::thread_rng();
+    rng.gen_range(1..(num + 1))
+}
+
 fn pause() {
     let mut stdout = stdout();
     print!("Press Enter to continue...");
@@ -139,15 +147,9 @@ fn character_creation(races: &Races) -> Character {
 }
 
 fn roll_stats(rolls: &mut [u8; 6]) {
-    let mut rng = rand::thread_rng();
     println!("Rolling own");
     for roll in rolls.iter_mut() {
-        let mut die_rolls: [u8; 4] = [
-            rng.gen_range(1..7),
-            rng.gen_range(1..7),
-            rng.gen_range(1..7),
-            rng.gen_range(1..7),
-        ];
+        let mut die_rolls: [u8; 4] = [d(6), d(6), d(6), d(6)];
         die_rolls.sort_unstable();
         die_rolls.reverse();
         *roll = die_rolls[0] + die_rolls[1] + die_rolls[2];
