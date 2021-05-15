@@ -100,10 +100,6 @@ impl Races {
         Races { races }
     }
 
-    pub fn print(&self) {
-        println!("{:#?}", self)
-    }
-
     pub fn races(&self) -> Vec<String> {
         let mut race_list: Vec<String> = Vec::new();
         for race in self.races.iter() {

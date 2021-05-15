@@ -29,16 +29,6 @@ fn main() {
     let races: Races = Races::new();
     let mut character: Character;
 
-    println!("Hello, world!");
-
-    //races.print();
-
-    //races::load();
-    //races::print();
-    //let race_json = include_str!("races.json");
-    //let races: Vec<Race> = serde_json::from_str(&race_json).unwrap();
-    //println!("{:#?}", races)
-
     #[derive(Debug, PartialEq)]
     enum StateMain {
         Init,
@@ -50,7 +40,7 @@ fn main() {
 
     let mut state_main = StateMain::Init;
     while state_main != StateMain::Exit {
-        println!("StateMain:{:#?}", state_main);
+        dbg!(&state_main);
         match state_main {
             StateMain::Init => {
                 println!("Dungeon Crawler\n\n");
@@ -87,7 +77,7 @@ fn character_creation(races: &Races) -> Character {
     }
     let mut state = State::Init;
     while state != State::Exit {
-        println!("StateCharacter:{:#?}", state);
+        dbg!(&state);
         match state {
             State::Init => {
                 println!("Character Creation\n\n");
