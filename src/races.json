@@ -1235,7 +1235,7 @@
                 "modifier": "Draconic Ancestry"
             },
             {
-                "description": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation.\n W hen you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level.\n After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+                "description": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation.\n When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level.\n After you use your breath weapon, you can't use it again until you complete a short or long rest.",
                 "modifier": "Breath Weapon"
             },
             {
@@ -1354,7 +1354,7 @@
         ],
         "modifiers": [
             {
-                "description": "Accustom ed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it w ere bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+                "description": "Accustom ed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
                 "modifier": "Darkvision"
             },
             {
@@ -1507,7 +1507,7 @@
                         "modifier": "Artificer's Lore"
                     },
                     {
-                        "description": "You have proficiency with artisan's tools (tinker's tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time.\n When you create a device, choose one of the following options:\n Clockwork Toy. This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. W hen placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents.\n Fire Starter. The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action.\n Music Box. W hen opened, this music box plays a single song at a moderate volume.  The box stops playing when it reaches the song's end or when it is closed.",
+                        "description": "You have proficiency with artisan's tools (tinker's tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time.\n When you create a device, choose one of the following options:\n Clockwork Toy. This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents.\n Fire Starter. The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action.\n Music Box. When opened, this music box plays a single song at a moderate volume.  The box stops playing when it reaches the song's end or when it is closed.",
                         "modifier": "Tinker"
                     }
                 ],
@@ -1552,7 +1552,7 @@
         ],
         "modifiers": [
             {
-                "description": "Thanks to your elf blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it w ere bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+                "description": "Thanks to your elf blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
                 "modifier": "Darkvision"
             },
             {
@@ -1606,14 +1606,14 @@
             "alignment": "CG",
             "description": "Half-orcs inherit a tendency toward chaos from their orc parents and are not strongly inclined toward good. Half-orcs raised among ores and willing to live out their lives among them are usually evil."
         },
-        "description": "Whether united under the leadership of a mighty warlock or having fought to a standstill after years of conflict, orc and human tribes sometimes form alliances, joining forces into a larger horde to the terror of civilized lands nearby. W hen these alliances are sealed by marriages, half-orcs are born. S om e half-orcs rise to become proud chiefs of orc tribes, their human blood giving them an edge over their full-blooded orc rivals. Some venture into the world to prove their worth among humans and other m ore civilized races. Many of these become adventurers, achieving greatness for their mighty deeds and notoriety for their barbaric custom s and savage fury.",
+        "description": "Whether united under the leadership of a mighty warlock or having fought to a standstill after years of conflict, orc and human tribes sometimes form alliances, joining forces into a larger horde to the terror of civilized lands nearby. When these alliances are sealed by marriages, half-orcs are born. S om e half-orcs rise to become proud chiefs of orc tribes, their human blood giving them an edge over their full-blooded orc rivals. Some venture into the world to prove their worth among humans and other m ore civilized races. Many of these become adventurers, achieving greatness for their mighty deeds and notoriety for their barbaric custom s and savage fury.",
         "languages": [
             "Common",
             "Orc"
         ],
         "modifiers": [
             {
-                "description": "Thanks to your orc blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it w ere bright light, and in darkness as if it w ere dim light. You can't discern color in darkness, only shades of gray.",
+                "description": "Thanks to your orc blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
                 "modifier": "Darkvision"
             },
             {
@@ -1632,7 +1632,7 @@
         "names": {
             "child": [],
             "clan": [],
-            "description": "Half-orcs usually have names appropriate to the culture in which they were raised. A half-orc w ho wants to fit in among humans might trade an orc name for a human name. Some half-orcs with human names decide to adopt a guttural orc name because they think it makes them more intimidating.",
+            "description": "Half-orcs usually have names appropriate to the culture in which they were raised. A half-orc who wants to fit in among humans might trade an orc name for a human name. Some half-orcs with human names decide to adopt a guttural orc name because they think it makes them more intimidating.",
             "female": [
                 "Baggi",
                 "Emen",

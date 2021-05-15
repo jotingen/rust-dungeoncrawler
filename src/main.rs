@@ -7,7 +7,6 @@ use crate::character::Character;
 use crate::races::Races;
 use rand::Rng;
 use regex::Regex;
-use serde::{Deserialize, Serialize};
 use std::io::{stdin, stdout, Read, Write};
 
 fn d(num: u8) -> u8 {
@@ -118,7 +117,7 @@ fn character_creation(races: &Races) -> Character {
                     println!("{:>2}) {}", count + 1, races.race_type(&r));
                 }
 
-                let number = pick_number(1, (races.races().len() as u32)) - 1;
+                let number = pick_number(1, races.races().len() as u32) - 1;
                 println!("{}", races.race_details(&races.races()[number as usize]));
 
                 if pick_yes_or_no("Use this race?") {

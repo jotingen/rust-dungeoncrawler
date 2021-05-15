@@ -233,33 +233,25 @@ impl Races {
     pub fn race_age(&self, race_str: &str) -> RaceAge {
         let (race, _subrace) = self.get_race_structs(race_str);
 
-        let age = race.age;
-
-        age
+        race.age
     }
 
     pub fn race_alignment(&self, race_str: &str) -> RaceAlignment {
         let (race, _subrace) = self.get_race_structs(race_str);
 
-        let alignment = race.alignment;
-
-        alignment
+        race.alignment
     }
 
     pub fn race_size(&self, race_str: &str) -> RaceSize {
         let (race, _subrace) = self.get_race_structs(race_str);
 
-        let size = race.size;
-
-        size
+        race.size
     }
 
     pub fn race_speed(&self, race_str: &str) -> RaceSpeed {
         let (race, _subrace) = self.get_race_structs(race_str);
 
-        let speed = race.speed;
-
-        speed
+        race.speed
     }
 
     pub fn race_modifiers(&self, race_str: &str) -> Vec<RaceModifier> {
