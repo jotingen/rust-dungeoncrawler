@@ -19,6 +19,10 @@ fn d(num: u8) -> u8 {
     rng.gen_range(1..(num + 1))
 }
 
+fn clear() {
+    print!("{esc}c", esc = 27 as char);
+}
+
 fn pause() {
     let mut stdout = stdout();
     print!("Press Enter to continue...");
@@ -45,18 +49,33 @@ fn main() {
         dbg!(&state_main);
         match state_main {
             StateMain::Init => {
+                clear();
+
                 println!("Dungeon Crawler\n\n");
+
+                pause();
+
                 state_main = StateMain::Load;
             }
             StateMain::Load => {
+                clear();
+
                 println!("No savegame found, starting new game\n\n");
+
+                pause();
+
                 state_main = StateMain::CharacterCreation;
             }
             StateMain::CharacterCreation => {
+                clear();
                 character = character_creation(&races);
                 state_main = StateMain::Game;
             }
             StateMain::Game => {
+                clear();
+
+                pause();
+
                 state_main = StateMain::Exit;
             }
             StateMain::Exit => {
@@ -87,10 +106,17 @@ fn character_creation(races: &Races) -> Character {
         dbg!(&state);
         match state {
             State::Init => {
+                clear();
+
                 println!("Character Creation\n\n");
+
+                pause();
+
                 state = State::Stats;
             }
             State::Stats => {
+                clear();
+
                 println!("Stats\n");
 
                 stats = [15, 14, 13, 12, 10, 8];
@@ -107,6 +133,8 @@ fn character_creation(races: &Races) -> Character {
                 state = State::Pick;
             }
             State::Pick => {
+                clear();
+
                 println!("Choose race:");
 
                 for (count, r) in races.races().iter().enumerate() {
@@ -128,20 +156,26 @@ fn character_creation(races: &Races) -> Character {
                 }
             }
             State::Class => {
+                clear();
+
                 pause();
 
                 state = State::Name;
             }
             State::Name => {
-                pause();
+                clear();
 
                 println!("Choose name:");
 
                 name = "Boaty McBoatface".to_string();
 
+                pause();
+
                 state = State::Summary;
             }
             State::Summary => {
+                clear();
+
                 character = Character::new();
 
                 //name
