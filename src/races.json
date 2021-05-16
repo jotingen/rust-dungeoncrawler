@@ -238,7 +238,7 @@
                 "modifier": "Fey Ancestry"
             },
             {
-                "description": " Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day. (The Common word for such meditation is \"trance.\") While meditating, you can dream after a fashion; such dreams are actually mental exercises that have become reflexive through years of practice. After resting in this way, you gain the same benefit that a human does from 8 hours of sleep.",
+                "description": "Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day. (The Common word for such meditation is \"trance.\") While meditating, you can dream after a fashion; such dreams are actually mental exercises that have become reflexive through years of practice. After resting in this way, you gain the same benefit that a human does from 8 hours of sleep.",
                 "modifier": "Trance"
             }
         ],
@@ -315,7 +315,7 @@
                 "Aust",
                 "Beiro",
                 "Berrian",
-                "Carric ",
+                "Carric",
                 "Enialis",
                 "Erdan",
                 "Erevan",
@@ -568,7 +568,7 @@
         "race": "Halfling",
         "size": {
             "class": "Small",
-            "description": "Halflings average about 3 feet tall and weigh about 40 pounds. Your size is Small.  ",
+            "description": "Halflings average about 3 feet tall and weigh about 40 pounds. Your size is Small.",
             "lower": 3.0,
             "upper": 3.0
         },

@@ -1,5 +1,7 @@
 use crate::basics::{Abilities, Alignment};
+use crate::COLUMN_WIDTH;
 use serde::{Deserialize, Serialize};
+use textwrap;
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct RaceAbilities {
@@ -276,7 +278,15 @@ impl Races {
     }
 
     fn race_detail_description(&self, race_str: &str) -> String {
-        format!("{}\n", self.race_description(race_str))
+        format!(
+            "{}\n",
+            textwrap::fill(
+                &self.race_description(race_str),
+                textwrap::Options::new(COLUMN_WIDTH)
+                    .initial_indent("  ")
+                    .subsequent_indent("  ")
+            )
+        )
     }
 
     fn race_detail_names(&self, race_str: &str) -> String {
@@ -284,33 +294,79 @@ impl Races {
         let mut names_str: String;
 
         names_str = "- Names\n".to_string();
-        names_str = format!("{}  {}\n", names_str, names.description);
+        names_str = format!(
+            "{}{}\n",
+            names_str,
+            textwrap::fill(
+                &names.description,
+                textwrap::Options::new(COLUMN_WIDTH)
+                    .initial_indent("  ")
+                    .subsequent_indent("  ")
+            )
+        );
 
         if !names.child.is_empty() {
-            names_str = format!("{}  - Childhood: {}\n", names_str, names.child.join(", "));
+            names_str = format!(
+                "{}{}\n",
+                names_str,
+                textwrap::fill(
+                    &format!("Childhood:      {}", names.child.join(", ")),
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("  - ")
+                        .subsequent_indent("                    ")
+                )
+            );
         }
 
         if !names.male.is_empty() {
-            names_str = format!("{}  - First (Male): {}\n", names_str, names.male.join(", "));
+            names_str = format!(
+                "{}{}\n",
+                names_str,
+                textwrap::fill(
+                    &format!("First (Male):   {}", names.male.join(", ")),
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("  - ")
+                        .subsequent_indent("                    ")
+                )
+            );
         }
 
         if !names.female.is_empty() {
             names_str = format!(
-                "{}  - First (Female): {}\n",
+                "{}{}\n",
                 names_str,
-                names.female.join(", ")
+                textwrap::fill(
+                    &format!("First (Female): {}", names.female.join(", ")),
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("  - ")
+                        .subsequent_indent("                    ")
+                )
             );
         }
 
         if !names.clan.is_empty() {
-            names_str = format!("{}  - Clan: {}\n", names_str, names.clan.join(", "));
+            names_str = format!(
+                "{}{}\n",
+                names_str,
+                textwrap::fill(
+                    &format!("Clan:           {}", names.clan.join(", ")),
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("  - ")
+                        .subsequent_indent("                    ")
+                )
+            );
         }
 
         if !names.nickname.is_empty() {
             names_str = format!(
-                "{}  - Nicknames: {}\n",
+                "{}{}\n",
                 names_str,
-                names.nickname.join(", ")
+                textwrap::fill(
+                    &format!("Nicknames:      {}", names.nickname.join(", ")),
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("  - ")
+                        .subsequent_indent("                    ")
+                )
             );
         }
 
@@ -322,9 +378,16 @@ impl Races {
         let mut ability_score_increase_str: String;
 
         ability_score_increase_str = "- Ability Score Increase\n".to_string();
+
         ability_score_increase_str = format!(
-            "{}  {}\n",
-            ability_score_increase_str, ability_score_increase.description
+            "{}{}\n",
+            ability_score_increase_str,
+            textwrap::fill(
+                &ability_score_increase.description,
+                textwrap::Options::new(COLUMN_WIDTH)
+                    .initial_indent("  ")
+                    .subsequent_indent("  ")
+            )
         );
 
         ability_score_increase_str = format!(
@@ -346,9 +409,18 @@ impl Races {
         let mut age_str: String;
 
         age_str = "- Age\n".to_string();
-        if !age.description.is_empty() {
-            age_str = format!("{}  {}\n", age_str, age.description)
-        }
+
+        age_str = format!(
+            "{}{}\n",
+            age_str,
+            textwrap::fill(
+                &age.description,
+                textwrap::Options::new(COLUMN_WIDTH)
+                    .initial_indent("  ")
+                    .subsequent_indent("  ")
+            )
+        );
+
         age_str = format!(
             "{}  - Adulthood: {}\n  - Lifespan: {}\n",
             age_str, age.adulthood, age.lifespan
@@ -362,9 +434,18 @@ impl Races {
         let mut alignment_str: String;
 
         alignment_str = "- Alignment\n".to_string();
-        if !alignment.description.is_empty() {
-            alignment_str = format!("{}  {}\n", alignment_str, alignment.description)
-        }
+
+        alignment_str = format!(
+            "{}{}\n",
+            alignment_str,
+            textwrap::fill(
+                &alignment.description,
+                textwrap::Options::new(COLUMN_WIDTH)
+                    .initial_indent("  ")
+                    .subsequent_indent("  ")
+            )
+        );
+
         alignment_str = format!("{}  - {:?}\n", alignment_str, alignment.alignment);
 
         alignment_str
@@ -375,9 +456,18 @@ impl Races {
         let mut size_str: String;
 
         size_str = "- Size\n".to_string();
-        if !size.description.is_empty() {
-            size_str = format!("{}  {}\n", size_str, size.description)
-        }
+
+        size_str = format!(
+            "{}{}\n",
+            size_str,
+            textwrap::fill(
+                &size.description,
+                textwrap::Options::new(COLUMN_WIDTH)
+                    .initial_indent("  ")
+                    .subsequent_indent("  ")
+            )
+        );
+
         size_str = format!(
             "{}  - {:?}: {}-{} ft\n",
             size_str, size.class, size.lower, size.upper
@@ -391,9 +481,18 @@ impl Races {
         let mut speed_str: String;
 
         speed_str = "- Speed\n".to_string();
-        if !speed.description.is_empty() {
-            speed_str = format!("{}  {}\n", speed_str, speed.description)
-        }
+
+        speed_str = format!(
+            "{}{}\n",
+            speed_str,
+            textwrap::fill(
+                &speed.description,
+                textwrap::Options::new(COLUMN_WIDTH)
+                    .initial_indent("  ")
+                    .subsequent_indent("  ")
+            )
+        );
+
         speed_str = format!("{}  - {} ft\n", speed_str, speed.speed);
 
         speed_str
@@ -407,8 +506,15 @@ impl Races {
 
         for modifier in modifiers.iter() {
             modifiers_str = format!(
-                "{}  - {}\n    {}\n",
-                modifiers_str, modifier.modifier, modifier.description
+                "{}  - {}\n{}\n\n",
+                modifiers_str,
+                modifier.modifier,
+                textwrap::fill(
+                    &modifier.description,
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("    ")
+                        .subsequent_indent("    ")
+                )
             );
         }
 
@@ -421,7 +527,16 @@ impl Races {
 
         languages_str = "- Languages\n".to_string();
         if !languages.is_empty() {
-            languages_str = format!("{}  - {}\n", languages_str, languages.join(", "));
+            languages_str = format!(
+                "{}{}\n",
+                languages_str,
+                textwrap::fill(
+                    &languages.join(", "),
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("  - ")
+                        .subsequent_indent("    ")
+                )
+            );
         }
 
         languages_str
