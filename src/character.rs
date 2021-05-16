@@ -3,11 +3,11 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Character {
-    name: String,
-    race: String,
-    age: u32,
-    alignment: Alignment,
-    ability_score_base: Abilities,
+    pub name: String,
+    pub race: String,
+    pub age: u32,
+    pub alignment: Alignment,
+    pub abilities: Abilities,
 }
 
 impl Character {

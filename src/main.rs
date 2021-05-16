@@ -68,12 +68,17 @@ fn main() {
 
 fn character_creation(races: &Races) -> Character {
     let mut character: Character = Character::new();
+    let mut stats: [u8; 6];
+    let mut race: String = "".to_string();
+    let mut name: String = "".to_string();
+
     #[derive(Debug, PartialEq)]
     enum State {
         Init,
         Stats,
         Pick,
-        Details,
+        Class,
+        Name,
         Summary,
         Exit,
     }
@@ -88,15 +93,14 @@ fn character_creation(races: &Races) -> Character {
             State::Stats => {
                 println!("Stats\n");
 
-                let mut rolls: [u8; 6] = [15, 14, 13, 12, 10, 8];
-
-                println!("Default stats are {:?}", rolls);
+                stats = [15, 14, 13, 12, 10, 8];
+                println!("Default stats are {:?}", stats);
 
                 if pick_yes_or_no("Roll your own stats?") {
-                    roll_stats(&mut rolls);
+                    roll_stats(&mut stats);
                 }
 
-                println!("Using stats {:?}", rolls);
+                println!("Using stats {:?}", stats);
 
                 pause();
 
@@ -109,21 +113,67 @@ fn character_creation(races: &Races) -> Character {
                     println!("{:>2}) {}", count + 1, races.race_type(&r));
                 }
 
-                let number = pick_number(1, races.races().len() as u32) - 1;
+                let number = pick_number(
+                    "Choose race, leave blank for random.",
+                    1,
+                    races.races().len() as u32,
+                ) - 1;
                 println!("{}", races.race_details(&races.races()[number as usize]));
 
                 if pick_yes_or_no("Use this race?") {
-                    state = State::Details;
+                    race = races.races()[number as usize].to_string();
+                    state = State::Class;
                 } else {
                     state = State::Pick;
                 }
             }
-            State::Details => {
+            State::Class => {
                 pause();
+
+                state = State::Name;
+            }
+            State::Name => {
+                pause();
+
+                println!("Choose name:");
+
+                name = "Boaty McBoatface".to_string();
 
                 state = State::Summary;
             }
             State::Summary => {
+                character = Character::new();
+
+                //name
+                character.name = name.to_string();
+
+                //race
+                character.race = race.to_string();
+
+                //age
+                character.age = 25;
+
+                //alignment
+                character.alignment = Alignment::N;
+
+                //ability_score_base
+                dbg!(races.race_ability_score_increase(&race));
+                character.abilities.strength =
+                    races.race_ability_score_increase(&race).abilities.strength;
+                character.abilities.dexterity =
+                    races.race_ability_score_increase(&race).abilities.dexterity;
+                character.abilities.charisma =
+                    races.race_ability_score_increase(&race).abilities.charisma;
+                character.abilities.constitution = races
+                    .race_ability_score_increase(&race)
+                    .abilities
+                    .constitution;
+                character.abilities.intellect =
+                    races.race_ability_score_increase(&race).abilities.intellect;
+                character.abilities.wisdom =
+                    races.race_ability_score_increase(&race).abilities.wisdom;
+
+                dbg!(&character);
                 pause();
 
                 state = State::Exit;
@@ -163,18 +213,21 @@ fn pick_yes_or_no(msg: &str) -> bool {
     false
 }
 
-fn pick_number(low: u32, high: u32) -> u32 {
+fn pick_number(msg: &str, low: u32, high: u32) -> u32 {
     loop {
+        if !msg.is_empty() {
+            print!("{} ", msg);
+        }
         println!("{}-{}", low, high);
         let mut my_number_str = String::new();
         stdin().read_line(&mut my_number_str).unwrap();
 
-        println!("{} {} {}", my_number_str, low, high);
-        if my_number_str.trim().parse::<u32>().is_ok() {
+        if my_number_str.trim().is_empty() {
+            let mut rng = rand::thread_rng();
+            return rng.gen_range(low..(high + 1));
+        } else if my_number_str.trim().parse::<u32>().is_ok() {
             let my_number: u32 = my_number_str.trim().parse().unwrap();
-            println!("{} {} {}", my_number, low, high);
             if my_number >= low && my_number <= high {
-                println!("OK - {} {} {}", my_number, low, high);
                 return my_number;
             }
         }

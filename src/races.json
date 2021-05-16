@@ -67,6 +67,7 @@
                 "Ungart"
             ],
             "description": "A dwarf's name is granted by a clan elder, in accordance with tradition. Every proper dwarven name has been used and reused down through the generations. A dwarf's name belongs to the clan, not to the individual.  A dwarf who misuses or brings shame to a clan name is stripped of the name and forbidden by law to use any dwarven name in its place.",
+            "family": [],
             "female": [
                 "Amber",
                 "Artin",
@@ -124,7 +125,13 @@
                 "Veit",
                 "Vondal"
             ],
-            "nickname": []
+            "nickname": [],
+            "order": [
+                "first",
+                "clan"
+            ],
+            "surname": [],
+            "virtue": []
         },
         "race": "Dwarf",
         "size": {
@@ -161,9 +168,13 @@
                     "child": [],
                     "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [],
                     "male": [],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [],
+                    "virtue": []
                 },
                 "race": "Hill Dwarf"
             },
@@ -190,9 +201,13 @@
                     "child": [],
                     "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [],
                     "male": [],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [],
+                    "virtue": []
                 },
                 "race": "Mountain Dwarf"
             }
@@ -262,19 +277,20 @@
                 "Thia",
                 "Vall"
             ],
-            "clan": [
-                "Amakiir (Gemflower)",
-                "Amastacia (Starflower)",
-                "Galanodel (Moonwhisper)",
-                "Holimion (Diam onddew)",
-                "Ilphelkiir (Gem blossom )",
-                "Liadon (Silverfrond)",
-                "Meliamne (Oakenheel)",
-                "Na\u00eflo (Nightbreeze)",
-                "Siannodel (Moonbrook)",
-                "Xiloscient (Goldpetal)"
-            ],
+            "clan": [],
             "description": "Elves are considered children until they declare themselves adults, sometime after the hundredth birthday, and before this period they are called by child names.  On declaring adulthood, an elf selects an adult name, although those who knew him or her as a youngster might continue to use the child name. Each elf's adult name is a unique creation, though it might reflect the names of respected individuals or other family members. Little distinction exists between male names and female names; the groupings here reflect only general tendencies. In addition, every elf bears a family name, typically a combination of other Elvish words. Some elves traveling among humans translate their family names into Common, but others retain the Elvish version.",
+            "family": [
+                "Amakiir",
+                "Amastacia",
+                "Galanodel",
+                "Holimion",
+                "Ilphelkiir",
+                "Liadon",
+                "Meliamne",
+                "Na\u00eflo",
+                "Siannodel",
+                "Xiloscient"
+            ],
             "female": [
                 "Adrie",
                 "Althaea",
@@ -338,7 +354,13 @@
                 "Theren",
                 "Varis"
             ],
-            "nickname": []
+            "nickname": [],
+            "order": [
+                "first",
+                "family"
+            ],
+            "surname": [],
+            "virtue": []
         },
         "race": "Elf",
         "size": {
@@ -383,9 +405,13 @@
                     "child": [],
                     "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [],
                     "male": [],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [],
+                    "virtue": []
                 },
                 "race": "High Elf"
             },
@@ -420,9 +446,13 @@
                     "child": [],
                     "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [],
                     "male": [],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [],
+                    "virtue": []
                 },
                 "race": "Wood Elf"
             },
@@ -461,9 +491,13 @@
                     "child": [],
                     "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [],
                     "male": [],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [],
+                    "virtue": []
                 },
                 "race": "Dark Elf"
             }
@@ -511,7 +545,9 @@
         ],
         "names": {
             "child": [],
-            "clan": [
+            "clan": [],
+            "description": "A halfling has a given name, a family name, and possibly a nickname. Family names are often nicknames that stuck so tenaciously they have been passed down through the generations.",
+            "family": [
                 "Brushgather",
                 "Goodbarrel",
                 "Greenbottle",
@@ -523,7 +559,6 @@
                 "Tosscobble",
                 "Underbough"
             ],
-            "description": "A halfling has a given name, a family name, and possibly a nickname. Family names are often nicknames that stuck so tenaciously they have been passed down through the generations.",
             "female": [
                 "Andry",
                 "Bree",
@@ -563,7 +598,14 @@
                 "Roscoe",
                 "Wellby"
             ],
-            "nickname": []
+            "nickname": [],
+            "order": [
+                "first",
+                "family",
+                "nickname"
+            ],
+            "surname": [],
+            "virtue": []
         },
         "race": "Halfling",
         "size": {
@@ -600,9 +642,13 @@
                     "child": [],
                     "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [],
                     "male": [],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [],
+                    "virtue": []
                 },
                 "race": "Lightfoot"
             },
@@ -629,9 +675,13 @@
                     "child": [],
                     "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [],
                     "male": [],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [],
+                    "virtue": []
                 },
                 "race": "Stout"
             }
@@ -668,9 +718,16 @@
             "child": [],
             "clan": [],
             "description": "",
+            "family": [],
             "female": [],
             "male": [],
-            "nickname": []
+            "nickname": [],
+            "order": [
+                "first",
+                "surname"
+            ],
+            "surname": [],
+            "virtue": []
         },
         "race": "Human",
         "size": {
@@ -705,16 +762,9 @@
                 ],
                 "names": {
                     "child": [],
-                    "clan": [
-                        "Basha",
-                        "Dumein",
-                        "Jassan",
-                        "Khalid",
-                        "Mostana",
-                        "Pashar",
-                        "Rein"
-                    ],
+                    "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [
                         "Atala",
                         "Ceidil",
@@ -734,7 +784,18 @@
                         "Sudeiman",
                         "Zasheir"
                     ],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [
+                        "Basha",
+                        "Dumein",
+                        "Jassan",
+                        "Khalid",
+                        "Mostana",
+                        "Pashar",
+                        "Rein"
+                    ],
+                    "virtue": []
                 },
                 "race": "Calishite"
             },
@@ -759,15 +820,9 @@
                 ],
                 "names": {
                     "child": [],
-                    "clan": [
-                        "Amblecrown",
-                        "Buckman",
-                        "Dundragon",
-                        "Evenwood",
-                        "Greycastle",
-                        "Tallstag"
-                    ],
+                    "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [
                         "Arveene",
                         "Esvele",
@@ -791,7 +846,17 @@
                         "Randal",
                         "Stedd"
                     ],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [
+                        "Amblecrown",
+                        "Buckman",
+                        "Dundragon",
+                        "Evenwood",
+                        "Greycastle",
+                        "Tallstag"
+                    ],
+                    "virtue": []
                 },
                 "race": "Chondathan"
             },
@@ -816,17 +881,9 @@
                 ],
                 "names": {
                     "child": [],
-                    "clan": [
-                        "Bersk",
-                        "Chernin",
-                        "Dotsk",
-                        "Kulenov",
-                        "Marsk",
-                        "Nemetsk",
-                        "Shemov",
-                        "Starag"
-                    ],
+                    "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [
                         "Alethra",
                         "Kara",
@@ -850,7 +907,19 @@
                         "Pavel",
                         "Sergor"
                     ],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [
+                        "Bersk",
+                        "Chernin",
+                        "Dotsk",
+                        "Kulenov",
+                        "Marsk",
+                        "Nemetsk",
+                        "Shemov",
+                        "Starag"
+                    ],
+                    "virtue": []
                 },
                 "race": "Damaran"
             },
@@ -875,15 +944,9 @@
                 ],
                 "names": {
                     "child": [],
-                    "clan": [
-                        "Brightwood",
-                        "Helder",
-                        "Hornraven",
-                        "Lackman",
-                        "Stormwind",
-                        "Windrivver"
-                    ],
+                    "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [
                         "Amafrey",
                         "Betha",
@@ -907,7 +970,17 @@
                         "Taman",
                         "Urth"
                     ],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [
+                        "Brightwood",
+                        "Helder",
+                        "Hornraven",
+                        "Lackman",
+                        "Stormwind",
+                        "Windrivver"
+                    ],
+                    "virtue": []
                 },
                 "race": "Illuskan"
             },
@@ -932,16 +1005,9 @@
                 ],
                 "names": {
                     "child": [],
-                    "clan": [
-                        "Ankhalab",
-                        "Anskuld",
-                        "Fezim",
-                        "Hahpet",
-                        "Nathandem",
-                        "Sepret",
-                        "Uuthrakt"
-                    ],
+                    "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [
                         "Arizima",
                         "Chathi",
@@ -964,7 +1030,18 @@
                         "Thazar-De",
                         "Urhur"
                     ],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [
+                        "Ankhalab",
+                        "Anskuld",
+                        "Fezim",
+                        "Hahpet",
+                        "Nathandem",
+                        "Sepret",
+                        "Uuthrakt"
+                    ],
+                    "virtue": []
                 },
                 "race": "Mulan"
             },
@@ -989,15 +1066,9 @@
                 ],
                 "names": {
                     "child": [],
-                    "clan": [
-                        "Chergoba",
-                        "Dyernina",
-                        "Iltazyara",
-                        "Murnyethara",
-                        "Stayanoga",
-                        "Ulmokina"
-                    ],
+                    "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [
                         "Fyevarra",
                         "Hulmarra",
@@ -1018,7 +1089,17 @@
                         "Shaumar",
                         "Vladislak"
                     ],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [
+                        "Chergoba",
+                        "Dyernina",
+                        "Iltazyara",
+                        "Murnyethara",
+                        "Stayanoga",
+                        "Ulmokina"
+                    ],
+                    "virtue": []
                 },
                 "race": "Rashemi"
             },
@@ -1043,21 +1124,9 @@
                 ],
                 "names": {
                     "child": [],
-                    "clan": [
-                        "Chien",
-                        "Huang",
-                        "Kao",
-                        "Kung",
-                        "Lao",
-                        "Ling",
-                        "Mei",
-                        "Pin",
-                        "Shin",
-                        "Sum",
-                        "Tan",
-                        "Wan"
-                    ],
+                    "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [
                         "Bai",
                         "Chao",
@@ -1083,7 +1152,26 @@
                         "Shui",
                         "Wen"
                     ],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [
+                        "surname",
+                        "first"
+                    ],
+                    "surname": [
+                        "Chien",
+                        "Huang",
+                        "Kao",
+                        "Kung",
+                        "Lao",
+                        "Ling",
+                        "Mei",
+                        "Pin",
+                        "Shin",
+                        "Sum",
+                        "Tan",
+                        "Wan"
+                    ],
+                    "virtue": []
                 },
                 "race": "Shou"
             },
@@ -1108,15 +1196,9 @@
                 ],
                 "names": {
                     "child": [],
-                    "clan": [
-                        "Amblecrown",
-                        "Buckman",
-                        "Dundragon",
-                        "Evenwood",
-                        "Greycastle",
-                        "Tallstag"
-                    ],
+                    "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [
                         "Arveene",
                         "Esvele",
@@ -1140,7 +1222,17 @@
                         "Randal",
                         "Stedd"
                     ],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [
+                        "Amblecrown",
+                        "Buckman",
+                        "Dundragon",
+                        "Evenwood",
+                        "Greycastle",
+                        "Tallstag"
+                    ],
+                    "virtue": []
                 },
                 "race": "Thethyrian"
             },
@@ -1165,17 +1257,9 @@
                 ],
                 "names": {
                     "child": [],
-                    "clan": [
-                        "Agosto",
-                        "Astorio",
-                        "Calabra",
-                        "Domine",
-                        "Falone",
-                        "Marivaldi",
-                        "Pisacar",
-                        "Ramondo"
-                    ],
+                    "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [
                         "Balama",
                         "Dona",
@@ -1197,7 +1281,19 @@
                         "Salazar",
                         "Umbero"
                     ],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [
+                        "Agosto",
+                        "Astorio",
+                        "Calabra",
+                        "Domine",
+                        "Falone",
+                        "Marivaldi",
+                        "Pisacar",
+                        "Ramondo"
+                    ],
+                    "virtue": []
                 },
                 "race": "Turami"
             }
@@ -1273,6 +1369,7 @@
                 "Yarjerit"
             ],
             "description": "Dragonborn have personal names given at birth, but they put their clan names first as a mark of honor. A childhood name or nickname is often used among clutchmates as a descriptive term or a term of endearment. The name might recall an event or center on a habit.",
+            "family": [],
             "female": [
                 "Akra",
                 "Biri",
@@ -1311,7 +1408,14 @@
                 "Tarhun",
                 "Torinn"
             ],
-            "nickname": []
+            "nickname": [],
+            "order": [
+                "child",
+                "first",
+                "clan"
+            ],
+            "surname": [],
+            "virtue": []
         },
         "race": "Dragonborn",
         "size": {
@@ -1378,6 +1482,7 @@
                 "Turen"
             ],
             "description": "",
+            "family": [],
             "female": [
                 "Bimpnottin",
                 "Breena",
@@ -1441,7 +1546,14 @@
                 "Pock",
                 "Sparklegem",
                 "Stumbleduck"
-            ]
+            ],
+            "order": [
+                "first",
+                "clan",
+                "nickname"
+            ],
+            "surname": [],
+            "virtue": []
         },
         "race": "Gnome",
         "size": {
@@ -1482,9 +1594,13 @@
                     "child": [],
                     "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [],
                     "male": [],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [],
+                    "virtue": []
                 },
                 "race": "Forest Gnome"
             },
@@ -1515,9 +1631,13 @@
                     "child": [],
                     "clan": [],
                     "description": "",
+                    "family": [],
                     "female": [],
                     "male": [],
-                    "nickname": []
+                    "nickname": [],
+                    "order": [],
+                    "surname": [],
+                    "virtue": []
                 },
                 "race": "Rock Gnome"
             }
@@ -1568,9 +1688,317 @@
             "child": [],
             "clan": [],
             "description": "Half-elves use either human or elven naming conventions. As if to emphasize that they don't really fit in to either society, half-elves raised among humans are often given elven names, and those raised among elves often take human names.",
-            "female": [],
-            "male": [],
-            "nickname": []
+            "family": [],
+            "female": [
+                "Adrie",
+                "Alethra",
+                "Althaea",
+                "Amafrey",
+                "Anastrianna",
+                "Andraste",
+                "Antinua",
+                "Arizima",
+                "Arveene",
+                "Arveene",
+                "Atala",
+                "Bai",
+                "Balama",
+                "Betha",
+                "Bethrynna",
+                "Birel",
+                "Caelynn",
+                "Cefrey",
+                "Ceidil",
+                "Chao",
+                "Chathi",
+                "Dona",
+                "Drusilia",
+                "Enna",
+                "Esvele",
+                "Esvele",
+                "Faila",
+                "Felosial",
+                "Fyevarra",
+                "Hama",
+                "Hulmarra",
+                "Ielenia",
+                "Immith",
+                "Imzel",
+                "Jalana",
+                "Jasmal",
+                "Jelenneth",
+                "Jhessail",
+                "Jhessail",
+                "Jia",
+                "Kara",
+                "Katernin",
+                "Kerri",
+                "Kerri",
+                "Kethra",
+                "Keyleth",
+                "Lei",
+                "Leshanna",
+                "Lia",
+                "Luisa",
+                "Lureene",
+                "Lureene",
+                "Mara",
+                "Mara",
+                "Marta",
+                "Mei",
+                "Meilil",
+                "Meriele",
+                "Mialee",
+                "Miri",
+                "Miri",
+                "Murithi",
+                "Naivara",
+                "Natali",
+                "Navarra",
+                "Nephis",
+                "Nulara",
+                "Olga",
+                "Olma",
+                "Qiao",
+                "Quara",
+                "Quelenna",
+                "Quillathe",
+                "Rowan",
+                "Rowan",
+                "Sariel",
+                "Sefris",
+                "Seipora",
+                "Selise",
+                "Shanairra",
+                "Shandri",
+                "Shandri",
+                "Shava",
+                "Shevarra",
+                "Shui",
+                "Silaqui",
+                "Silifrey",
+                "Tai",
+                "Tammith",
+                "Tana",
+                "Tessele",
+                "Tessele",
+                "Theirastra",
+                "Thia",
+                "Thola",
+                "Umara",
+                "Vadania",
+                "Valanthe",
+                "Vonda",
+                "Westra",
+                "Xanaphia",
+                "Yasheira",
+                "Yuldra",
+                "Zasheida",
+                "Zolis",
+                "Zora"
+            ],
+            "male": [
+                "Adran",
+                "Aelar",
+                "An",
+                "Ander",
+                "Anton",
+                "Aoth",
+                "Aramil",
+                "Arannis",
+                "Aseir",
+                "Aust",
+                "Bardeid",
+                "Bareris",
+                "Beiro",
+                "Berrian",
+                "Blath",
+                "Bor",
+                "Borivik",
+                "Bran",
+                "Carric",
+                "Chen",
+                "Chi",
+                "Darvin",
+                "Darvin",
+                "Diero",
+                "Dorn",
+                "Dorn",
+                "Ehput-Ki",
+                "Enialis",
+                "Erdan",
+                "Erevan",
+                "Evendur",
+                "Evendur",
+                "Fai",
+                "Faurgar",
+                "Fodel",
+                "Frath",
+                "Galinndan",
+                "Geth",
+                "Glar",
+                "Gorstag",
+                "Gorstag",
+                "Grigor",
+                "Grim",
+                "Grim",
+                "Hadarai",
+                "Haseid",
+                "Heian",
+                "Helm",
+                "Helm",
+                "Himo",
+                "Igan",
+                "Immeral",
+                "Ivellios",
+                "Ivor",
+                "Jandar",
+                "Jiang",
+                "Jun",
+                "Kanithar",
+                "Kethoth",
+                "Khemed",
+                "Kosef",
+                "Lander",
+                "Laucian",
+                "Lian",
+                "Long",
+                "Luth",
+                "Madislak",
+                "Malark",
+                "Malark",
+                "Malcer",
+                "Marcon",
+                "Mehmen",
+                "Meng",
+                "Mindartis",
+                "Mival",
+                "Morn",
+                "Morn",
+                "Mumed",
+                "On",
+                "Orel",
+                "Paelias",
+                "Pavel",
+                "Peren",
+                "Pieron",
+                "Quarion",
+                "Ralmevik",
+                "Ramas",
+                "Randal",
+                "Randal",
+                "Riardon",
+                "Rimardo",
+                "Rolen",
+                "Romero",
+                "Salazar",
+                "Sergor",
+                "Shan",
+                "Shaumar",
+                "Shui",
+                "So-Kehur",
+                "Soveliss",
+                "Stedd",
+                "Stedd",
+                "Stor",
+                "Sudeiman",
+                "Taman",
+                "Thamior",
+                "Tharivol",
+                "Thazar-De",
+                "Theren",
+                "Umbero",
+                "Urhur",
+                "Urth",
+                "Varis",
+                "Vladislak",
+                "Wen",
+                "Zasheir"
+            ],
+            "nickname": [],
+            "order": [
+                "first",
+                "surname"
+            ],
+            "surname": [
+                "Agosto",
+                "Amakiir",
+                "Amastacia",
+                "Amblecrown",
+                "Amblecrown",
+                "Ankhalab",
+                "Anskuld",
+                "Astorio",
+                "Basha",
+                "Bersk",
+                "Brightwood",
+                "Buckman",
+                "Buckman",
+                "Calabra",
+                "Chergoba",
+                "Chernin",
+                "Chien",
+                "Domine",
+                "Dotsk",
+                "Dumein",
+                "Dundragon",
+                "Dundragon",
+                "Dyernina",
+                "Evenwood",
+                "Evenwood",
+                "Falone",
+                "Fezim",
+                "Galanodel",
+                "Greycastle",
+                "Greycastle",
+                "Hahpet",
+                "Helder",
+                "Holimion",
+                "Hornraven",
+                "Huang",
+                "Ilphelkiir",
+                "Iltazyara",
+                "Jassan",
+                "Kao",
+                "Khalid",
+                "Kulenov",
+                "Kung",
+                "Lackman",
+                "Lao",
+                "Liadon",
+                "Ling",
+                "Marivaldi",
+                "Marsk",
+                "Mei",
+                "Meliamne",
+                "Mostana",
+                "Murnyethara",
+                "Na\u00eflo",
+                "Nathandem",
+                "Nemetsk",
+                "Pashar",
+                "Pin",
+                "Pisacar",
+                "Ramondo",
+                "Rein",
+                "Sepret",
+                "Shemov",
+                "Shin",
+                "Siannodel",
+                "Starag",
+                "Stayanoga",
+                "Stormwind",
+                "Sum",
+                "Tallstag",
+                "Tallstag",
+                "Tan",
+                "Ulmokina",
+                "Uuthrakt",
+                "Wan",
+                "Windrivver",
+                "Xiloscient"
+            ],
+            "virtue": []
         },
         "race": "Half-Elf",
         "size": {
@@ -1633,6 +2061,7 @@
             "child": [],
             "clan": [],
             "description": "Half-orcs usually have names appropriate to the culture in which they were raised. A half-orc who wants to fit in among humans might trade an orc name for a human name. Some half-orcs with human names decide to adopt a guttural orc name because they think it makes them more intimidating.",
+            "family": [],
             "female": [
                 "Baggi",
                 "Emen",
@@ -1662,7 +2091,12 @@
                 "Shump",
                 "Thokk"
             ],
-            "nickname": []
+            "nickname": [],
+            "order": [
+                "first"
+            ],
+            "surname": [],
+            "virtue": []
         },
         "race": "Half-Orc",
         "size": {
@@ -1721,6 +2155,7 @@
             "child": [],
             "clan": [],
             "description": "Tiefling names fall into three broad categories. Tieflings born into another culture typically have names reflective of that culture. Some have names derived from the Infernal language, passed down through generations, that reflect their fiendish heritage. And some younger tieflings, striving to find a place in the world, adopt a name that signifies a virtue or other concept and then try to em body that concept. For some, the chosen name is a noble quest. For others, it's a grim destiny.",
+            "family": [],
             "female": [
                 "Akta",
                 "Anakis",
@@ -1752,7 +2187,13 @@
                 "Skamos",
                 "Therai"
             ],
-            "nickname": [
+            "nickname": [],
+            "order": [
+                "first",
+                "virtue"
+            ],
+            "surname": [],
+            "virtue": [
                 "Art",
                 "Carrion",
                 "Chant",

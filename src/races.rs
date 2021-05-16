@@ -6,7 +6,7 @@ use textwrap;
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct RaceAbilities {
     description: String,
-    abilities: Abilities,
+    pub abilities: Abilities,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
@@ -45,11 +45,15 @@ pub struct RaceSize {
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct RaceNames {
     description: String,
+    order: Vec<String>,
     child: Vec<String>,
     male: Vec<String>,
     female: Vec<String>,
     clan: Vec<String>,
+    family: Vec<String>,
+    surname: Vec<String>,
     nickname: Vec<String>,
+    virtue: Vec<String>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
@@ -174,6 +178,11 @@ impl Races {
 
         names.description = [race.names.description, subrace.names.description].join("\n");
 
+        names.order = race.names.order;
+        if !subrace.names.order.is_empty() {
+            names.order = subrace.names.order;
+        }
+
         names.child = race.names.child;
         names.child.extend(subrace.names.child);
         names.child.sort();
@@ -190,9 +199,21 @@ impl Races {
         names.clan.extend(subrace.names.clan);
         names.clan.sort();
 
+        names.family = race.names.family;
+        names.family.extend(subrace.names.family);
+        names.family.sort();
+
+        names.surname = race.names.surname;
+        names.surname.extend(subrace.names.surname);
+        names.surname.sort();
+
         names.nickname = race.names.nickname;
         names.nickname.extend(subrace.names.nickname);
         names.nickname.sort();
+
+        names.virtue = race.names.virtue;
+        names.virtue.extend(subrace.names.virtue);
+        names.virtue.sort();
 
         names
     }
@@ -305,6 +326,23 @@ impl Races {
             )
         );
 
+        let mut order_uppercase = names.order;
+        for i in 0..order_uppercase.len() {
+            if let Some(r) = order_uppercase[i].get_mut(0..1) {
+                r.make_ascii_uppercase();
+            }
+        }
+        names_str = format!(
+            "{}{}\n",
+            names_str,
+            textwrap::fill(
+                &format!("Ordering: {}", order_uppercase.join(" ")),
+                textwrap::Options::new(COLUMN_WIDTH)
+                    .initial_indent("  ")
+                    .subsequent_indent("  ")
+            )
+        );
+
         if !names.child.is_empty() {
             names_str = format!(
                 "{}{}\n",
@@ -357,12 +395,51 @@ impl Races {
             );
         }
 
+        if !names.family.is_empty() {
+            names_str = format!(
+                "{}{}\n",
+                names_str,
+                textwrap::fill(
+                    &format!("Family:         {}", names.family.join(", ")),
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("  - ")
+                        .subsequent_indent("                    ")
+                )
+            );
+        }
+
+        if !names.surname.is_empty() {
+            names_str = format!(
+                "{}{}\n",
+                names_str,
+                textwrap::fill(
+                    &format!("Surname:        {}", names.surname.join(", ")),
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("  - ")
+                        .subsequent_indent("                    ")
+                )
+            );
+        }
+
         if !names.nickname.is_empty() {
             names_str = format!(
                 "{}{}\n",
                 names_str,
                 textwrap::fill(
                     &format!("Nicknames:      {}", names.nickname.join(", ")),
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("  - ")
+                        .subsequent_indent("                    ")
+                )
+            );
+        }
+
+        if !names.virtue.is_empty() {
+            names_str = format!(
+                "{}{}\n",
+                names_str,
+                textwrap::fill(
+                    &format!("Virtue:         {}", names.virtue.join(", ")),
                     textwrap::Options::new(COLUMN_WIDTH)
                         .initial_indent("  - ")
                         .subsequent_indent("                    ")
