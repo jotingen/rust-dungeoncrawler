@@ -94,9 +94,10 @@ fn character_creation(races: &Races) -> Character {
     #[derive(Debug, PartialEq)]
     enum State {
         Init,
-        Stats,
-        Pick,
+        Race,
         Class,
+        Stats,
+        Equipment,
         Name,
         Summary,
         Exit,
@@ -112,27 +113,9 @@ fn character_creation(races: &Races) -> Character {
 
                 pause();
 
-                state = State::Stats;
+                state = State::Race;
             }
-            State::Stats => {
-                clear();
-
-                println!("Stats\n");
-
-                stats = [15, 14, 13, 12, 10, 8];
-                println!("Default stats are {:?}", stats);
-
-                if pick_yes_or_no("Roll your own stats?") {
-                    roll_stats(&mut stats);
-                }
-
-                println!("Using stats {:?}", stats);
-
-                pause();
-
-                state = State::Pick;
-            }
-            State::Pick => {
+            State::Race => {
                 clear();
 
                 println!("Choose race:");
@@ -152,11 +135,40 @@ fn character_creation(races: &Races) -> Character {
                     race = races.races()[number as usize].to_string();
                     state = State::Class;
                 } else {
-                    state = State::Pick;
+                    state = State::Race;
                 }
             }
             State::Class => {
                 clear();
+
+                println!("Choose class:");
+
+                pause();
+
+                state = State::Stats;
+            }
+            State::Stats => {
+                clear();
+
+                println!("Roll stats\n");
+
+                stats = [15, 14, 13, 12, 10, 8];
+                println!("Default stats are {:?}", stats);
+
+                if pick_yes_or_no("Roll your own stats?") {
+                    roll_stats(&mut stats);
+                }
+
+                println!("Using stats {:?}", stats);
+
+                pause();
+
+                state = State::Equipment;
+            }
+            State::Equipment => {
+                clear();
+
+                println!("Choose equipment:");
 
                 pause();
 
@@ -176,6 +188,8 @@ fn character_creation(races: &Races) -> Character {
             State::Summary => {
                 clear();
 
+                println!("Character Summary:");
+
                 character = Character::new();
 
                 //name
@@ -186,6 +200,9 @@ fn character_creation(races: &Races) -> Character {
 
                 //age
                 character.age = 25;
+
+                //class
+                character.class = "Hobo".to_string();
 
                 //alignment
                 character.alignment = Alignment::N;
@@ -208,6 +225,7 @@ fn character_creation(races: &Races) -> Character {
                     races.race_ability_score_increase(&race).abilities.wisdom;
 
                 dbg!(&character);
+
                 pause();
 
                 state = State::Exit;

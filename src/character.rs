@@ -6,6 +6,7 @@ pub struct Character {
     pub name: String,
     pub race: String,
     pub age: u32,
+    pub class: String,
     pub alignment: Alignment,
     pub abilities: Abilities,
 }
