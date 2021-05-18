@@ -2,10 +2,12 @@ const COLUMN_WIDTH: usize = 80;
 
 mod basics;
 mod character;
+mod classes;
 mod races;
 
 use crate::basics::{Abilities, Alignment};
 use crate::character::Character;
+use crate::classes::Classes;
 use crate::races::Races;
 use rand::Rng;
 use regex::Regex;
@@ -33,6 +35,8 @@ fn pause() {
 fn main() {
     //Load races
     let races: Races = Races::new();
+    //Load classes
+    let classes: Classes = Classes::new();
     let mut character: Character;
 
     #[derive(Debug, PartialEq)]

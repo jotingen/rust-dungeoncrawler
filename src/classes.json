@@ -1,0 +1,254 @@
+[
+    {
+        "class": "Barbarian",
+        "description": "A fierce warrior of primitive background who can enter a battle rage",
+        "hit_die": 12,
+        "primary_ability": [
+            "strength"
+        ],
+        "saving_throw_proficiencies": [
+            "strength",
+            "constitution"
+        ],
+        "armor_proficiencies": [
+            "light",
+            "medium",
+            "shields"
+        ],
+        "weapon_proficiencies": [
+            "simple weapons",
+            "martial weapons"
+        ]
+    },
+    {
+        "class": "Bard",
+        "description": "An inspiring magician whose power echoes the music of creation",
+        "hit_die": 8,
+        "primary_ability": [
+            "charisma"
+        ],
+        "saving_throw_proficiencies": [
+            "dexterity",
+            "charisma"
+        ],
+        "armor_proficiencies": [
+            "light"
+        ],
+        "weapon_proficiencies": [
+            "simple weapons",
+            "hand crossbows",
+            "longswords",
+            "rapiers",
+            "shortswords"
+        ]
+    },
+    {
+        "class": "Cleric",
+        "description": "A priestly champion who wields divine magic in service of a higher power",
+        "hit_die": 8,
+        "primary_ability": [
+            "wisdom"
+        ],
+        "saving_throw_proficiencies": [
+            "wisdom",
+            "charisma"
+        ],
+        "armor_proficiencies": [
+            "light",
+            "medium",
+            "shields"
+        ],
+        "weapon_proficiencies": [
+            "simple weapons"
+        ]
+    },
+    {
+        "class": "Druid",
+        "description": "A priest of the Old Faith, wielding the powers of nature\u2014 moonlight and plant growth, fire and lightning\u2014 and adopting animal forms",
+        "hit_die": 8,
+        "primary_ability": [
+            "wisdom"
+        ],
+        "saving_throw_proficiencies": [
+            "intelligence",
+            "wisdom"
+        ],
+        "armor_proficiencies": [
+            "light",
+            "medium",
+            "shields"
+        ],
+        "weapon_proficiencies": [
+            "clubs",
+            "daggers",
+            "darts",
+            "javelins",
+            "maces",
+            "quarterstaffs",
+            "scimitars",
+            "sickles",
+            "slings",
+            "spears"
+        ]
+    },
+    {
+        "class": "Fighter",
+        "description": "A master of martial combat, skilled with a variety of weapons and armor",
+        "hit_die": 10,
+        "primary_ability": [
+            "strength or dexterity"
+        ],
+        "saving_throw_proficiencies": [
+            "strength",
+            "constitution"
+        ],
+        "armor_proficiencies": [
+            "light",
+            "medium",
+            "heavy",
+            "shields"
+        ],
+        "weapon_proficiencies": [
+            "simple weapons",
+            "martial weapons"
+        ]
+    },
+    {
+        "class": "Monk",
+        "description": "An master of martial arts, harnessing the power of the body in pursuit of physical and spiritual perfection",
+        "hit_die": 8,
+        "primary_ability": [
+            "dexterity",
+            "wisdom"
+        ],
+        "saving_throw_proficiencies": [
+            "strength",
+            "dexterity"
+        ],
+        "armor_proficiencies": [],
+        "weapon_proficiencies": [
+            "simple weapons",
+            "shortswords"
+        ]
+    },
+    {
+        "class": "Paladin",
+        "description": "A holy warrior bound to a sacred oath",
+        "hit_die": 10,
+        "primary_ability": [
+            "strength",
+            "charisma"
+        ],
+        "saving_throw_proficiencies": [
+            "wisdom",
+            "charisma"
+        ],
+        "armor_proficiencies": [
+            "all armor, shields"
+        ],
+        "weapon_proficiencies": [
+            "simple and martial weapons"
+        ]
+    },
+    {
+        "class": "Ranger",
+        "description": "A warrior who uses martial prowess and nature magic to combat threats on the edges of civilization",
+        "hit_die": 10,
+        "primary_ability": [
+            "dexterity",
+            "wisdom"
+        ],
+        "saving_throw_proficiencies": [
+            "strength",
+            "dexterity"
+        ],
+        "armor_proficiencies": [
+            "light",
+            "medium",
+            "shields"
+        ],
+        "weapon_proficiencies": [
+            "simple and martial weapons"
+        ]
+    },
+    {
+        "class": "Rogue",
+        "description": "A scoundrel who uses stealth and trickery to overcome obstacles and enemies",
+        "hit_die": 8,
+        "primary_ability": [
+            "dexterity"
+        ],
+        "saving_throw_proficiencies": [
+            "dexterity",
+            "intelligence"
+        ],
+        "armor_proficiencies": [
+            "light"
+        ],
+        "weapon_proficiencies": [
+            "simple weapons",
+            "hand crossbows",
+            "longswords",
+            "rapiers",
+            "shortswords"
+        ]
+    },
+    {
+        "class": "Sorcerer",
+        "description": "A spellcaster who draws on inherent magic from a gift or bloodline",
+        "hit_die": 6,
+        "primary_ability": [
+            "charisma"
+        ],
+        "saving_throw_proficiencies": [
+            "constitution",
+            "charisma"
+        ],
+        "armor_proficiencies": [],
+        "weapon_proficiencies": [
+            "daggers",
+            "darts",
+            "slings",
+            "quarterstaffs",
+            "light crossbows"
+        ]
+    },
+    {
+        "class": "Warlock",
+        "description": "A wielder of magic that is derived from a bargain with an extraplanar entity",
+        "hit_die": 8,
+        "primary_ability": [
+            "charisma"
+        ],
+        "saving_throw_proficiencies": [
+            "wisdom",
+            "charisma"
+        ],
+        "armor_proficiencies": [
+            "light armor"
+        ],
+        "weapon_proficiencies": [
+            "simple weapons"
+        ]
+    },
+    {
+        "class": "Wizard",
+        "description": "A scholarly magic-user capable of manipulating the structures of reality",
+        "hit_die": 6,
+        "primary_ability": [
+            "intelligence"
+        ],
+        "saving_throw_proficiencies": [
+            "intelligence",
+            "wisdom"
+        ],
+        "armor_proficiencies": [],
+        "weapon_proficiencies": [
+            "daggers",
+            "darts",
+            "slings",
+            "quarterstaffs",
+            "light crossbows"
+        ]
+    }
+]
