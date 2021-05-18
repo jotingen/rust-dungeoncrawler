@@ -120,19 +120,20 @@ fn character_creation(races: &Races) -> Character {
 
                 println!("Choose race:");
 
-                for (count, r) in races.races().iter().enumerate() {
-                    println!("{:>2}) {}", count + 1, races.race_type(&r));
+                for (count, race_key) in races.keys().iter().enumerate() {
+                    println!("{:>2}) {}", count + 1, races.race(&race_key));
                 }
 
                 let number = pick_number(
                     "Choose race, leave blank for random.",
                     1,
-                    races.races().len() as u32,
+                    races.keys().len() as u32,
                 ) - 1;
-                println!("{}", races.race_details(&races.races()[number as usize]));
+
+                println!("{}", races.details(&races.keys()[number as usize]));
 
                 if pick_yes_or_no("Use this race?") {
-                    race = races.races()[number as usize].to_string();
+                    race = races.keys()[number as usize].to_string();
                     state = State::Class;
                 } else {
                     state = State::Race;
@@ -208,21 +209,18 @@ fn character_creation(races: &Races) -> Character {
                 character.alignment = Alignment::N;
 
                 //ability_score_base
-                dbg!(races.race_ability_score_increase(&race));
+                dbg!(races.ability_score_increase(&race));
                 character.abilities.strength =
-                    races.race_ability_score_increase(&race).abilities.strength;
+                    races.ability_score_increase(&race).abilities.strength;
                 character.abilities.dexterity =
-                    races.race_ability_score_increase(&race).abilities.dexterity;
+                    races.ability_score_increase(&race).abilities.dexterity;
                 character.abilities.charisma =
-                    races.race_ability_score_increase(&race).abilities.charisma;
-                character.abilities.constitution = races
-                    .race_ability_score_increase(&race)
-                    .abilities
-                    .constitution;
+                    races.ability_score_increase(&race).abilities.charisma;
+                character.abilities.constitution =
+                    races.ability_score_increase(&race).abilities.constitution;
                 character.abilities.intellect =
-                    races.race_ability_score_increase(&race).abilities.intellect;
-                character.abilities.wisdom =
-                    races.race_ability_score_increase(&race).abilities.wisdom;
+                    races.ability_score_increase(&race).abilities.intellect;
+                character.abilities.wisdom = races.ability_score_increase(&race).abilities.wisdom;
 
                 dbg!(&character);
 

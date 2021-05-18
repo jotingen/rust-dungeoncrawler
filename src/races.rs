@@ -106,21 +106,21 @@ impl Races {
         Races { races }
     }
 
-    pub fn races(&self) -> Vec<String> {
-        let mut race_list: Vec<String> = Vec::new();
+    pub fn keys(&self) -> Vec<String> {
+        let mut keys: Vec<String> = Vec::new();
         for race in self.races.iter() {
             if race.subraces.is_empty() {
-                race_list.push(race.race.clone());
+                keys.push(race.race.clone());
             } else {
                 for subrace in race.subraces.iter() {
-                    race_list.push(subrace.race.clone());
+                    keys.push(subrace.race.clone());
                 }
             }
         }
-        race_list
+        keys
     }
 
-    fn get_race_structs(&self, race_str: &str) -> (Race, SubRace) {
+    fn structs(&self, key: &str) -> (Race, SubRace) {
         //Find given race/subrace
         let mut race: Race = Race {
             ..Default::default()
@@ -130,11 +130,11 @@ impl Races {
         };
 
         for r in self.races.iter() {
-            if r.race == race_str {
+            if r.race == key {
                 race = r.clone();
             } else {
                 for sr in r.subraces.iter() {
-                    if sr.race == race_str {
+                    if sr.race == key {
                         race = r.clone();
                         subrace = sr.clone();
                     }
@@ -145,24 +145,24 @@ impl Races {
         (race, subrace)
     }
 
-    pub fn race_type(&self, race_str: &str) -> String {
-        let (race, subrace) = self.get_race_structs(race_str);
-        let type_str: String;
+    pub fn race(&self, key: &str) -> String {
+        let (race, subrace) = self.structs(key);
+        let race_str: String;
 
         if subrace.race.is_empty() {
-            type_str = format!("{}", race.race)
+            race_str = race.race
         } else {
-            type_str = format!("{} ({})", subrace.race, race.race)
+            race_str = format!("{} ({})", subrace.race, race.race)
         }
 
-        type_str
+        race_str
     }
 
-    pub fn race_description(&self, race_str: &str) -> String {
-        let (race, subrace) = self.get_race_structs(race_str);
+    pub fn description(&self, key: &str) -> String {
+        let (race, subrace) = self.structs(key);
         let mut description_str: String;
 
-        description_str = format!("{}", race.description);
+        description_str = race.description;
         if !subrace.description.is_empty() {
             description_str = format!("{}\n{}", description_str, subrace.description)
         }
@@ -170,8 +170,8 @@ impl Races {
         description_str
     }
 
-    pub fn race_names(&self, race_str: &str) -> RaceNames {
-        let (race, subrace) = self.get_race_structs(race_str);
+    pub fn names(&self, key: &str) -> RaceNames {
+        let (race, subrace) = self.structs(key);
         let mut names = RaceNames {
             ..Default::default()
         };
@@ -218,8 +218,8 @@ impl Races {
         names
     }
 
-    pub fn race_ability_score_increase(&self, race_str: &str) -> RaceAbilities {
-        let (race, subrace) = self.get_race_structs(race_str);
+    pub fn ability_score_increase(&self, key: &str) -> RaceAbilities {
+        let (race, subrace) = self.structs(key);
         let mut ability_score_increase = RaceAbilities {
             ..Default::default()
         };
@@ -249,32 +249,32 @@ impl Races {
         ability_score_increase
     }
 
-    pub fn race_age(&self, race_str: &str) -> RaceAge {
-        let (race, _subrace) = self.get_race_structs(race_str);
+    pub fn age(&self, key: &str) -> RaceAge {
+        let (race, _subrace) = self.structs(key);
 
         race.age
     }
 
-    pub fn race_alignment(&self, race_str: &str) -> RaceAlignment {
-        let (race, _subrace) = self.get_race_structs(race_str);
+    pub fn alignment(&self, key: &str) -> RaceAlignment {
+        let (race, _subrace) = self.structs(key);
 
         race.alignment
     }
 
-    pub fn race_size(&self, race_str: &str) -> RaceSize {
-        let (race, _subrace) = self.get_race_structs(race_str);
+    pub fn size(&self, key: &str) -> RaceSize {
+        let (race, _subrace) = self.structs(key);
 
         race.size
     }
 
-    pub fn race_speed(&self, race_str: &str) -> RaceSpeed {
-        let (race, _subrace) = self.get_race_structs(race_str);
+    pub fn speed(&self, key: &str) -> RaceSpeed {
+        let (race, _subrace) = self.structs(key);
 
         race.speed
     }
 
-    pub fn race_modifiers(&self, race_str: &str) -> Vec<RaceModifier> {
-        let (race, subrace) = self.get_race_structs(race_str);
+    pub fn modifiers(&self, key: &str) -> Vec<RaceModifier> {
+        let (race, subrace) = self.structs(key);
         let mut modifiers: Vec<RaceModifier>;
 
         modifiers = race.modifiers;
@@ -284,8 +284,8 @@ impl Races {
         modifiers
     }
 
-    pub fn race_languages(&self, race_str: &str) -> Vec<String> {
-        let (race, _subrace) = self.get_race_structs(race_str);
+    pub fn languages(&self, key: &str) -> Vec<String> {
+        let (race, _subrace) = self.structs(key);
         let mut languages: Vec<String>;
 
         languages = race.languages;
@@ -294,15 +294,15 @@ impl Races {
         languages
     }
 
-    fn race_detail_type(&self, race_str: &str) -> String {
-        format!("{}\n", self.race_type(race_str))
+    fn detail_race(&self, key: &str) -> String {
+        format!("{}\n", self.race(key))
     }
 
-    fn race_detail_description(&self, race_str: &str) -> String {
+    fn detail_description(&self, key: &str) -> String {
         format!(
             "{}\n",
             textwrap::fill(
-                &self.race_description(race_str),
+                &self.description(key),
                 textwrap::Options::new(COLUMN_WIDTH)
                     .initial_indent("  ")
                     .subsequent_indent("  ")
@@ -310,8 +310,8 @@ impl Races {
         )
     }
 
-    fn race_detail_names(&self, race_str: &str) -> String {
-        let names = self.race_names(race_str);
+    fn detail_names(&self, key: &str) -> String {
+        let names = self.names(key);
         let mut names_str: String;
 
         names_str = "- Names\n".to_string();
@@ -327,9 +327,9 @@ impl Races {
         );
 
         let mut order_uppercase = names.order;
-        for i in 0..order_uppercase.len() {
-            if let Some(r) = order_uppercase[i].get_mut(0..1) {
-                r.make_ascii_uppercase();
+        for order_uppercase_name in &mut order_uppercase {
+            if let Some(letter) = order_uppercase_name.get_mut(0..1) {
+                letter.make_ascii_uppercase();
             }
         }
         names_str = format!(
@@ -450,8 +450,8 @@ impl Races {
         names_str
     }
 
-    fn race_detail_ability_score_increase(&self, race_str: &str) -> String {
-        let ability_score_increase = self.race_ability_score_increase(race_str);
+    fn detail_ability_score_increase(&self, key: &str) -> String {
+        let ability_score_increase = self.ability_score_increase(key);
         let mut ability_score_increase_str: String;
 
         ability_score_increase_str = "- Ability Score Increase\n".to_string();
@@ -481,8 +481,8 @@ impl Races {
         ability_score_increase_str
     }
 
-    fn race_detail_age(&self, race_str: &str) -> String {
-        let age = self.race_age(race_str);
+    fn detail_age(&self, key: &str) -> String {
+        let age = self.age(key);
         let mut age_str: String;
 
         age_str = "- Age\n".to_string();
@@ -506,8 +506,8 @@ impl Races {
         age_str
     }
 
-    fn race_detail_alignment(&self, race_str: &str) -> String {
-        let alignment = self.race_alignment(race_str);
+    fn detail_alignment(&self, key: &str) -> String {
+        let alignment = self.alignment(key);
         let mut alignment_str: String;
 
         alignment_str = "- Alignment\n".to_string();
@@ -528,8 +528,8 @@ impl Races {
         alignment_str
     }
 
-    fn race_detail_size(&self, race_str: &str) -> String {
-        let size = self.race_size(race_str);
+    fn detail_size(&self, key: &str) -> String {
+        let size = self.size(key);
         let mut size_str: String;
 
         size_str = "- Size\n".to_string();
@@ -553,8 +553,8 @@ impl Races {
         size_str
     }
 
-    fn race_detail_speed(&self, race_str: &str) -> String {
-        let speed = self.race_speed(race_str);
+    fn detail_speed(&self, key: &str) -> String {
+        let speed = self.speed(key);
         let mut speed_str: String;
 
         speed_str = "- Speed\n".to_string();
@@ -575,8 +575,8 @@ impl Races {
         speed_str
     }
 
-    fn race_detail_modifiers(&self, race_str: &str) -> String {
-        let modifiers = self.race_modifiers(race_str);
+    fn detail_modifiers(&self, key: &str) -> String {
+        let modifiers = self.modifiers(key);
         let mut modifiers_str: String;
 
         modifiers_str = "- Modifiers\n".to_string();
@@ -598,8 +598,8 @@ impl Races {
         modifiers_str
     }
 
-    fn race_detail_languages(&self, race_str: &str) -> String {
-        let languages = self.race_languages(race_str);
+    fn detail_languages(&self, key: &str) -> String {
+        let languages = self.languages(key);
         let mut languages_str: String;
 
         languages_str = "- Languages\n".to_string();
@@ -619,18 +619,18 @@ impl Races {
         languages_str
     }
 
-    pub fn race_details(&self, race_str: &str) -> String {
+    pub fn details(&self, key: &str) -> String {
         [
-            self.race_detail_type(race_str),
-            self.race_detail_description(race_str),
-            self.race_detail_names(race_str),
-            self.race_detail_ability_score_increase(race_str),
-            self.race_detail_age(race_str),
-            self.race_detail_alignment(race_str),
-            self.race_detail_size(race_str),
-            self.race_detail_speed(race_str),
-            self.race_detail_modifiers(race_str),
-            self.race_detail_languages(race_str),
+            self.detail_race(key),
+            self.detail_description(key),
+            self.detail_names(key),
+            self.detail_ability_score_increase(key),
+            self.detail_age(key),
+            self.detail_alignment(key),
+            self.detail_size(key),
+            self.detail_speed(key),
+            self.detail_modifiers(key),
+            self.detail_languages(key),
         ]
         .join("\n")
     }
