@@ -315,16 +315,19 @@ impl Races {
         let mut names_str: String;
 
         names_str = "- Names\n".to_string();
-        names_str = format!(
-            "{}{}\n",
-            names_str,
-            textwrap::fill(
-                &names.description,
-                textwrap::Options::new(COLUMN_WIDTH)
-                    .initial_indent("  ")
-                    .subsequent_indent("  ")
-            )
-        );
+
+        if !&names.description.trim().is_empty() {
+            names_str = format!(
+                "{}{}\n",
+                names_str,
+                textwrap::fill(
+                    &names.description,
+                    textwrap::Options::new(COLUMN_WIDTH)
+                        .initial_indent("  ")
+                        .subsequent_indent("  ")
+                )
+            );
+        }
 
         let mut order_uppercase = names.order;
         for order_uppercase_name in &mut order_uppercase {

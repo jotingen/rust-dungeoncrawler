@@ -9,7 +9,7 @@
                 "strength": 0,
                 "wisdom": 0
             },
-            "description": ""
+            "description": "Your Constitution score increases by 2."
         },
         "age": {
             "adulthood": 50,
@@ -155,7 +155,7 @@
                         "strength": 0,
                         "wisdom": 1
                     },
-                    "description": ""
+                    "description": "Your Wisdom score increases by 1."
                 },
                 "description": "As a hill dwarf, you have keen senses, deep intuition, and remarkable resilience. The gold dwarves of Faerun in their mighty southern kingdom are hill dwarves, as are the exiled Neidar and the debased Klar of Krynn in the Dragonlance setting.",
                 "modifiers": [
@@ -188,7 +188,7 @@
                         "strength": 2,
                         "wisdom": 0
                     },
-                    "description": ""
+                    "description": "Your Strength score increases by 2."
                 },
                 "description": "As a mountain dwarf, you're strong and hardy, accustomed to a difficult life in rugged terrain. You're probably on the tall side (for a dwarf), and tend toward lighter coloration. The shield dwarves of northern Faerun, as well as the ruling Hylar clan and the noble Daewar clan of Dragonlance, are mountain dwarves.",
                 "modifiers": [
@@ -223,7 +223,7 @@
                 "strength": 0,
                 "wisdom": 0
             },
-            "description": ""
+            "description": "Your Dexterity score increases by 2."
         },
         "age": {
             "adulthood": 100,
@@ -384,7 +384,7 @@
                         "strength": 0,
                         "wisdom": 0
                     },
-                    "description": ""
+                    "description": "Your Intelligence score increases by 1."
                 },
                 "description": "As a high elf, you have a keen mind and a mastery of at least the basics of magic. In many of the worlds of D&D, there are two kinds of high elves. One type (which includes the gray elves and valley elves of Greyhawk, the Silvanesti of Dragonlance, and the sun elves of the Forgotten Realms) is haughty and reclusive, believing themselves to be superior to non-elves and even other elves. The other type (including the high elves of Greyhawk, the Qualinesti of Dragonlance, and the moon elves of the Forgotten Realms) are more common and more friendly, and often encountered among humans and other races.\n The sun elves of Faerun (also called gold elves or sunrise elves) have bronze skin and hair of copper, black, or golden blond. Their eyes are golden, silver, or black. Moon elves (also called silver elves or gray elves) are much paler, with alabaster skin sometimes tinged with blue.  They often have hair of silver-white, black, or blue, but various shades of blond, brown, and red are not uncommon. Their eyes are blue or green and flecked with gold.",
                 "modifiers": [
@@ -425,7 +425,7 @@
                         "strength": 0,
                         "wisdom": 1
                     },
-                    "description": ""
+                    "description": "Your Wisdom score increases by 1."
                 },
                 "description": "As a wood elf, you have keen senses and intuition, and your fleet feet carry you quickly and stealthily through your native forests. This category includes the wild elves (grugach) of Greyhawk and the Kagonesti of Dragonlance, as well as the races called wood elves in Greyhawk and the Forgotten Realms. In Faerun, wood elves (also called wild elves, green elves, or forest elves) are reclusive and distrusting of non-elves.  Wood elves' skin tends to be copperish in hue, sometimes with traces of green. Their hair tends toward browns and blacks, but it is occasionally blond or copper-colored. Their eyes are green, brown, or hazel.",
                 "modifiers": [
@@ -466,7 +466,7 @@
                         "strength": 0,
                         "wisdom": 0
                     },
-                    "description": ""
+                    "description": "Your Charisma score increases by 1."
                 },
                 "description": "Descended from an earlier subrace of dark-skinned elves, the drow were banished from the surface world for following the goddess Lolth down the path to evil and corruption. Now they have built their own civilization in the depths of the Underdark, patterned after the Way of Lolth. Also called dark elves, the drow have black skin that resembles polished obsidian and stark white or pale yellow hair. They commonly have very pale eyes (so pale as to be mistaken for white) in shades of lilac, silver, pink, red, and blue. They tend to be smaller and thinner than most elves.",
                 "modifiers": [
@@ -513,7 +513,7 @@
                 "strength": 0,
                 "wisdom": 0
             },
-            "description": ""
+            "description": "Your Dexterity score increases by 2."
         },
         "age": {
             "adulthood": 20,
@@ -629,7 +629,7 @@
                         "strength": 0,
                         "wisdom": 0
                     },
-                    "description": ""
+                    "description": "Your Charisma score increases by 1."
                 },
                 "description": "As a lightfoot halfling, you can easily hide from notice, even using other people as cover. You're inclined to be affable and get along well with others. In the Forgotten Realms, lightfoot halflings have spread the farthest and thus are the most common variety.\n Lightfoots are more prone to wanderlust than other halflings, and often dwell alongside other races or take up a nomadic life. In the world of Greyhawk, these halflings are called hairfeet or tallfellows.",
                 "modifiers": [
@@ -662,7 +662,7 @@
                         "strength": 0,
                         "wisdom": 0
                     },
-                    "description": ""
+                    "description": "Your Constitution score increases by 1."
                 },
                 "description": "As a stout halfling, you're hardier than average and have some resistance to poison. Some say that stouts have dwarven blood. In the Forgotten Realms, these halflings are called stronghearts, and they're most common in the south.",
                 "modifiers": [
@@ -697,7 +697,7 @@
                 "strength": 1,
                 "wisdom": 1
             },
-            "description": ""
+            "description": "Your ability scores each increase by 1."
         },
         "age": {
             "adulthood": 18,
@@ -754,12 +754,7 @@
                     "description": ""
                 },
                 "description": "Shorter and slighter in build than most other humans, Calishites have dusky brown skin, hair, and eyes.  They're found primarily in southwest Faerun.",
-                "modifiers": [
-                    {
-                        "description": "",
-                        "modifier": ""
-                    }
-                ],
+                "modifiers": [],
                 "names": {
                     "child": [],
                     "clan": [],
@@ -812,12 +807,7 @@
                     "description": ""
                 },
                 "description": "Chondathans are slender, tawny-skinned folk with brown hair that ranges from almost blond to almost black. Most are tall and have green or brown eyes, but these traits are hardly universal. Humans of Chondathan descent dominate the central lands of Faerun, around the Inner Sea.",
-                "modifiers": [
-                    {
-                        "description": "",
-                        "modifier": ""
-                    }
-                ],
+                "modifiers": [],
                 "names": {
                     "child": [],
                     "clan": [],
@@ -873,12 +863,7 @@
                     "description": ""
                 },
                 "description": "Found primarily in the northwest of Faerun, Damarans are of moderate height and build, with skin hues ranging from tawny to fair. Their hair is usually brown or black, and their eye color varies widely, though brown is most common.",
-                "modifiers": [
-                    {
-                        "description": "",
-                        "modifier": ""
-                    }
-                ],
+                "modifiers": [],
                 "names": {
                     "child": [],
                     "clan": [],
@@ -936,12 +921,7 @@
                     "description": ""
                 },
                 "description": "Illuskans are tall, fair-skinned folk with blue or steely gray eyes. Most have raven-black hair, but those who inhabit the extreme northwest have blond, red, or light brown hair.",
-                "modifiers": [
-                    {
-                        "description": "",
-                        "modifier": ""
-                    }
-                ],
+                "modifiers": [],
                 "names": {
                     "child": [],
                     "clan": [],
@@ -997,12 +977,7 @@
                     "description": ""
                 },
                 "description": "Dominant in the eastern and southeastern shores of the Inner Sea, the Mulan are generally tall, slim, and amber-skinned, with eyes of hazel or brown. Their hair ranges from black to dark brown, but in the lands where the Mulan are most prominent, nobles and many other Mulan shave off all their hair.",
-                "modifiers": [
-                    {
-                        "description": "",
-                        "modifier": ""
-                    }
-                ],
+                "modifiers": [],
                 "names": {
                     "child": [],
                     "clan": [],
@@ -1058,12 +1033,7 @@
                     "description": ""
                 },
                 "description": "Most often found east of the Inner Sea and often intermingled with the Mulan, Rashem is tend to be short, stout, and muscular. They usually have dusky skin, dark eyes, and thick black hair.",
-                "modifiers": [
-                    {
-                        "description": "",
-                        "modifier": ""
-                    }
-                ],
+                "modifiers": [],
                 "names": {
                     "child": [],
                     "clan": [],
@@ -1116,12 +1086,7 @@
                     "description": ""
                 },
                 "description": "The Shou are the most numerous and powerful ethnic group in Kara-Tur, far to the east of Faerun. They are yellowish-bronze in hue, with black hair and dark eyes. Shou surnames are usually presented before the given name.",
-                "modifiers": [
-                    {
-                        "description": "",
-                        "modifier": ""
-                    }
-                ],
+                "modifiers": [],
                 "names": {
                     "child": [],
                     "clan": [],
@@ -1188,12 +1153,7 @@
                     "description": ""
                 },
                 "description": "Widespread along the entire Sword Coast at the western edge of Faerun, Tethyrians are of medium build and height, with dusky skin that tends to grow fairer the farther north they dwell. Their hair and eye color varies widely, but brown hair and blue eyes are the most common. Tethyrians primarily use Chondathan names.",
-                "modifiers": [
-                    {
-                        "description": "",
-                        "modifier": ""
-                    }
-                ],
+                "modifiers": [],
                 "names": {
                     "child": [],
                     "clan": [],
@@ -1249,12 +1209,7 @@
                     "description": ""
                 },
                 "description": "Native to the southern shore of the Inner Sea, the Turami people are generally tall and muscular, with dark mahogany skin, curly black hair, and dark eyes.",
-                "modifiers": [
-                    {
-                        "description": "",
-                        "modifier": ""
-                    }
-                ],
+                "modifiers": [],
                 "names": {
                     "child": [],
                     "clan": [],
@@ -1577,7 +1532,7 @@
                         "strength": 0,
                         "wisdom": 0
                     },
-                    "description": ""
+                    "description": "Your Dexterity score increases by 1."
                 },
                 "description": "As a forest gnome, you have a natural knack for illusion and inherent quickness and stealth. In the worlds of D&D, forest gnomes are rare and secretive. They gather in hidden com m unities in sylvan forests, using illusions and trickery to conceal themselves from threats or to m ask their escape should they be detected. Forest gnomes tend to be friendly with other good-spirited woodland folk, and they regard elves and good fey as their most important allies. These gnomes also befriend small forest animals and rely on them for information about threats that might prowl their lands.",
                 "modifiers": [
@@ -1614,7 +1569,7 @@
                         "strength": 0,
                         "wisdom": 0
                     },
-                    "description": ""
+                    "description": "Your Constitution score increases by 1."
                 },
                 "description": "As a rock gnome, you have a natural inventiveness and hardiness beyond that of other gnomes. Most gnomes in the worlds of D&D are rock gnomes, including the tinker gnomes of the Dragonlance setting.",
                 "modifiers": [
@@ -2023,7 +1978,7 @@
                 "strength": 2,
                 "wisdom": 0
             },
-            "description": ""
+            "description": "Your Charisma score increases by 2, and two other ability scores of your choice increase by 1"
         },
         "age": {
             "adulthood": 14,
