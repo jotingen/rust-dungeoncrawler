@@ -35,8 +35,10 @@ fn pause() {
 fn main() {
     //Load races
     let races: Races = Races::new();
+
     //Load classes
     let classes: Classes = Classes::new();
+
     let mut character: Character;
 
     #[derive(Debug, PartialEq)]
@@ -72,7 +74,7 @@ fn main() {
             }
             StateMain::CharacterCreation => {
                 clear();
-                character = character_creation(&races);
+                character = character_creation(&races, &classes);
                 state_main = StateMain::Game;
             }
             StateMain::Game => {
@@ -89,10 +91,11 @@ fn main() {
     }
 }
 
-fn character_creation(races: &Races) -> Character {
+fn character_creation(races: &Races, classes: &Classes) -> Character {
     let mut character: Character = Character::new();
     let mut stats: [u8; 6];
     let mut race: String = "".to_string();
+    let mut class: String = "".to_string();
     let mut name: String = "".to_string();
 
     #[derive(Debug, PartialEq)]
@@ -148,9 +151,27 @@ fn character_creation(races: &Races) -> Character {
 
                 println!("Choose class:");
 
+                for (count, class_key) in classes.keys().iter().enumerate() {
+                    println!("{:>2}) {}", count + 1, classes.class(&class_key));
+                }
+
+                let number = pick_number(
+                    "Choose class, leave blank for random.",
+                    1,
+                    classes.keys().len() as u32,
+                ) - 1;
+
+                println!("{}", classes.details(&classes.keys()[number as usize]));
+
                 pause();
 
                 state = State::Stats;
+                if pick_yes_or_no("Use this class?") {
+                    class = classes.keys()[number as usize].to_string();
+                    state = State::Stats;
+                } else {
+                    state = State::Class;
+                }
             }
             State::Stats => {
                 clear();
@@ -207,7 +228,7 @@ fn character_creation(races: &Races) -> Character {
                 character.age = 25;
 
                 //class
-                character.class = "Hobo".to_string();
+                character.class = class.to_string();
 
                 //alignment
                 character.alignment = Alignment::N;

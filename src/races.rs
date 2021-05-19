@@ -120,113 +120,136 @@ impl Races {
         keys
     }
 
-    fn structs(&self, key: &str) -> (Race, SubRace) {
-        //Find given race/subrace
-        let mut race: Race = Race {
-            ..Default::default()
-        };
-        let mut subrace: SubRace = SubRace {
-            ..Default::default()
-        };
-
-        for r in self.races.iter() {
-            if r.race == key {
-                race = r.clone();
+    fn value(&self, key: &str) -> (Option<&Race>, Option<&SubRace>) {
+        for race in &self.races {
+            if race.race == key {
+                return (Some(race), None);
             } else {
-                for sr in r.subraces.iter() {
-                    if sr.race == key {
-                        race = r.clone();
-                        subrace = sr.clone();
+                for subrace in &race.subraces {
+                    if subrace.race == key {
+                        return (Some(race), Some(subrace));
                     }
                 }
             }
         }
 
-        (race, subrace)
+        (None, None)
     }
 
     pub fn race(&self, key: &str) -> String {
-        let (race, subrace) = self.structs(key);
+        let (race_opt, subrace_opt) = self.value(key);
+        let race: &Race = race_opt.unwrap();
+        let mut subrace = &SubRace {
+            ..Default::default()
+        };
+        if subrace_opt.is_some() {
+            subrace = subrace_opt.unwrap();
+        };
         let race_str: String;
 
         if subrace.race.is_empty() {
-            race_str = race.race
+            race_str = race.race.clone()
         } else {
-            race_str = format!("{} ({})", subrace.race, race.race)
+            race_str = format!("{} ({})", subrace.race.clone(), race.race.clone())
         }
 
         race_str
     }
 
     pub fn description(&self, key: &str) -> String {
-        let (race, subrace) = self.structs(key);
+        let (race_opt, subrace_opt) = self.value(key);
+        let race = race_opt.unwrap();
+        let mut subrace = &SubRace {
+            ..Default::default()
+        };
+        if subrace_opt.is_some() {
+            subrace = subrace_opt.unwrap();
+        };
         let mut description_str: String;
 
-        description_str = race.description;
+        description_str = race.description.clone();
         if !subrace.description.is_empty() {
-            description_str = format!("{}\n{}", description_str, subrace.description)
+            description_str = format!("{}\n{}", description_str, subrace.description.clone())
         }
 
         description_str
     }
 
     pub fn names(&self, key: &str) -> RaceNames {
-        let (race, subrace) = self.structs(key);
+        let (race_opt, subrace_opt) = self.value(key);
+        let race = race_opt.unwrap();
+        let mut subrace = &SubRace {
+            ..Default::default()
+        };
+        if subrace_opt.is_some() {
+            subrace = subrace_opt.unwrap();
+        };
         let mut names = RaceNames {
             ..Default::default()
         };
 
-        names.description = [race.names.description, subrace.names.description].join("\n");
+        names.description = [
+            race.names.description.clone(),
+            subrace.names.description.clone(),
+        ]
+        .join("\n");
 
-        names.order = race.names.order;
+        names.order = race.names.order.clone();
         if !subrace.names.order.is_empty() {
-            names.order = subrace.names.order;
+            names.order = subrace.names.order.clone();
         }
 
-        names.child = race.names.child;
-        names.child.extend(subrace.names.child);
+        names.child = race.names.child.clone();
+        names.child.extend(subrace.names.child.clone());
         names.child.sort();
 
-        names.male = race.names.male;
-        names.male.extend(subrace.names.male);
+        names.male = race.names.male.clone();
+        names.male.extend(subrace.names.male.clone());
         names.male.sort();
 
-        names.female = race.names.female;
-        names.female.extend(subrace.names.female);
+        names.female = race.names.female.clone();
+        names.female.extend(subrace.names.female.clone());
         names.female.sort();
 
-        names.clan = race.names.clan;
-        names.clan.extend(subrace.names.clan);
+        names.clan = race.names.clan.clone();
+        names.clan.extend(subrace.names.clan.clone());
         names.clan.sort();
 
-        names.family = race.names.family;
-        names.family.extend(subrace.names.family);
+        names.family = race.names.family.clone();
+        names.family.extend(subrace.names.family.clone());
         names.family.sort();
 
-        names.surname = race.names.surname;
-        names.surname.extend(subrace.names.surname);
+        names.surname = race.names.surname.clone();
+        names.surname.extend(subrace.names.surname.clone());
         names.surname.sort();
 
-        names.nickname = race.names.nickname;
-        names.nickname.extend(subrace.names.nickname);
+        names.nickname = race.names.nickname.clone();
+        names.nickname.extend(subrace.names.nickname.clone());
         names.nickname.sort();
 
-        names.virtue = race.names.virtue;
-        names.virtue.extend(subrace.names.virtue);
+        names.virtue = race.names.virtue.clone();
+        names.virtue.extend(subrace.names.virtue.clone());
         names.virtue.sort();
 
         names
     }
 
     pub fn ability_score_increase(&self, key: &str) -> RaceAbilities {
-        let (race, subrace) = self.structs(key);
+        let (race_opt, subrace_opt) = self.value(key);
+        let race = race_opt.unwrap();
+        let mut subrace = &SubRace {
+            ..Default::default()
+        };
+        if subrace_opt.is_some() {
+            subrace = subrace_opt.unwrap();
+        };
         let mut ability_score_increase = RaceAbilities {
             ..Default::default()
         };
 
         ability_score_increase.description = [
-            race.ability_score_increase.description,
-            subrace.ability_score_increase.description,
+            race.ability_score_increase.description.clone(),
+            subrace.ability_score_increase.description.clone(),
         ]
         .join("\n");
 
@@ -250,45 +273,57 @@ impl Races {
     }
 
     pub fn age(&self, key: &str) -> RaceAge {
-        let (race, _subrace) = self.structs(key);
+        let (race_opt, _) = self.value(key);
+        let race = race_opt.unwrap();
 
-        race.age
+        race.age.clone()
     }
 
     pub fn alignment(&self, key: &str) -> RaceAlignment {
-        let (race, _subrace) = self.structs(key);
+        let (race_opt, _) = self.value(key);
+        let race = race_opt.unwrap();
 
-        race.alignment
+        race.alignment.clone()
     }
 
     pub fn size(&self, key: &str) -> RaceSize {
-        let (race, _subrace) = self.structs(key);
+        let (race_opt, _) = self.value(key);
+        let race = race_opt.unwrap();
 
-        race.size
+        race.size.clone()
     }
 
     pub fn speed(&self, key: &str) -> RaceSpeed {
-        let (race, _subrace) = self.structs(key);
+        let (race_opt, _) = self.value(key);
+        let race = race_opt.unwrap();
 
-        race.speed
+        race.speed.clone()
     }
 
     pub fn modifiers(&self, key: &str) -> Vec<RaceModifier> {
-        let (race, subrace) = self.structs(key);
+        let (race_opt, subrace_opt) = self.value(key);
+        let race = race_opt.unwrap();
+        let mut subrace = &SubRace {
+            ..Default::default()
+        };
+        if subrace_opt.is_some() {
+            subrace = subrace_opt.unwrap();
+        };
         let mut modifiers: Vec<RaceModifier>;
 
-        modifiers = race.modifiers;
-        modifiers.extend(subrace.modifiers);
+        modifiers = race.modifiers.clone();
+        modifiers.extend(subrace.modifiers.clone());
         modifiers.sort_by(|a, b| a.modifier.cmp(&b.modifier));
 
         modifiers
     }
 
     pub fn languages(&self, key: &str) -> Vec<String> {
-        let (race, _subrace) = self.structs(key);
+        let (race_opt, _) = self.value(key);
+        let race = race_opt.unwrap();
         let mut languages: Vec<String>;
 
-        languages = race.languages;
+        languages = race.languages.clone();
         languages.sort();
 
         languages
