@@ -139,18 +139,12 @@ impl Races {
     pub fn race(&self, key: &str) -> String {
         let (race_opt, subrace_opt) = self.value(key);
         let race: &Race = race_opt.unwrap();
-        let mut subrace = &SubRace {
-            ..Default::default()
-        };
-        if subrace_opt.is_some() {
-            subrace = subrace_opt.unwrap();
-        };
         let race_str: String;
 
-        if subrace.race.is_empty() {
-            race_str = race.race.clone()
-        } else {
+        if let Some(subrace) = subrace_opt {
             race_str = format!("{} ({})", subrace.race.clone(), race.race.clone())
+        } else {
+            race_str = race.race.clone()
         }
 
         race_str
@@ -159,17 +153,13 @@ impl Races {
     pub fn description(&self, key: &str) -> String {
         let (race_opt, subrace_opt) = self.value(key);
         let race = race_opt.unwrap();
-        let mut subrace = &SubRace {
-            ..Default::default()
-        };
-        if subrace_opt.is_some() {
-            subrace = subrace_opt.unwrap();
-        };
         let mut description_str: String;
 
         description_str = race.description.clone();
-        if !subrace.description.is_empty() {
-            description_str = format!("{}\n{}", description_str, subrace.description.clone())
+        if let Some(subrace) = subrace_opt {
+            if !subrace.description.is_empty() {
+                description_str = [description_str, subrace.description.clone()].join("\n");
+            }
         }
 
         description_str
@@ -178,57 +168,47 @@ impl Races {
     pub fn names(&self, key: &str) -> RaceNames {
         let (race_opt, subrace_opt) = self.value(key);
         let race = race_opt.unwrap();
-        let mut subrace = &SubRace {
-            ..Default::default()
-        };
-        if subrace_opt.is_some() {
-            subrace = subrace_opt.unwrap();
-        };
         let mut names = RaceNames {
             ..Default::default()
         };
 
-        names.description = [
-            race.names.description.clone(),
-            subrace.names.description.clone(),
-        ]
-        .join("\n");
+        names.description = race.names.description.clone();
 
         names.order = race.names.order.clone();
-        if !subrace.names.order.is_empty() {
-            names.order = subrace.names.order.clone();
-        }
 
         names.child = race.names.child.clone();
-        names.child.extend(subrace.names.child.clone());
-        names.child.sort();
-
         names.male = race.names.male.clone();
-        names.male.extend(subrace.names.male.clone());
-        names.male.sort();
-
         names.female = race.names.female.clone();
-        names.female.extend(subrace.names.female.clone());
-        names.female.sort();
-
         names.clan = race.names.clan.clone();
-        names.clan.extend(subrace.names.clan.clone());
-        names.clan.sort();
-
         names.family = race.names.family.clone();
-        names.family.extend(subrace.names.family.clone());
-        names.family.sort();
-
         names.surname = race.names.surname.clone();
-        names.surname.extend(subrace.names.surname.clone());
-        names.surname.sort();
-
         names.nickname = race.names.nickname.clone();
-        names.nickname.extend(subrace.names.nickname.clone());
-        names.nickname.sort();
-
         names.virtue = race.names.virtue.clone();
-        names.virtue.extend(subrace.names.virtue.clone());
+
+        if let Some(subrace) = subrace_opt {
+            names.description = [names.description, subrace.names.description.clone()].join("\n");
+
+            if !subrace.names.order.is_empty() {
+                names.order = subrace.names.order.clone();
+            }
+
+            names.child.extend(subrace.names.child.clone());
+            names.male.extend(subrace.names.male.clone());
+            names.female.extend(subrace.names.female.clone());
+            names.clan.extend(subrace.names.clan.clone());
+            names.family.extend(subrace.names.family.clone());
+            names.surname.extend(subrace.names.surname.clone());
+            names.nickname.extend(subrace.names.nickname.clone());
+            names.virtue.extend(subrace.names.virtue.clone());
+        }
+
+        names.child.sort();
+        names.male.sort();
+        names.female.sort();
+        names.clan.sort();
+        names.family.sort();
+        names.surname.sort();
+        names.nickname.sort();
         names.virtue.sort();
 
         names
@@ -237,37 +217,28 @@ impl Races {
     pub fn ability_score_increase(&self, key: &str) -> RaceAbilities {
         let (race_opt, subrace_opt) = self.value(key);
         let race = race_opt.unwrap();
-        let mut subrace = &SubRace {
-            ..Default::default()
-        };
-        if subrace_opt.is_some() {
-            subrace = subrace_opt.unwrap();
-        };
-        let mut ability_score_increase = RaceAbilities {
-            ..Default::default()
-        };
+        let mut ability_score_increase = race.ability_score_increase.clone();
 
-        ability_score_increase.description = [
-            race.ability_score_increase.description.clone(),
-            subrace.ability_score_increase.description.clone(),
-        ]
-        .join("\n");
+        if let Some(subrace) = subrace_opt {
+            ability_score_increase.description = [
+                ability_score_increase.description,
+                subrace.names.description.clone(),
+            ]
+            .join("\n");
 
-        ability_score_increase.abilities.strength = race.ability_score_increase.abilities.strength
-            + subrace.ability_score_increase.abilities.strength;
-        ability_score_increase.abilities.dexterity =
-            race.ability_score_increase.abilities.dexterity
-                + subrace.ability_score_increase.abilities.dexterity;
-        ability_score_increase.abilities.charisma = race.ability_score_increase.abilities.charisma
-            + subrace.ability_score_increase.abilities.charisma;
-        ability_score_increase.abilities.constitution =
-            race.ability_score_increase.abilities.constitution
-                + subrace.ability_score_increase.abilities.constitution;
-        ability_score_increase.abilities.intellect =
-            race.ability_score_increase.abilities.intellect
-                + subrace.ability_score_increase.abilities.intellect;
-        ability_score_increase.abilities.wisdom = race.ability_score_increase.abilities.wisdom
-            + subrace.ability_score_increase.abilities.wisdom;
+            ability_score_increase.abilities.strength +=
+                subrace.ability_score_increase.abilities.strength;
+            ability_score_increase.abilities.dexterity +=
+                subrace.ability_score_increase.abilities.dexterity;
+            ability_score_increase.abilities.charisma +=
+                subrace.ability_score_increase.abilities.charisma;
+            ability_score_increase.abilities.constitution +=
+                subrace.ability_score_increase.abilities.constitution;
+            ability_score_increase.abilities.intellect +=
+                subrace.ability_score_increase.abilities.intellect;
+            ability_score_increase.abilities.wisdom +=
+                subrace.ability_score_increase.abilities.wisdom;
+        }
 
         ability_score_increase
     }
@@ -303,16 +274,12 @@ impl Races {
     pub fn modifiers(&self, key: &str) -> Vec<RaceModifier> {
         let (race_opt, subrace_opt) = self.value(key);
         let race = race_opt.unwrap();
-        let mut subrace = &SubRace {
-            ..Default::default()
-        };
-        if subrace_opt.is_some() {
-            subrace = subrace_opt.unwrap();
-        };
         let mut modifiers: Vec<RaceModifier>;
 
         modifiers = race.modifiers.clone();
-        modifiers.extend(subrace.modifiers.clone());
+        if let Some(subrace) = subrace_opt {
+            modifiers.extend(subrace.modifiers.clone());
+        }
         modifiers.sort_by(|a, b| a.modifier.cmp(&b.modifier));
 
         modifiers
