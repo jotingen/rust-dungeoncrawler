@@ -4,8 +4,6 @@ use textwrap;
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 struct WeaponProperties {
-    proficiency: String,
-    class: String,
     finesse: bool,
     heavy: bool,
     light: bool,
@@ -24,6 +22,8 @@ struct WeaponProperties {
 #[derive(Debug, Default, Serialize, Deserialize)]
 struct Weapon {
     weapon: String,
+    proficiency: String,
+    class: String,
     cost: u32,
     damage: String,
     weight: f32,
@@ -63,6 +63,14 @@ impl Weapons {
         self.value(key).unwrap().weapon.clone()
     }
 
+    pub fn proficiency(&self, key: &str) -> String {
+        self.value(key).unwrap().proficiency.clone()
+    }
+
+    pub fn class(&self, key: &str) -> String {
+        self.value(key).unwrap().class.clone()
+    }
+
     pub fn cost(&self, key: &str) -> u32 {
         self.value(key).unwrap().cost
     }
@@ -73,14 +81,6 @@ impl Weapons {
 
     pub fn weight(&self, key: &str) -> f32 {
         self.value(key).unwrap().weight
-    }
-
-    pub fn proficiency(&self, key: &str) -> String {
-        self.value(key).unwrap().properties.proficiency.clone()
-    }
-
-    pub fn class(&self, key: &str) -> String {
-        self.value(key).unwrap().properties.class.clone()
     }
 
     pub fn finesse(&self, key: &str) -> bool {

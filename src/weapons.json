@@ -1,12 +1,12 @@
 [
     {
-        "weapon": "Club",
+        "weapon": "club",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 10,
         "damage": "1d4 bludgeoning",
         "weight": 2,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": true,
@@ -23,13 +23,13 @@
         }
     },
     {
-        "weapon": "Dagger",
+        "weapon": "dagger",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 200,
         "damage": "1d4 piercing",
         "weight": 1,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": true,
             "heavy": false,
             "light": true,
@@ -46,13 +46,13 @@
         }
     },
     {
-        "weapon": "Greatclub",
+        "weapon": "greatclub",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 20,
         "damage": "1d8 bludgeoning",
         "weight": 10,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -69,13 +69,13 @@
         }
     },
     {
-        "weapon": "Handaxe",
+        "weapon": "handaxe",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 500,
         "damage": "1d6 slashing",
         "weight": 2,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": true,
@@ -93,12 +93,12 @@
     },
     {
         "weapon": "javelin",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 50,
         "damage": "1d6 piercing",
         "weight": 2,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -115,13 +115,13 @@
         }
     },
     {
-        "weapon": "Light hammer",
+        "weapon": "light hammer",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 200,
         "damage": "1d4 bludgeoning",
         "weight": 2,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": true,
@@ -138,13 +138,13 @@
         }
     },
     {
-        "weapon": "Mace",
+        "weapon": "mace",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 500,
         "damage": "1d6 bludgeoning",
         "weight": 4,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -161,13 +161,13 @@
         }
     },
     {
-        "weapon": "Quarterstaff",
+        "weapon": "quarterstaff",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 20,
         "damage": "1d6 bludgeoning",
         "weight": 4,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -184,13 +184,13 @@
         }
     },
     {
-        "weapon": "Sickle",
+        "weapon": "sickle",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 100,
         "damage": "1d4 slashing",
         "weight": 2,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": true,
@@ -207,13 +207,13 @@
         }
     },
     {
-        "weapon": "Spear",
+        "weapon": "spear",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 100,
         "damage": "1d6 piercing",
         "weight": 3,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -230,13 +230,13 @@
         }
     },
     {
-        "weapon": "Unarmed strike",
+        "weapon": "unarmed strike",
+        "proficiency": "simple",
+        "class": "melee",
         "cost": 0,
         "damage": "1 bludgeoning",
         "weight": 0,
         "properties": {
-            "proficiency": "simple",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -253,13 +253,13 @@
         }
     },
     {
-        "weapon": "Light Crossbow",
+        "weapon": "light crossbow",
+        "proficiency": "simple",
+        "class": "ranged",
         "cost": 2500,
         "damage": "1d8 piercing",
         "weight": 5,
         "properties": {
-            "proficiency": "simple",
-            "class": "ranged",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -276,13 +276,13 @@
         }
     },
     {
-        "weapon": "Dart",
+        "weapon": "dart",
+        "proficiency": "simple",
+        "class": "ranged",
         "cost": 5,
         "damage": "1d4 piercing",
         "weight": 0.25,
         "properties": {
-            "proficiency": "simple",
-            "class": "ranged",
             "finesse": true,
             "heavy": false,
             "light": false,
@@ -299,13 +299,13 @@
         }
     },
     {
-        "weapon": "Shortbow",
+        "weapon": "shortbow",
+        "proficiency": "simple",
+        "class": "ranged",
         "cost": 2500,
         "damage": "1d6 piercing",
         "weight": 2,
         "properties": {
-            "proficiency": "simple",
-            "class": "ranged",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -322,13 +322,13 @@
         }
     },
     {
-        "weapon": "Sling",
+        "weapon": "sling",
+        "proficiency": "simple",
+        "class": "ranged",
         "cost": 10,
         "damage": "1d4 bludgeoning",
         "weight": 0,
         "properties": {
-            "proficiency": "simple",
-            "class": "ranged",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -345,13 +345,13 @@
         }
     },
     {
-        "weapon": "Battleaxe",
+        "weapon": "battleaxe",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 1000,
         "damage": "1d8 slashing",
         "weight": 4,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -368,13 +368,13 @@
         }
     },
     {
-        "weapon": "Flail",
+        "weapon": "flail",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 1000,
         "damage": "1d8 bludgeoning",
         "weight": 2,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -391,13 +391,13 @@
         }
     },
     {
-        "weapon": "Glaive",
+        "weapon": "glaive",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 2000,
         "damage": "1d10 slashing",
         "weight": 6,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": true,
             "light": false,
@@ -414,13 +414,13 @@
         }
     },
     {
-        "weapon": "Greataxe",
+        "weapon": "greataxe",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 3000,
         "damage": "1d12 slashing",
         "weight": 7,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": true,
             "light": false,
@@ -437,13 +437,13 @@
         }
     },
     {
-        "weapon": "Greatsword",
+        "weapon": "greatsword",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 5000,
         "damage": "2d6 slashing",
         "weight": 6,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": true,
             "light": false,
@@ -460,13 +460,13 @@
         }
     },
     {
-        "weapon": "Halberd",
+        "weapon": "halberd",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 2000,
         "damage": "1d10 slashing",
         "weight": 6,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": true,
             "light": false,
@@ -483,13 +483,13 @@
         }
     },
     {
-        "weapon": "Lance",
+        "weapon": "lance",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 1000,
         "damage": "1d12 piercing",
         "weight": 6,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -506,13 +506,13 @@
         }
     },
     {
-        "weapon": "Longsword",
+        "weapon": "longsword",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 1500,
         "damage": "1d8 slashing",
         "weight": 3,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -529,13 +529,13 @@
         }
     },
     {
-        "weapon": "Maul",
+        "weapon": "maul",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 1000,
         "damage": "2d6 bludgeoning",
         "weight": 10,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": true,
             "light": false,
@@ -552,13 +552,13 @@
         }
     },
     {
-        "weapon": "Morningstar",
+        "weapon": "morningstar",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 1500,
         "damage": "1d8 piercing",
         "weight": 4,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -575,13 +575,13 @@
         }
     },
     {
-        "weapon": "Pike",
+        "weapon": "pike",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 500,
         "damage": "1d10 piercing",
         "weight": 18,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": true,
             "light": false,
@@ -598,13 +598,13 @@
         }
     },
     {
-        "weapon": "Rapier",
+        "weapon": "rapier",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 2500,
         "damage": "1d8 piercing",
         "weight": 2,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": true,
             "heavy": false,
             "light": false,
@@ -621,13 +621,13 @@
         }
     },
     {
-        "weapon": "Scimitar",
+        "weapon": "scimitar",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 2500,
         "damage": "1d6 slashing",
         "weight": 3,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": true,
             "heavy": false,
             "light": true,
@@ -644,13 +644,13 @@
         }
     },
     {
-        "weapon": "Shortsword",
+        "weapon": "shortsword",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 1000,
         "damage": "1d6 piercing",
         "weight": 2,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": true,
             "heavy": false,
             "light": true,
@@ -667,13 +667,13 @@
         }
     },
     {
-        "weapon": "Trident",
+        "weapon": "trident",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 500,
         "damage": "1d6 piercing",
         "weight": 4,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -690,13 +690,13 @@
         }
     },
     {
-        "weapon": "War pick",
+        "weapon": "war pick",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 500,
         "damage": "1d8 piercing",
         "weight": 2,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -713,13 +713,13 @@
         }
     },
     {
-        "weapon": "Warhammer",
+        "weapon": "warhammer",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 1500,
         "damage": "1d8 bludgeoning",
         "weight": 2,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -736,13 +736,13 @@
         }
     },
     {
-        "weapon": "Whip",
+        "weapon": "whip",
+        "proficiency": "martial",
+        "class": "melee",
         "cost": 200,
         "damage": "1d4 slashing",
         "weight": 3,
         "properties": {
-            "proficiency": "martial",
-            "class": "melee",
             "finesse": true,
             "heavy": false,
             "light": false,
@@ -759,13 +759,13 @@
         }
     },
     {
-        "weapon": "Blowgun",
+        "weapon": "blowgun",
+        "proficiency": "martial",
+        "class": "ranged",
         "cost": 1000,
         "damage": "1 piercing",
         "weight": 1,
         "properties": {
-            "proficiency": "martial",
-            "class": "ranged",
             "finesse": false,
             "heavy": false,
             "light": false,
@@ -782,13 +782,13 @@
         }
     },
     {
-        "weapon": "Hand Crossbow",
+        "weapon": "hand crossbow",
+        "proficiency": "martial",
+        "class": "ranged",
         "cost": 7500,
         "damage": "1d6 piercing",
         "weight": 3,
         "properties": {
-            "proficiency": "martial",
-            "class": "ranged",
             "finesse": false,
             "heavy": false,
             "light": true,
@@ -805,13 +805,13 @@
         }
     },
     {
-        "weapon": "Heavy Crossbow",
+        "weapon": "heavy crossbow",
+        "proficiency": "martial",
+        "class": "ranged",
         "cost": 5000,
         "damage": "1d10 piercing",
         "weight": 18,
         "properties": {
-            "proficiency": "martial",
-            "class": "ranged",
             "finesse": false,
             "heavy": true,
             "light": false,
@@ -828,13 +828,13 @@
         }
     },
     {
-        "weapon": "Longbow",
+        "weapon": "longbow",
+        "proficiency": "martial",
+        "class": "ranged",
         "cost": 5000,
         "damage": "1d8 piercing",
         "weight": 2,
         "properties": {
-            "proficiency": "martial",
-            "class": "ranged",
             "finesse": false,
             "heavy": true,
             "light": false,
@@ -851,13 +851,13 @@
         }
     },
     {
-        "weapon": "Net",
+        "weapon": "net",
+        "proficiency": "martial",
+        "class": "ranged",
         "cost": 100,
         "damage": "\u2014",
         "weight": 3,
         "properties": {
-            "proficiency": "martial",
-            "class": "ranged",
             "finesse": false,
             "heavy": false,
             "light": false,
