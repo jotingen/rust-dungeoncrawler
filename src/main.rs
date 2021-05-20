@@ -5,12 +5,14 @@ mod character;
 mod classes;
 mod races;
 mod utils;
+mod weapons;
 
 use crate::basics::{Abilities, Alignment};
 use crate::character::Character;
 use crate::classes::Classes;
 use crate::races::Races;
 use crate::utils::*;
+use crate::weapons::Weapons;
 use sm::sm;
 
 sm! {
@@ -42,6 +44,9 @@ fn main() {
 
     //Load classes
     let classes: Classes = Classes::new();
+
+    //Load weapons
+    let weapons: Weapons = Weapons::new();
 
     let mut character: Character;
 
