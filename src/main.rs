@@ -77,7 +77,7 @@ fn main() {
 
             CharacterByCreateCharacter(m) => {
                 clear();
-                character = Character::character_creation(&races, &classes);
+                character = Character::character_creation(&races, &classes, &weapons);
                 m.transition(LaunchGame).as_enum()
             }
 

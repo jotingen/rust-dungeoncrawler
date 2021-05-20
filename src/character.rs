@@ -2,6 +2,7 @@ use crate::basics::{Abilities, Alignment};
 use crate::classes::Classes;
 use crate::races::Races;
 use crate::utils::*;
+use crate::weapons::Weapons;
 use serde::{Deserialize, Serialize};
 use sm::sm;
 
@@ -74,7 +75,7 @@ impl Character {
         }
     }
 
-    pub fn character_creation(races: &Races, classes: &Classes) -> Character {
+    pub fn character_creation(races: &Races, classes: &Classes, weapons: &Weapons) -> Character {
         let mut character: Character = Character::new();
         let mut stats: [u8; 6];
         let mut race: String = "".to_string();
@@ -174,6 +175,10 @@ impl Character {
                     clear();
 
                     println!("Choose equipment:");
+
+                    for (count, weapon_key) in weapons.keys().iter().enumerate() {
+                        println!("{:>2})\n{}", count + 1, weapons.details(&weapon_key));
+                    }
 
                     pause();
 
