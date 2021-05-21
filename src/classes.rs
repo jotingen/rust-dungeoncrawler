@@ -1,4 +1,5 @@
 use crate::COLUMN_WIDTH;
+use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
 use textwrap;
 
@@ -43,7 +44,7 @@ impl Classes {
     }
 
     pub fn class(&self, key: &str) -> String {
-        self.value(key).unwrap().class.clone()
+        self.value(key).unwrap().class.clone().to_case(Case::Title)
     }
 
     pub fn description(&self, key: &str) -> String {
@@ -78,7 +79,7 @@ impl Classes {
         format!(
             "{}\n",
             textwrap::fill(
-                &self.description(key),
+                &self.description(key).to_case(Case::Title),
                 textwrap::Options::new(COLUMN_WIDTH)
                     .initial_indent("  ")
                     .subsequent_indent("  ")
@@ -103,18 +104,12 @@ impl Classes {
 
         primary_ability_str = "- Primary Ability\n".to_string();
 
-        let mut primary_ability_uppercase = primary_ability;
-        for primary_ability_uppercase_name in &mut primary_ability_uppercase {
-            if let Some(letter) = primary_ability_uppercase_name.get_mut(0..1) {
-                letter.make_ascii_uppercase();
-            }
-        }
-        if !primary_ability_uppercase.is_empty() {
+        if !primary_ability.is_empty() {
             primary_ability_str = format!(
                 "{}{}\n",
                 primary_ability_str,
                 textwrap::fill(
-                    &primary_ability_uppercase.join(", "),
+                    &primary_ability.join(", ").to_case(Case::Title),
                     textwrap::Options::new(COLUMN_WIDTH)
                         .initial_indent("  - ")
                         .subsequent_indent("    ")
@@ -131,18 +126,12 @@ impl Classes {
 
         saving_throw_proficiencies_str = "- Saving Throw Proficiencies\n".to_string();
 
-        let mut saving_throw_proficiencies_uppercase = saving_throw_proficiencies;
-        for saving_throw_proficiencies_uppercase_name in &mut saving_throw_proficiencies_uppercase {
-            if let Some(letter) = saving_throw_proficiencies_uppercase_name.get_mut(0..1) {
-                letter.make_ascii_uppercase();
-            }
-        }
-        if !saving_throw_proficiencies_uppercase.is_empty() {
+        if !saving_throw_proficiencies.is_empty() {
             saving_throw_proficiencies_str = format!(
                 "{}{}\n",
                 saving_throw_proficiencies_str,
                 textwrap::fill(
-                    &saving_throw_proficiencies_uppercase.join(", "),
+                    &saving_throw_proficiencies.join(", ").to_case(Case::Title),
                     textwrap::Options::new(COLUMN_WIDTH)
                         .initial_indent("  - ")
                         .subsequent_indent("    ")
@@ -159,18 +148,12 @@ impl Classes {
 
         armor_proficiencies_str = "- Armor Proficiencies\n".to_string();
 
-        let mut armor_proficiencies_uppercase = armor_proficiencies;
-        for armor_proficiencies_uppercase_name in &mut armor_proficiencies_uppercase {
-            if let Some(letter) = armor_proficiencies_uppercase_name.get_mut(0..1) {
-                letter.make_ascii_uppercase();
-            }
-        }
-        if !armor_proficiencies_uppercase.is_empty() {
+        if !armor_proficiencies.is_empty() {
             armor_proficiencies_str = format!(
                 "{}{}\n",
                 armor_proficiencies_str,
                 textwrap::fill(
-                    &armor_proficiencies_uppercase.join(", "),
+                    &armor_proficiencies.join(", ").to_case(Case::Title),
                     textwrap::Options::new(COLUMN_WIDTH)
                         .initial_indent("  - ")
                         .subsequent_indent("    ")
@@ -187,18 +170,12 @@ impl Classes {
 
         weapon_proficiencies_str = "- Weapon Proficiencies\n".to_string();
 
-        let mut weapon_proficiencies_uppercase = weapon_proficiencies;
-        for weapon_proficiencies_uppercase_name in &mut weapon_proficiencies_uppercase {
-            if let Some(letter) = weapon_proficiencies_uppercase_name.get_mut(0..1) {
-                letter.make_ascii_uppercase();
-            }
-        }
-        if !weapon_proficiencies_uppercase.is_empty() {
+        if !weapon_proficiencies.is_empty() {
             weapon_proficiencies_str = format!(
                 "{}{}\n",
                 weapon_proficiencies_str,
                 textwrap::fill(
-                    &weapon_proficiencies_uppercase.join(", "),
+                    &weapon_proficiencies.join(", ").to_case(Case::Title),
                     textwrap::Options::new(COLUMN_WIDTH)
                         .initial_indent("  - ")
                         .subsequent_indent("    ")

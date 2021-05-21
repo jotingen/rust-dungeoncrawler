@@ -22,29 +22,29 @@
         },
         "description": "Bold and hardy, dwarves are known as skilled warriors, miners, and workers of stone and metal. Though they stand well under 5 feet tall, dwarves are so broad and compact that they can weigh as much as a human standing nearly two feet taller. Their courage and endurance are also easily a match for any of the larger folk.  Dwarven skin ranges from deep brown to a paler hue tinged with red, but the most com m on shades are light brown or deep tan, like certain tones of earth.  Their hair, worn long but in simple styles, is usually black, gray, or brown, though paler dwarves often have red hair. Male dwarves value their beards highly and groom them carefully.",
         "languages": [
-            "Common",
-            "Dwarvish"
+            "common",
+            "dwarvish"
         ],
         "modifiers": [
             {
                 "description": "Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
-                "modifier": "Darkvision"
+                "modifier": "darkvision"
             },
             {
                 "description": "You have advantage on saving throws against poison, and you have resistance against poison damage (explained in chapter 9).",
-                "modifier": "Dwarven Resilience"
+                "modifier": "dwarven resilience"
             },
             {
                 "description": "You have proficiency with the battleaxe, handaxe, throwing hammer, and warhammer.",
-                "modifier": "Dwarven Combat Training"
+                "modifier": "dwarven combat training"
             },
             {
                 "description": "You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.",
-                "modifier": "Tool Proficiency"
+                "modifier": "tool proficiency"
             },
             {
                 "description": "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.",
-                "modifier": "Stonecunning"
+                "modifier": "stonecunning"
             }
         ],
         "names": {
@@ -133,7 +133,7 @@
             "surname": [],
             "virtue": []
         },
-        "race": "Dwarf",
+        "race": "dwarf",
         "size": {
             "class": "Medium",
             "description": "Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.",
@@ -161,7 +161,7 @@
                 "modifiers": [
                     {
                         "description": "Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.",
-                        "modifier": "Dwarven Toughness"
+                        "modifier": "dwarven toughness"
                     }
                 ],
                 "names": {
@@ -176,7 +176,7 @@
                     "surname": [],
                     "virtue": []
                 },
-                "race": "Hill Dwarf"
+                "race": "hill dwarf"
             },
             {
                 "ability_score_increase": {
@@ -194,7 +194,7 @@
                 "modifiers": [
                     {
                         "description": "You have proficiency with light and medium armor.",
-                        "modifier": "Dwarven Armer Training"
+                        "modifier": "dwarven armer training"
                     }
                 ],
                 "names": {
@@ -209,7 +209,7 @@
                     "surname": [],
                     "virtue": []
                 },
-                "race": "Mountain Dwarf"
+                "race": "mountain dwarf"
             }
         ]
     },
@@ -236,25 +236,25 @@
         },
         "description": "Elves are a magical people of otherworldly grace, living in the world but not entirely part of it. They live in places of ethereal beauty, in the midst of ancient forests or in silvery spires glittering with faerie light, where soft music drifts through the air and gentle fragrances waft on the breeze. Elves love nature and magic, art and artistry, music and poetry, and the good things of the world.",
         "languages": [
-            "Common",
-            "Elvish"
+            "common",
+            "elvish"
         ],
         "modifiers": [
             {
                 "description": "Accustomed to twilit forests and the night sky, you have superior vision in dark and dim conditions.  You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light.  You can't discern color in darkness, only shades of gray",
-                "modifier": "Darkvision"
+                "modifier": "darkvision"
             },
             {
                 "description": "You have proficiency in the Perception skill.",
-                "modifier": "Keen Senses"
+                "modifier": "keen senses"
             },
             {
                 "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep.",
-                "modifier": "Fey Ancestry"
+                "modifier": "fey ancestry"
             },
             {
                 "description": "Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day. (The Common word for such meditation is \"trance.\") While meditating, you can dream after a fashion; such dreams are actually mental exercises that have become reflexive through years of practice. After resting in this way, you gain the same benefit that a human does from 8 hours of sleep.",
-                "modifier": "Trance"
+                "modifier": "trance"
             }
         ],
         "names": {
@@ -362,7 +362,7 @@
             "surname": [],
             "virtue": []
         },
-        "race": "Elf",
+        "race": "elf",
         "size": {
             "class": "Medium",
             "description": "Elves range from under 5 to over 6 feet tall and have slender builds. Your size is Medium.",
@@ -390,15 +390,15 @@
                 "modifiers": [
                     {
                         "description": "You have proficiency with the longsword, shortsword, shortbow, and longbow.",
-                        "modifier": "Elf Weapon Training"
+                        "modifier": "elf weapon training"
                     },
                     {
                         "description": "You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it",
-                        "modifier": "Cantrip"
+                        "modifier": "cantrip"
                     },
                     {
                         "description": "You can speak, read, and write one extra language of your choice.",
-                        "modifier": "Extra Language"
+                        "modifier": "extra language"
                     }
                 ],
                 "names": {
@@ -413,7 +413,7 @@
                     "surname": [],
                     "virtue": []
                 },
-                "race": "High Elf"
+                "race": "high elf"
             },
             {
                 "ability_score_increase": {
@@ -431,15 +431,15 @@
                 "modifiers": [
                     {
                         "description": "You have proficiency with the longsword, shortsword, shortbow, and longbow.",
-                        "modifier": "Elf Weapon Training"
+                        "modifier": "elf weapon training"
                     },
                     {
                         "description": "Your base walking speed increases to 35 feet.",
-                        "modifier": "Fleet of Foot"
+                        "modifier": "fleet of foot"
                     },
                     {
                         "description": "You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.",
-                        "modifier": "Mask of the Wild"
+                        "modifier": "mask of the wild"
                     }
                 ],
                 "names": {
@@ -454,7 +454,7 @@
                     "surname": [],
                     "virtue": []
                 },
-                "race": "Wood Elf"
+                "race": "wood elf"
             },
             {
                 "ability_score_increase": {
@@ -472,19 +472,19 @@
                 "modifiers": [
                     {
                         "description": "Your darkvision has a radius of 120 feet.",
-                        "modifier": "Superior Darkvision"
+                        "modifier": "superior darkvision"
                     },
                     {
                         "description": "You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight.",
-                        "modifier": "Sunlight Sensitivity"
+                        "modifier": "sunlight sensitivity"
                     },
                     {
                         "description": "You know the dancing lights cantrip.  When you reach 3rd level, you can cast the faerie fire spell once per day. When you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spells.",
-                        "modifier": "Drow Magic"
+                        "modifier": "drow magic"
                     },
                     {
                         "description": "You have proficiency with rapiers, shortswords, and hand crossbows.",
-                        "modifier": "Drow Weapon Training"
+                        "modifier": "drow weapon training"
                     }
                 ],
                 "names": {
@@ -499,7 +499,7 @@
                     "surname": [],
                     "virtue": []
                 },
-                "race": "Dark Elf"
+                "race": "dark elf"
             }
         ]
     },
@@ -526,21 +526,21 @@
         },
         "description": "The comforts of home are the goals of most halflings' lives: a place to settle in peace and quiet, far from marauding monsters and clashing armies; a blazing fire and a generous meal; fine drink and fine conversation.  Though some halflings live out their days in remote agricultural communities, others form nomadic bands that travel constantly, lured by the open road and the wide horizon to discover the wonders of new lands and peoples. But even these wanderers love peace, food, hearth, and home, though home might be a wagon jostling along an dirt road or a raft floating downriver",
         "languages": [
-            "Common",
-            "Halfling"
+            "common",
+            "halfling"
         ],
         "modifiers": [
             {
                 "description": "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.",
-                "modifier": "Lucky"
+                "modifier": "lucky"
             },
             {
                 "description": "You have advantage on saving throws against being frightened",
-                "modifier": "Brave"
+                "modifier": "brave"
             },
             {
                 "description": "You can move through the space of any creature that is of a size larger than yours.",
-                "modifier": "Halfling Nimbleness"
+                "modifier": "halfling nimbleness"
             }
         ],
         "names": {
@@ -607,7 +607,7 @@
             "surname": [],
             "virtue": []
         },
-        "race": "Halfling",
+        "race": "halfling",
         "size": {
             "class": "Small",
             "description": "Halflings average about 3 feet tall and weigh about 40 pounds. Your size is Small.",
@@ -635,7 +635,7 @@
                 "modifiers": [
                     {
                         "description": "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you.",
-                        "modifier": "Naturally Stealthy"
+                        "modifier": "naturally stealthy"
                     }
                 ],
                 "names": {
@@ -650,7 +650,7 @@
                     "surname": [],
                     "virtue": []
                 },
-                "race": "Lightfoot"
+                "race": "lightfoot"
             },
             {
                 "ability_score_increase": {
@@ -668,7 +668,7 @@
                 "modifiers": [
                     {
                         "description": "You have advantage on saving throws against poison, and you have resistance against poison damage.",
-                        "modifier": "Stout Resilience"
+                        "modifier": "stout resilience"
                     }
                 ],
                 "names": {
@@ -683,7 +683,7 @@
                     "surname": [],
                     "virtue": []
                 },
-                "race": "Stout"
+                "race": "stout"
             }
         ]
     },
@@ -710,8 +710,8 @@
         },
         "description": "In the reckonings of most worlds, humans are the youngest of the common races, late to arrive on the world scene and short-lived in comparison to dwarves, elves, and dragons. Perhaps it is because of their shorter lives that they strive to achieve as much as they can in the years they are given. Or maybe they feel they have something to prove to the elder races, and that's why they build their mighty empires on the foundation of conquest and trade. Whatever drives them, humans are the innovators, the achievers, and the pioneers of the worlds.",
         "languages": [
-            "Common",
-            "Any"
+            "common",
+            "any"
         ],
         "modifiers": [],
         "names": {
@@ -729,7 +729,7 @@
             "surname": [],
             "virtue": []
         },
-        "race": "Human",
+        "race": "human",
         "size": {
             "class": "Medium",
             "description": "Humans vary widely in height and build, from barely 5 feet to well over 6 feet tall. Regardless of your position in that range, your size is Medium.",
@@ -792,7 +792,7 @@
                     ],
                     "virtue": []
                 },
-                "race": "Calishite"
+                "race": "calishite"
             },
             {
                 "ability_score_increase": {
@@ -848,7 +848,7 @@
                     ],
                     "virtue": []
                 },
-                "race": "Chondathan"
+                "race": "chondathan"
             },
             {
                 "ability_score_increase": {
@@ -906,7 +906,7 @@
                     ],
                     "virtue": []
                 },
-                "race": "Damaran"
+                "race": "damaran"
             },
             {
                 "ability_score_increase": {
@@ -962,7 +962,7 @@
                     ],
                     "virtue": []
                 },
-                "race": "Illuskan"
+                "race": "illuskan"
             },
             {
                 "ability_score_increase": {
@@ -1018,7 +1018,7 @@
                     ],
                     "virtue": []
                 },
-                "race": "Mulan"
+                "race": "mulan"
             },
             {
                 "ability_score_increase": {
@@ -1071,7 +1071,7 @@
                     ],
                     "virtue": []
                 },
-                "race": "Rashemi"
+                "race": "rashemi"
             },
             {
                 "ability_score_increase": {
@@ -1138,7 +1138,7 @@
                     ],
                     "virtue": []
                 },
-                "race": "Shou"
+                "race": "shou"
             },
             {
                 "ability_score_increase": {
@@ -1194,7 +1194,7 @@
                     ],
                     "virtue": []
                 },
-                "race": "Thethyrian"
+                "race": "thethyrian"
             },
             {
                 "ability_score_increase": {
@@ -1250,7 +1250,7 @@
                     ],
                     "virtue": []
                 },
-                "race": "Turami"
+                "race": "turami"
             }
         ]
     },
@@ -1277,21 +1277,21 @@
         },
         "description": "Born of dragons, as their name proclaims, the dragonborn walk proudly through a world that greets them with fearful incomprehension. Shaped by draconic gods or the dragons themselves, dragonborn originally hatched from dragon eggs as a unique race, combining the best attributes of dragons and humanoids. S om e dragonborn are faithful servants to true dragons, others form the ranks o f soldiers in great wars, and still others find themselves adrift, with no clear calling in life.",
         "languages": [
-            "Common",
-            "Draconic"
+            "common",
+            "draconic"
         ],
         "modifiers": [
             {
                 "description": "You have draconic ancestry.  Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-                "modifier": "Draconic Ancestry"
+                "modifier": "draconic ancestry"
             },
             {
                 "description": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation.\n When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level.\n After you use your breath weapon, you can't use it again until you complete a short or long rest.",
-                "modifier": "Breath Weapon"
+                "modifier": "breath weapon"
             },
             {
                 "description": "You have resistance to the damage type associated with your draconic ancestry.",
-                "modifier": "Damage Resistance"
+                "modifier": "damage resistance"
             }
         ],
         "names": {
@@ -1372,7 +1372,7 @@
             "surname": [],
             "virtue": []
         },
-        "race": "Dragonborn",
+        "race": "dragonborn",
         "size": {
             "class": "Medium",
             "description": "Dragonborn are taller and heavier than humans, standing well over 6 feet tall and averaging almost 250 pounds. Your size is Medium.",
@@ -1408,17 +1408,17 @@
         },
         "description": "A constant hum of busy activity pervades the warrens and neighborhoods where gnomes form their closeknit communities. Louder sounds punctuate the hum: a crunch of grinding gears here, a minor explosion there, a yelp of surprise or triumph, and especially bursts of laughter. Gnomes take delight in life, enjoying every moment of invention, exploration, investigation, creation, and play",
         "languages": [
-            "Common",
-            "Gnomish"
+            "common",
+            "gnomish"
         ],
         "modifiers": [
             {
                 "description": "Accustom ed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
-                "modifier": "Darkvision"
+                "modifier": "darkvision"
             },
             {
                 "description": "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.",
-                "modifier": "Gnome Cunning"
+                "modifier": "gnome cunning"
             }
         ],
         "names": {
@@ -1510,7 +1510,7 @@
             "surname": [],
             "virtue": []
         },
-        "race": "Gnome",
+        "race": "gnome",
         "size": {
             "class": "Small",
             "description": "Gnomes are between 3 and 4 feet tall and average about 40 pounds. Your size is Small.",
@@ -1538,11 +1538,11 @@
                 "modifiers": [
                     {
                         "description": "You know the minor illusion cantrip. Intelligence is your spellcasting ability for it.",
-                        "modifier": "Natural Illusionist"
+                        "modifier": "natural illusionist"
                     },
                     {
                         "description": "Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts. Forest gnomes love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets.",
-                        "modifier": "Speak with Small Beasts"
+                        "modifier": "speak with small beasts"
                     }
                 ],
                 "names": {
@@ -1557,7 +1557,7 @@
                     "surname": [],
                     "virtue": []
                 },
-                "race": "Forest Gnome"
+                "race": "forest gnome"
             },
             {
                 "ability_score_increase": {
@@ -1575,11 +1575,11 @@
                 "modifiers": [
                     {
                         "description": "Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you normally apply.",
-                        "modifier": "Artificer's Lore"
+                        "modifier": "artificer's lore"
                     },
                     {
                         "description": "You have proficiency with artisan's tools (tinker's tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time.\n When you create a device, choose one of the following options:\n Clockwork Toy. This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents.\n Fire Starter. The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action.\n Music Box. When opened, this music box plays a single song at a moderate volume.  The box stops playing when it reaches the song's end or when it is closed.",
-                        "modifier": "Tinker"
+                        "modifier": "tinker"
                     }
                 ],
                 "names": {
@@ -1594,7 +1594,7 @@
                     "surname": [],
                     "virtue": []
                 },
-                "race": "Rock Gnome"
+                "race": "rock gnome"
             }
         ]
     },
@@ -1621,22 +1621,22 @@
         },
         "description": "Walking in two worlds but truly belonging to neither, half-elves combine what some say are the best qualities of their elf and human parents: human curiosity, inventiveness, and ambition tempered by the refined senses, love of nature, and artistic tastes o f the elves.  Some half-elves live among humans, set apart by their emotional and physical differences, watching friends and loved ones age while time barely touches them.  Others live with the elves, growing restless as they reach adulthood in the timeless elven realms, while their peers continue to live as children. Many half-elves, unable to fit into either society, choose lives of solitary wandering or join with other misfits and outcasts in the adventuring life.",
         "languages": [
-            "Common",
-            "Elvish",
-            "Any"
+            "common",
+            "elvish",
+            "any"
         ],
         "modifiers": [
             {
                 "description": "Thanks to your elf blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
-                "modifier": "Darkvision"
+                "modifier": "darkvision"
             },
             {
                 "description": "You have advantage on saving throws against being charm ed, and magic can't put you to sleep.",
-                "modifier": "Fey Ancestry"
+                "modifier": "fey ancestry"
             },
             {
                 "description": "You gain proficiency in two skills of your choice.",
-                "modifier": "Skill Versatility"
+                "modifier": "skill versatility"
             }
         ],
         "names": {
@@ -1955,7 +1955,7 @@
             ],
             "virtue": []
         },
-        "race": "Half-Elf",
+        "race": "half-elf",
         "size": {
             "class": "Medium",
             "description": "Half-elves are about the same size as humans, ranging from 5 to 6 feet tall. Your size is Medium.",
@@ -1991,25 +1991,25 @@
         },
         "description": "Whether united under the leadership of a mighty warlock or having fought to a standstill after years of conflict, orc and human tribes sometimes form alliances, joining forces into a larger horde to the terror of civilized lands nearby. When these alliances are sealed by marriages, half-orcs are born. S om e half-orcs rise to become proud chiefs of orc tribes, their human blood giving them an edge over their full-blooded orc rivals. Some venture into the world to prove their worth among humans and other m ore civilized races. Many of these become adventurers, achieving greatness for their mighty deeds and notoriety for their barbaric custom s and savage fury.",
         "languages": [
-            "Common",
-            "Orc"
+            "common",
+            "orc"
         ],
         "modifiers": [
             {
                 "description": "Thanks to your orc blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
-                "modifier": "Darkvision"
+                "modifier": "darkvision"
             },
             {
                 "description": "You gain proficiency in the Intimidation skill.",
-                "modifier": "Menacing"
+                "modifier": "menacing"
             },
             {
                 "description": "When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You can't use this feature again until you finish a long rest.",
-                "modifier": "Relentless Endurance"
+                "modifier": "relentless endurance"
             },
             {
                 "description": "When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the critical hit.",
-                "modifier": "Savage Attacks"
+                "modifier": "savage attacks"
             }
         ],
         "names": {
@@ -2053,7 +2053,7 @@
             "surname": [],
             "virtue": []
         },
-        "race": "Half-Orc",
+        "race": "half-orc",
         "size": {
             "class": "Medium",
             "description": "Half-orcs are somewhat larger and bulkier than humans, and they range from 5 to well over 6 feet tall.  Your size is Medium.",
@@ -2089,21 +2089,21 @@
         },
         "description": "To be greeted with stares and whispers, to suffer violence and insult on the street, to see mistrust and fear in every eye: this is the lot of the tiefling. And to twist the knife, tieflings know that this is because a pact struck generations ago infused the essence of Asmodeus-overlord of the Nine Hells-into their bloodline. Their appearance and their nature are not their fault but the result of an ancient sin, for which they and their children and their children's children will always be held accountable.",
         "languages": [
-            "Common",
-            "Infernal"
+            "common",
+            "infernal"
         ],
         "modifiers": [
             {
                 "description": "Thanks to your infernal heritage, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades o f gray.",
-                "modifier": "Darkvision"
+                "modifier": "darkvision"
             },
             {
                 "description": "You have resistance to fire damage.",
-                "modifier": "Hellish Resistance"
+                "modifier": "hellish resistance"
             },
             {
                 "description": "You know the thaumaturgy cantrip.  Once you reach 3rd level, you can cast the hellish rebuke spell once per day as a 2nd-level spell. Once you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spells.",
-                "modifier": "Infernal Legacy"
+                "modifier": "infernal legacy"
             }
         ],
         "names": {
@@ -2172,7 +2172,7 @@
                 "Weary"
             ]
         },
-        "race": "Tiefling",
+        "race": "tiefling",
         "size": {
             "class": "Medium",
             "description": "Tieflings are about the same size and build as humans. Your size is Medium.",

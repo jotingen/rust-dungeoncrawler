@@ -3,6 +3,7 @@ use crate::classes::Classes;
 use crate::races::Races;
 use crate::utils::*;
 use crate::weapons::Weapons;
+use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
 use sm::sm;
 

@@ -1,4 +1,5 @@
 use crate::COLUMN_WIDTH;
+use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
 use textwrap;
 
@@ -60,7 +61,7 @@ impl Weapons {
     }
 
     pub fn weapon(&self, key: &str) -> String {
-        self.value(key).unwrap().weapon.clone()
+        self.value(key).unwrap().weapon.clone().to_case(Case::Title)
     }
 
     pub fn proficiency(&self, key: &str) -> String {
@@ -136,7 +137,7 @@ impl Weapons {
     }
 
     fn detail_weapon(&self, key: &str) -> String {
-        format!("{}\n", self.weapon(key))
+        format!("{}\n", self.weapon(key).to_case(Case::Title))
     }
 
     fn detail_proficiency(&self, key: &str) -> String {
@@ -145,7 +146,7 @@ impl Weapons {
 
         proficiency_str = "- Proficiency:".to_string();
 
-        proficiency_str = format!("{} {}\n", proficiency_str, proficiency);
+        proficiency_str = format!("{} {}\n", proficiency_str, proficiency.to_case(Case::Title));
 
         proficiency_str
     }
@@ -156,7 +157,7 @@ impl Weapons {
 
         class_str = "- Class:".to_string();
 
-        class_str = format!("{} {}\n", class_str, class);
+        class_str = format!("{} {}\n", class_str, class.to_case(Case::Title));
 
         class_str
     }
@@ -178,7 +179,7 @@ impl Weapons {
 
         damage_str = "- Damage:".to_string();
 
-        damage_str = format!("{} {}\n", damage_str, damage);
+        damage_str = format!("{} {}\n", damage_str, damage.to_case(Case::Title));
 
         damage_str
     }
@@ -243,7 +244,11 @@ impl Weapons {
         properties_vec.sort();
 
         properties_str = textwrap::fill(
-            &format!("{} {}\n", properties_str, properties_vec.join(", ")),
+            &format!(
+                "{} {}\n",
+                properties_str,
+                properties_vec.join(", ").to_case(Case::Title)
+            ),
             textwrap::Options::new(COLUMN_WIDTH)
                 .initial_indent("")
                 .subsequent_indent("    "),

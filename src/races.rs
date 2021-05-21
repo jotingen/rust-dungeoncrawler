@@ -1,5 +1,6 @@
 use crate::basics::{Abilities, Alignment};
 use crate::COLUMN_WIDTH;
+use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
 use textwrap;
 
@@ -142,9 +143,13 @@ impl Races {
         let race_str: String;
 
         if let Some(subrace) = subrace_opt {
-            race_str = format!("{} ({})", subrace.race.clone(), race.race.clone())
+            race_str = format!(
+                "{} ({})",
+                subrace.race.clone().to_case(Case::Title),
+                race.race.clone().to_case(Case::Title)
+            )
         } else {
-            race_str = race.race.clone()
+            race_str = race.race.clone().to_case(Case::Title)
         }
 
         race_str
@@ -297,7 +302,7 @@ impl Races {
     }
 
     fn detail_race(&self, key: &str) -> String {
-        format!("{}\n", self.race(key))
+        format!("{}\n", self.race(key).to_case(Case::Title))
     }
 
     fn detail_description(&self, key: &str) -> String {
@@ -331,17 +336,11 @@ impl Races {
             );
         }
 
-        let mut order_uppercase = names.order;
-        for order_uppercase_name in &mut order_uppercase {
-            if let Some(letter) = order_uppercase_name.get_mut(0..1) {
-                letter.make_ascii_uppercase();
-            }
-        }
         names_str = format!(
             "{}{}\n",
             names_str,
             textwrap::fill(
-                &format!("Ordering: {}", order_uppercase.join(" ")),
+                &format!("Ordering: {}", names.order.join(" ").to_case(Case::Title)),
                 textwrap::Options::new(COLUMN_WIDTH)
                     .initial_indent("  ")
                     .subsequent_indent("  ")
@@ -590,7 +589,7 @@ impl Races {
             modifiers_str = format!(
                 "{}  - {}\n{}\n\n",
                 modifiers_str,
-                modifier.modifier,
+                modifier.modifier.to_case(Case::Title),
                 textwrap::fill(
                     &modifier.description,
                     textwrap::Options::new(COLUMN_WIDTH)
@@ -613,7 +612,7 @@ impl Races {
                 "{}{}\n",
                 languages_str,
                 textwrap::fill(
-                    &languages.join(", "),
+                    &languages.join(", ").to_case(Case::Title),
                     textwrap::Options::new(COLUMN_WIDTH)
                         .initial_indent("  - ")
                         .subsequent_indent("    ")
