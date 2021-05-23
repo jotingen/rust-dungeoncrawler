@@ -1,3 +1,4 @@
+use crate::COLUMN_WIDTH;
 use crate::basics::{Abilities, Alignment};
 use crate::classes::Classes;
 use crate::races::Races;
@@ -5,6 +6,7 @@ use crate::utils::*;
 use crate::weapons::{Weapon, Weapons};
 use serde::{Deserialize, Serialize};
 use sm::sm;
+use textwrap;
 
 sm! {
     CharacterCreationState {
@@ -27,7 +29,7 @@ sm! {
         }
 
         ChooseEquipment {
-            Stats => Equipment
+            Stats, Equipment => Equipment
         }
 
         ChooseName {
@@ -53,7 +55,7 @@ pub struct Character {
     pub class: String,
     pub alignment: Alignment,
     pub abilities: Abilities,
-    pub weapon: Weapon,
+    pub weapons: Vec<Weapon>,
 }
 
 fn roll_stats(rolls: &mut [u8; 6]) {
@@ -177,9 +179,11 @@ impl Character {
 
                     println!("Choose equipment:");
 
+                    let mut weapon_list: String = "".to_string();
                     for (count, weapon_key) in weapons.keys().iter().enumerate() {
-                        println!(
-                            "{:>2}) {} {}",
+                        weapon_list = format!(
+                            "{}{:>2}) {} {}\n",
+                            weapon_list,
                             count + 1,
                             if self.is_weapon_proficient(races, classes, weapons, weapon_key) {
                                 "*"
@@ -189,10 +193,24 @@ impl Character {
                             weapons.value(&weapon_key).unwrap().detail_name().trim()
                         );
                     }
+                    for line in textwrap::wrap_columns(&weapon_list, 3, COLUMN_WIDTH, "", "", "").iter() {
+                        println!("{}",line);
+                    } 
 
-                    pause();
+                    let number = pick_number(
+                        "Choose weapon, leave blank for random.",
+                        1,
+                        weapons.keys().len() as u32,
+                    ) - 1;
 
-                    m.transition(ChooseName).as_enum()
+                    println!("{}", weapons.value(&weapons.keys()[number as usize]).unwrap().details());
+
+                    if pick_yes_or_no("Use this weapon?") {
+                        self.weapons.push(weapons.weapon(&weapons.keys()[number as usize].to_string()).unwrap());
+                        m.transition(ChooseName).as_enum()
+                    } else {
+                        m.transition(ChooseEquipment).as_enum()
+                    }
                 }
                 NameByChooseName(m) => {
                     clear();

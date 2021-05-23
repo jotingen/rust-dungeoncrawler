@@ -3,7 +3,7 @@ use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
 use textwrap;
 
-#[derive(Debug, Default, Serialize, Deserialize)]
+#[derive(Clone, Debug, Default, Serialize, Deserialize)]
 struct WeaponProperties {
     finesse: bool,
     heavy: bool,
@@ -20,7 +20,7 @@ struct WeaponProperties {
     versatile_dmg: String,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize)]
+#[derive(Clone, Debug, Default, Serialize, Deserialize)]
 pub struct Weapon {
     weapon: String,
     proficiency: String,
@@ -267,6 +267,15 @@ impl Weapons {
         for weapon in &self.weapons {
             if weapon.weapon == key {
                 return Some(weapon);
+            }
+        }
+        None
+    }
+
+    pub fn weapon(&self, key: &str) -> Option<Weapon> {
+        for weapon in self.weapons.iter() {
+            if weapon.weapon == key {
+                return Some(weapon.clone());
             }
         }
         None
