@@ -115,7 +115,7 @@
         }
     },
     {
-        "weapon": "light hammer",
+        "weapon": "throwing hammer",
         "proficiency": "simple",
         "class": "melee",
         "cost": 200,
