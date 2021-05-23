@@ -76,7 +76,7 @@ impl Character {
         }
     }
 
-    pub fn character_creation(races: &Races, classes: &Classes, weapons: &Weapons) -> Character {
+    pub fn character_creation(&mut self, races: &Races, classes: &Classes, weapons: &Weapons) {
         let mut character: Character = Character::new();
         let mut stats: [u8; 6];
         let mut race: String = "".to_string();
@@ -110,7 +110,7 @@ impl Character {
                     println!("Choose race:");
 
                     for (count, race_key) in races.keys().iter().enumerate() {
-                        println!("{:>2}) {}", count + 1, races.race(&race_key));
+                        println!("{:>2}) {}", count + 1, races.detail_race(&race_key).trim());
                     }
 
                     let number = pick_number(
@@ -122,7 +122,7 @@ impl Character {
                     println!("{}", races.details(&races.keys()[number as usize]));
 
                     if pick_yes_or_no("Use this race?") {
-                        race = races.keys()[number as usize].to_string();
+                        self.race = races.keys()[number as usize].to_string();
                         m.transition(ChooseClass).as_enum()
                     } else {
                         m.transition(ChooseRace).as_enum()
@@ -134,7 +134,11 @@ impl Character {
                     println!("Choose class:");
 
                     for (count, class_key) in classes.keys().iter().enumerate() {
-                        println!("{:>2}) {}", count + 1, classes.class(&class_key));
+                        println!(
+                            "{:>2}) {}",
+                            count + 1,
+                            classes.detail_class(&class_key).trim()
+                        );
                     }
 
                     let number = pick_number(
@@ -148,7 +152,7 @@ impl Character {
                     pause();
 
                     if pick_yes_or_no("Use this class?") {
-                        class = classes.keys()[number as usize].to_string();
+                        self.class = classes.keys()[number as usize].to_string();
                         m.transition(ChooseStats).as_enum()
                     } else {
                         m.transition(ChooseClass).as_enum()
@@ -178,10 +182,26 @@ impl Character {
                     println!("Choose equipment:");
 
                     for (count, weapon_key) in weapons.keys().iter().enumerate() {
-                        println!("{:>2})\n{}", count + 1, weapons.details(&weapon_key));
+                        println!(
+                            "{:>2}) {} {}",
+                            count + 1,
+                            if self.is_weapon_proficient(races, classes, weapons, weapon_key) {
+                                "*"
+                            } else {
+                                " "
+                            },
+                            weapons.detail_weapon(&weapon_key).trim()
+                        );
                     }
 
                     pause();
+
+                    //Print all modifiers
+                    for (count, race_key) in races.keys().iter().enumerate() {
+                        for modifier in races.modifiers(&race_key) {
+                            println!("{:#?}", modifier);
+                        }
+                    }
 
                     m.transition(ChooseName).as_enum()
                 }
@@ -190,7 +210,7 @@ impl Character {
 
                     println!("Choose name:");
 
-                    name = "Boaty McBoatface".to_string();
+                    self.name = "Boaty McBoatface".to_string();
 
                     pause();
 
@@ -201,39 +221,33 @@ impl Character {
 
                     println!("Character Summary:");
 
-                    character = Character::new();
-
                     //name
-                    character.name = name.to_string();
 
                     //race
-                    character.race = race.to_string();
 
                     //age
-                    character.age = 25;
+                    self.age = 25;
 
                     //class
-                    character.class = class.to_string();
 
                     //alignment
-                    character.alignment = Alignment::N;
+                    self.alignment = Alignment::N;
 
                     //ability_score_base
                     dbg!(races.ability_score_increase(&race));
-                    character.abilities.strength =
+                    self.abilities.strength =
                         races.ability_score_increase(&race).abilities.strength;
-                    character.abilities.dexterity =
+                    self.abilities.dexterity =
                         races.ability_score_increase(&race).abilities.dexterity;
-                    character.abilities.charisma =
+                    self.abilities.charisma =
                         races.ability_score_increase(&race).abilities.charisma;
-                    character.abilities.constitution =
+                    self.abilities.constitution =
                         races.ability_score_increase(&race).abilities.constitution;
-                    character.abilities.intellect =
+                    self.abilities.intellect =
                         races.ability_score_increase(&race).abilities.intellect;
-                    character.abilities.wisdom =
-                        races.ability_score_increase(&race).abilities.wisdom;
+                    self.abilities.wisdom = races.ability_score_increase(&race).abilities.wisdom;
 
-                    dbg!(&character);
+                    dbg!(&self);
 
                     pause();
 
@@ -248,7 +262,48 @@ impl Character {
                 }
             }
         }
+    }
 
-        character
+    pub fn is_weapon_proficient(
+        &self,
+        races: &Races,
+        classes: &Classes,
+        weapons: &Weapons,
+        weapon_key: &str,
+    ) -> bool {
+        //Run through race modifiers to check for weapon proficiencies
+        for modifier in races.modifiers(&self.race).iter() {
+            if modifier.modifier == "dwarven combat training" {
+                //You have proficiency with the battleaxe, handaxe, throwing hammer, and warhammer
+                if weapons.weapon(weapon_key) == "battleaxe"
+                    || weapons.weapon(weapon_key) == "handaxe"
+                    || weapons.weapon(weapon_key) == "throwing hammer"
+                    || weapons.weapon(weapon_key) == "warhammer"
+                {
+                    return true;
+                }
+            }
+            if modifier.modifier == "elf weapon training" {
+                //You have proficiency with the longsword, shortsword, shortbow, and longbow.
+                if weapons.weapon(weapon_key) == "longsword"
+                    || weapons.weapon(weapon_key) == "shortsword"
+                    || weapons.weapon(weapon_key) == "shortbow"
+                    || weapons.weapon(weapon_key) == "longbow"
+                {
+                    return true;
+                }
+            }
+            if modifier.modifier == "drow weapon training" {
+                //You have proficiency with rapiers, shortswords, and hand crossbows.
+                if weapons.weapon(weapon_key) == "rapier"
+                    || weapons.weapon(weapon_key) == "shortsword"
+                    || weapons.weapon(weapon_key) == "hand crossbow"
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

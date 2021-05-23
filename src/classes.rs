@@ -44,7 +44,7 @@ impl Classes {
     }
 
     pub fn class(&self, key: &str) -> String {
-        self.value(key).unwrap().class.clone().to_case(Case::Title)
+        self.value(key).unwrap().class.clone()
     }
 
     pub fn description(&self, key: &str) -> String {
@@ -71,8 +71,8 @@ impl Classes {
         self.value(key).unwrap().weapon_proficiencies.clone()
     }
 
-    fn detail_class(&self, key: &str) -> String {
-        format!("{}\n", self.class(key))
+    pub fn detail_class(&self, key: &str) -> String {
+        format!("{}\n", self.class(key).to_case(Case::Title))
     }
 
     fn detail_description(&self, key: &str) -> String {

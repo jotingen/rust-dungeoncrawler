@@ -61,7 +61,7 @@ impl Weapons {
     }
 
     pub fn weapon(&self, key: &str) -> String {
-        self.value(key).unwrap().weapon.clone().to_case(Case::Title)
+        self.value(key).unwrap().weapon.clone()
     }
 
     pub fn proficiency(&self, key: &str) -> String {
@@ -136,7 +136,7 @@ impl Weapons {
         self.value(key).unwrap().properties.versatile_dmg.clone()
     }
 
-    fn detail_weapon(&self, key: &str) -> String {
+    pub fn detail_weapon(&self, key: &str) -> String {
         format!("{}\n", self.weapon(key).to_case(Case::Title))
     }
 

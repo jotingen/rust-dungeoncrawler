@@ -66,7 +66,7 @@ pub struct RaceSpeed {
 #[derive(Clone, Eq, Ord, PartialEq, PartialOrd, Serialize, Deserialize, Debug, Default)]
 pub struct RaceModifier {
     description: String,
-    modifier: String,
+    pub modifier: String,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
@@ -143,13 +143,9 @@ impl Races {
         let race_str: String;
 
         if let Some(subrace) = subrace_opt {
-            race_str = format!(
-                "{} ({})",
-                subrace.race.clone().to_case(Case::Title),
-                race.race.clone().to_case(Case::Title)
-            )
+            race_str = subrace.race.clone();
         } else {
-            race_str = race.race.clone().to_case(Case::Title)
+            race_str = race.race.clone();
         }
 
         race_str
@@ -301,8 +297,22 @@ impl Races {
         languages
     }
 
-    fn detail_race(&self, key: &str) -> String {
-        format!("{}\n", self.race(key).to_case(Case::Title))
+    pub fn detail_race(&self, key: &str) -> String {
+        let (race_opt, subrace_opt) = self.value(key);
+        let race: &Race = race_opt.unwrap();
+        let race_str: String;
+
+        if let Some(subrace) = subrace_opt {
+            race_str = format!(
+                "{} ({})\n",
+                subrace.race.clone().to_case(Case::Title),
+                race.race.clone().to_case(Case::Title)
+            )
+        } else {
+            race_str = format!("{}\n", race.race.clone().to_case(Case::Title))
+        }
+
+        race_str
     }
 
     fn detail_description(&self, key: &str) -> String {

@@ -48,7 +48,7 @@ fn main() {
     //Load weapons
     let weapons: Weapons = Weapons::new();
 
-    let mut character: Character;
+    let mut character: Character = Character::new();
 
     let mut sm = Machine::new(Idle).as_enum();
     loop {
@@ -77,7 +77,7 @@ fn main() {
 
             CharacterByCreateCharacter(m) => {
                 clear();
-                character = Character::character_creation(&races, &classes, &weapons);
+                character.character_creation(&races, &classes, &weapons);
                 m.transition(LaunchGame).as_enum()
             }
 
