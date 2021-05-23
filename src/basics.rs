@@ -27,3 +27,14 @@ impl Default for Alignment {
         Alignment::N
     }
 }
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub enum Gender {
+    M, //Male
+    F, //Female
+}
+impl Default for Gender {
+    fn default() -> Self {
+        Gender::M
+    }
+}

@@ -1,9 +1,9 @@
-use crate::COLUMN_WIDTH;
-use crate::basics::{Abilities, Alignment};
+use crate::basics::{Abilities, Alignment, Gender};
 use crate::classes::Classes;
 use crate::races::Races;
 use crate::utils::*;
 use crate::weapons::{Weapon, Weapons};
+use crate::COLUMN_WIDTH;
 use serde::{Deserialize, Serialize};
 use sm::sm;
 use textwrap;
@@ -12,12 +12,12 @@ sm! {
     CharacterCreationState {
         InitialStates { Idle }
 
-        ChooseSex {
-            Idle, Summary => Sex
+        ChooseGender {
+            Idle, Summary, Gender => Gender
         }
 
         ChooseRace {
-            Sex, Race => Race
+            Gender, Race => Race
         }
 
         ChooseClass {
@@ -50,6 +50,7 @@ use crate::character::CharacterCreationState::{Variant::*, *};
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Character {
     pub name: String,
+    pub gender: Gender,
     pub race: String,
     pub age: u32,
     pub class: String,
@@ -91,16 +92,26 @@ impl Character {
 
                     pause();
 
-                    m.transition(ChooseSex).as_enum()
+                    m.transition(ChooseGender).as_enum()
                 }
-                SexByChooseSex(m) => {
+                GenderByChooseGender(m) => {
                     clear();
 
-                    println!("Choose Sex:\n\n");
+                    println!("Choose Gender:\n\n");
 
-                    pause();
+                    println!(" 1) Male");
+                    println!(" 2) Female");
 
-                    m.transition(ChooseRace).as_enum()
+                    let number = pick_number("Choose gender, leave blank for random.", 1, 2) - 1;
+
+                    println!("{}", if number == 0 { "M" } else { "F" });
+
+                    if pick_yes_or_no("Use this gender?") {
+                        self.gender = if number == 0 { Gender::M } else { Gender::F };
+                        m.transition(ChooseRace).as_enum()
+                    } else {
+                        m.transition(ChooseGender).as_enum()
+                    }
                 }
                 RaceByChooseRace(m) => {
                     clear();
@@ -193,9 +204,11 @@ impl Character {
                             weapons.value(&weapon_key).unwrap().detail_name().trim()
                         );
                     }
-                    for line in textwrap::wrap_columns(&weapon_list, 3, COLUMN_WIDTH, "", "", "").iter() {
-                        println!("{}",line);
-                    } 
+                    for line in
+                        textwrap::wrap_columns(&weapon_list, 3, COLUMN_WIDTH, "", "", "").iter()
+                    {
+                        println!("{}", line);
+                    }
 
                     let number = pick_number(
                         "Choose weapon, leave blank for random.",
@@ -203,10 +216,20 @@ impl Character {
                         weapons.keys().len() as u32,
                     ) - 1;
 
-                    println!("{}", weapons.value(&weapons.keys()[number as usize]).unwrap().details());
+                    println!(
+                        "{}",
+                        weapons
+                            .value(&weapons.keys()[number as usize])
+                            .unwrap()
+                            .details()
+                    );
 
                     if pick_yes_or_no("Use this weapon?") {
-                        self.weapons.push(weapons.weapon(&weapons.keys()[number as usize].to_string()).unwrap());
+                        self.weapons.push(
+                            weapons
+                                .weapon(&weapons.keys()[number as usize].to_string())
+                                .unwrap(),
+                        );
                         m.transition(ChooseName).as_enum()
                     } else {
                         m.transition(ChooseEquipment).as_enum()
@@ -264,7 +287,7 @@ impl Character {
                     if pick_yes_or_no("Use this character?") {
                         m.transition(Done).as_enum()
                     } else {
-                        m.transition(ChooseSex).as_enum()
+                        m.transition(ChooseGender).as_enum()
                     }
                 }
                 FinishedByDone(_) => {
@@ -316,7 +339,8 @@ impl Character {
         //Run through class to check for weapon proficiencies
         for weapon_proficiency in classes.weapon_proficiencies(&self.class).iter() {
             if weapons.value(weapon_key).unwrap().name() == weapon_proficiency.to_string()
-                || weapons.value(weapon_key).unwrap().proficiency() == weapon_proficiency.to_string()
+                || weapons.value(weapon_key).unwrap().proficiency()
+                    == weapon_proficiency.to_string()
             {
                 return true;
             }
