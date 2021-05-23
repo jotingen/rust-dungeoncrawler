@@ -186,7 +186,7 @@ impl Character {
                             } else {
                                 " "
                             },
-                            weapons.detail_weapon(&weapon_key).trim()
+                            weapons.value(&weapon_key).unwrap().detail_name().trim()
                         );
                     }
 
@@ -267,29 +267,29 @@ impl Character {
         for modifier in races.modifiers(&self.race).iter() {
             if modifier.modifier == "dwarven combat training" {
                 //You have proficiency with the battleaxe, handaxe, throwing hammer, and warhammer
-                if weapons.weapon(weapon_key) == "battleaxe"
-                    || weapons.weapon(weapon_key) == "handaxe"
-                    || weapons.weapon(weapon_key) == "throwing hammer"
-                    || weapons.weapon(weapon_key) == "warhammer"
+                if weapons.value(weapon_key).unwrap().name() == "battleaxe"
+                    || weapons.value(weapon_key).unwrap().name() == "handaxe"
+                    || weapons.value(weapon_key).unwrap().name() == "throwing hammer"
+                    || weapons.value(weapon_key).unwrap().name() == "warhammer"
                 {
                     return true;
                 }
             }
             if modifier.modifier == "elf weapon training" {
                 //You have proficiency with the longsword, shortsword, shortbow, and longbow.
-                if weapons.weapon(weapon_key) == "longsword"
-                    || weapons.weapon(weapon_key) == "shortsword"
-                    || weapons.weapon(weapon_key) == "shortbow"
-                    || weapons.weapon(weapon_key) == "longbow"
+                if weapons.value(weapon_key).unwrap().name() == "longsword"
+                    || weapons.value(weapon_key).unwrap().name() == "shortsword"
+                    || weapons.value(weapon_key).unwrap().name() == "shortbow"
+                    || weapons.value(weapon_key).unwrap().name() == "longbow"
                 {
                     return true;
                 }
             }
             if modifier.modifier == "drow weapon training" {
                 //You have proficiency with rapiers, shortswords, and hand crossbows.
-                if weapons.weapon(weapon_key) == "rapier"
-                    || weapons.weapon(weapon_key) == "shortsword"
-                    || weapons.weapon(weapon_key) == "hand crossbow"
+                if weapons.value(weapon_key).unwrap().name() == "rapier"
+                    || weapons.value(weapon_key).unwrap().name() == "shortsword"
+                    || weapons.value(weapon_key).unwrap().name() == "hand crossbow"
                 {
                     return true;
                 }
@@ -297,8 +297,8 @@ impl Character {
         }
         //Run through class to check for weapon proficiencies
         for weapon_proficiency in classes.weapon_proficiencies(&self.class).iter() {
-            if weapons.weapon(weapon_key) == weapon_proficiency.to_string()
-                || weapons.proficiency(weapon_key) == weapon_proficiency.to_string()
+            if weapons.value(weapon_key).unwrap().name() == weapon_proficiency.to_string()
+                || weapons.value(weapon_key).unwrap().proficiency() == weapon_proficiency.to_string()
             {
                 return true;
             }
