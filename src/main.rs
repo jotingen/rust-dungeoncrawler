@@ -7,7 +7,6 @@ mod races;
 mod utils;
 mod weapons;
 
-use crate::basics::{Abilities, Alignment};
 use crate::character::Character;
 use crate::classes::Classes;
 use crate::races::Races;

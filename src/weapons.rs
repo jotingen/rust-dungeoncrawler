@@ -21,7 +21,7 @@ struct WeaponProperties {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize)]
-struct Weapon {
+pub struct Weapon {
     weapon: String,
     proficiency: String,
     class: String,

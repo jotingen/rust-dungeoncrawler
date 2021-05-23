@@ -2,8 +2,7 @@ use crate::basics::{Abilities, Alignment};
 use crate::classes::Classes;
 use crate::races::Races;
 use crate::utils::*;
-use crate::weapons::Weapons;
-use convert_case::{Case, Casing};
+use crate::weapons::{Weapon, Weapons};
 use serde::{Deserialize, Serialize};
 use sm::sm;
 
@@ -54,6 +53,7 @@ pub struct Character {
     pub class: String,
     pub alignment: Alignment,
     pub abilities: Abilities,
+    pub weapon: Weapon,
 }
 
 fn roll_stats(rolls: &mut [u8; 6]) {
@@ -77,11 +77,7 @@ impl Character {
     }
 
     pub fn character_creation(&mut self, races: &Races, classes: &Classes, weapons: &Weapons) {
-        let mut character: Character = Character::new();
         let mut stats: [u8; 6];
-        let mut race: String = "".to_string();
-        let mut class: String = "".to_string();
-        let mut name: String = "".to_string();
 
         let mut sm = Machine::new(Idle).as_enum();
         loop {
@@ -196,13 +192,6 @@ impl Character {
 
                     pause();
 
-                    //Print all modifiers
-                    for (count, race_key) in races.keys().iter().enumerate() {
-                        for modifier in races.modifiers(&race_key) {
-                            println!("{:#?}", modifier);
-                        }
-                    }
-
                     m.transition(ChooseName).as_enum()
                 }
                 NameByChooseName(m) => {
@@ -234,18 +223,21 @@ impl Character {
                     self.alignment = Alignment::N;
 
                     //ability_score_base
-                    dbg!(races.ability_score_increase(&race));
+                    dbg!(races.ability_score_increase(&self.race));
                     self.abilities.strength =
-                        races.ability_score_increase(&race).abilities.strength;
+                        races.ability_score_increase(&self.race).abilities.strength;
                     self.abilities.dexterity =
-                        races.ability_score_increase(&race).abilities.dexterity;
+                        races.ability_score_increase(&self.race).abilities.dexterity;
                     self.abilities.charisma =
-                        races.ability_score_increase(&race).abilities.charisma;
-                    self.abilities.constitution =
-                        races.ability_score_increase(&race).abilities.constitution;
+                        races.ability_score_increase(&self.race).abilities.charisma;
+                    self.abilities.constitution = races
+                        .ability_score_increase(&self.race)
+                        .abilities
+                        .constitution;
                     self.abilities.intellect =
-                        races.ability_score_increase(&race).abilities.intellect;
-                    self.abilities.wisdom = races.ability_score_increase(&race).abilities.wisdom;
+                        races.ability_score_increase(&self.race).abilities.intellect;
+                    self.abilities.wisdom =
+                        races.ability_score_increase(&self.race).abilities.wisdom;
 
                     dbg!(&self);
 
@@ -301,6 +293,14 @@ impl Character {
                 {
                     return true;
                 }
+            }
+        }
+        //Run through class to check for weapon proficiencies
+        for weapon_proficiency in classes.weapon_proficiencies(&self.class).iter() {
+            if weapons.weapon(weapon_key) == weapon_proficiency.to_string()
+                || weapons.proficiency(weapon_key) == weapon_proficiency.to_string()
+            {
+                return true;
             }
         }
 
