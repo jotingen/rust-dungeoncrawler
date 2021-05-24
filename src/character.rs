@@ -59,10 +59,10 @@ pub struct Character {
     pub weapons: Vec<Weapon>,
 }
 
-fn roll_stats(rolls: &mut [u8; 6]) {
+fn roll_stats(rolls: &mut Vec<u32>) {
     println!("Rolling own");
     for roll in rolls.iter_mut() {
-        let mut die_rolls: [u8; 4] = [d(6), d(6), d(6), d(6)];
+        let mut die_rolls: [u32; 4] = [d(6), d(6), d(6), d(6)];
         die_rolls.sort_unstable();
         die_rolls.reverse();
         *roll = die_rolls[0] + die_rolls[1] + die_rolls[2];
@@ -80,7 +80,6 @@ impl Character {
     }
 
     pub fn character_creation(&mut self, races: &Races, classes: &Classes, weapons: &Weapons) {
-        let mut stats: [u8; 6];
 
         let mut sm = Machine::new(Idle).as_enum();
         loop {
@@ -169,10 +168,29 @@ impl Character {
                 }
                 StatsByChooseStats(m) => {
                     clear();
+                    println!("Starting abilities:\n");
 
-                    println!("Roll stats\n");
+                    self.abilities.strength =
+                        races.ability_score_increase(&self.race).abilities.strength;
+                    self.abilities.dexterity =
+                        races.ability_score_increase(&self.race).abilities.dexterity;
+                    self.abilities.charisma =
+                        races.ability_score_increase(&self.race).abilities.charisma;
+                    self.abilities.constitution = races
+                        .ability_score_increase(&self.race)
+                        .abilities
+                        .constitution;
+                    self.abilities.intellect =
+                        races.ability_score_increase(&self.race).abilities.intellect;
+                    self.abilities.wisdom =
+                        races.ability_score_increase(&self.race).abilities.wisdom;
 
-                    stats = [15, 14, 13, 12, 10, 8];
+                    dbg!(&self.abilities);
+
+                    println!("Roll stats:\n");
+                    println!("{}",textwrap::fill("  You can choose to use the default stat values or to roll random new ones.",COLUMN_WIDTH));
+
+                    let mut stats: Vec<u32> = vec![15, 14, 13, 12, 10, 8];
                     println!("Default stats are {:?}", stats);
 
                     if pick_yes_or_no("Roll your own stats?") {
@@ -180,6 +198,70 @@ impl Character {
                     }
 
                     println!("Using stats {:?}", stats);
+
+                    let mut abilities: Vec<&str> = vec![
+                        "strength",
+                        "dexterity",
+                        "charisma",
+                        "constitution",
+                        "intellect",
+                        "wisdom",
+                    ];
+
+                    while !abilities.is_empty() {
+                        println!("Choose ability to assign stat to:");
+
+                        for (count, ability) in abilities.iter().enumerate() {
+                            println!("{:>2}) {}", count + 1, ability);
+                        }
+
+                        let number = pick_number(
+                            "Choose ability, leave blank for random.",
+                            1,
+                            abilities.len() as u32,
+                        ) - 1;
+
+                        let ability = abilities[number as usize];
+                        
+                        abilities.remove(number as usize);
+                        println!("{}", ability);
+
+                    println!("Choose stat value {:?}", stats);
+                        for (count, stat) in stats.iter().enumerate() {
+                            println!("{:>2}) {}", count + 1, stat);
+                        }
+
+                        let number = pick_number(
+                            "Choose stat, leave blank for random.",
+                            1,
+                            stats.len() as u32,
+                        ) - 1;
+
+                        let stat = stats[number as usize];
+                        
+                        stats.remove(number as usize);
+
+                        if ability == "strength" {
+                            self.abilities.strength += stat;
+                        }
+                        if ability == "dexterity" {
+                        self.abilities.dexterity += stat;
+                        }
+                        if ability == "charisma" {
+                        self.abilities.charisma += stat;
+                        }
+                        if ability == "constitution" {
+                        self.abilities.constitution += stat;
+                        }
+                        if ability == "intellect" {
+                        self.abilities.intellect += stat;
+                        }
+                        if ability == "wisdom" {
+                        self.abilities.wisdom += stat;
+                        }
+                        
+                    dbg!(&self.abilities);
+                    }
 
                     pause();
 
@@ -265,20 +347,6 @@ impl Character {
 
                     //ability_score_base
                     dbg!(races.ability_score_increase(&self.race));
-                    self.abilities.strength =
-                        races.ability_score_increase(&self.race).abilities.strength;
-                    self.abilities.dexterity =
-                        races.ability_score_increase(&self.race).abilities.dexterity;
-                    self.abilities.charisma =
-                        races.ability_score_increase(&self.race).abilities.charisma;
-                    self.abilities.constitution = races
-                        .ability_score_increase(&self.race)
-                        .abilities
-                        .constitution;
-                    self.abilities.intellect =
-                        races.ability_score_increase(&self.race).abilities.intellect;
-                    self.abilities.wisdom =
-                        races.ability_score_increase(&self.race).abilities.wisdom;
 
                     dbg!(&self);
 

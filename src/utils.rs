@@ -2,7 +2,7 @@ use rand::Rng;
 use regex::Regex;
 use std::io::{stdin, stdout, Read, Write};
 
-pub fn d(num: u8) -> u8 {
+pub fn d(num: u32) -> u32 {
     if num == 0 {
         return 0;
     }
