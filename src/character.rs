@@ -1,12 +1,13 @@
 use crate::basics::{Abilities, Alignment, Gender};
 use crate::classes::Classes;
 use crate::races::Races;
+use crate::screen::Screen;
 use crate::utils::*;
 use crate::weapons::{Weapon, Weapons};
 use crate::COLUMN_WIDTH;
+use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
 use sm::sm;
-use textwrap;
 
 sm! {
     CharacterCreationState {
@@ -60,13 +61,13 @@ pub struct Character {
 }
 
 fn roll_stats(rolls: &mut Vec<u32>) {
-    println!("Rolling own");
+    //println!("Rolling own");
     for roll in rolls.iter_mut() {
         let mut die_rolls: [u32; 4] = [d(6), d(6), d(6), d(6)];
         die_rolls.sort_unstable();
         die_rolls.reverse();
         *roll = die_rolls[0] + die_rolls[1] + die_rolls[2];
-        println!("Rolled {:?} for {}", die_rolls, *roll);
+        //println!("Rolled {:?} for {}", die_rolls, *roll);
     }
     rolls.sort_unstable();
     rolls.reverse();
@@ -79,31 +80,42 @@ impl Character {
         }
     }
 
-    pub fn character_creation(&mut self, races: &Races, classes: &Classes, weapons: &Weapons) {
-
+    pub fn character_creation(
+        &mut self,
+        screen: &mut Screen,
+        races: &Races,
+        classes: &Classes,
+        weapons: &Weapons,
+    ) {
         let mut sm = Machine::new(Idle).as_enum();
+        let original_header = screen.get_header();
         loop {
             sm = match sm {
                 InitialIdle(m) => {
-                    clear();
+                    screen.set_header("Character Creation");
 
-                    println!("Character Creation\n\n");
-
+                    screen.set_msg("Starting character creation...");
+                    screen.draw();
                     pause();
 
                     m.transition(ChooseGender).as_enum()
                 }
                 GenderByChooseGender(m) => {
-                    clear();
+                    screen.set_header("Character Creation - Gender");
+                    let msg = "\n\
+                                     1) Male\n\
+                                     2) Female";
+                    screen.set_msg(msg);
+                    screen.draw();
 
-                    println!("Choose Gender:\n\n");
+                    let number = pick_number("Choose number, leave blank for random.", 1, 2) - 1;
 
-                    println!(" 1) Male");
-                    println!(" 2) Female");
-
-                    let number = pick_number("Choose gender, leave blank for random.", 1, 2) - 1;
-
-                    println!("{}", if number == 0 { "M" } else { "F" });
+                    screen.set_msg(&format!(
+                        "{}\n\n{}",
+                        msg,
+                        if number == 0 { "M" } else { "F" }
+                    ));
+                    screen.draw();
 
                     if pick_yes_or_no("Use this gender?") {
                         self.gender = if number == 0 { Gender::M } else { Gender::F };
@@ -113,13 +125,19 @@ impl Character {
                     }
                 }
                 RaceByChooseRace(m) => {
-                    clear();
+                    screen.set_header("Character Creation - Race");
 
-                    println!("Choose race:");
-
+                    let mut msg: String = "".to_string();
                     for (count, race_key) in races.keys().iter().enumerate() {
-                        println!("{:>2}) {}", count + 1, races.detail_race(&race_key).trim());
+                        msg = format!(
+                            "{}\n{:>2}) {}",
+                            msg,
+                            count + 1,
+                            &races.detail_race(&race_key).trim()
+                        );
                     }
+                    screen.set_msg(&msg.strip_prefix('\n').unwrap());
+                    screen.draw();
 
                     let number = pick_number(
                         "Choose race, leave blank for random.",
@@ -127,7 +145,8 @@ impl Character {
                         races.keys().len() as u32,
                     ) - 1;
 
-                    println!("{}", races.details(&races.keys()[number as usize]));
+                    screen.set_msg(&races.details(&races.keys()[number as usize]));
+                    screen.draw();
 
                     if pick_yes_or_no("Use this race?") {
                         self.race = races.keys()[number as usize].to_string();
@@ -137,17 +156,19 @@ impl Character {
                     }
                 }
                 ClassByChooseClass(m) => {
-                    clear();
+                    screen.set_header("Character Creation - Class");
 
-                    println!("Choose class:");
-
+                    let mut msg: String = "".to_string();
                     for (count, class_key) in classes.keys().iter().enumerate() {
-                        println!(
-                            "{:>2}) {}",
+                        msg = format!(
+                            "{}\n{:>2}) {}",
+                            msg,
                             count + 1,
-                            classes.detail_class(&class_key).trim()
+                            &classes.detail_class(&class_key).trim()
                         );
                     }
+                    screen.set_msg(&msg.strip_prefix('\n').unwrap());
+                    screen.draw();
 
                     let number = pick_number(
                         "Choose class, leave blank for random.",
@@ -155,9 +176,8 @@ impl Character {
                         classes.keys().len() as u32,
                     ) - 1;
 
-                    println!("{}", classes.details(&classes.keys()[number as usize]));
-
-                    pause();
+                    screen.set_msg(&classes.details(&classes.keys()[number as usize]));
+                    screen.draw();
 
                     if pick_yes_or_no("Use this class?") {
                         self.class = classes.keys()[number as usize].to_string();
@@ -167,9 +187,11 @@ impl Character {
                     }
                 }
                 StatsByChooseStats(m) => {
-                    clear();
-                    println!("Starting abilities:\n");
+                    screen.set_header("Character Creation - Abilities");
 
+                    let mut msg: String;
+
+                    //Add in race bonuses for abilities
                     self.abilities.strength =
                         races.ability_score_increase(&self.race).abilities.strength;
                     self.abilities.dexterity =
@@ -185,19 +207,32 @@ impl Character {
                     self.abilities.wisdom =
                         races.ability_score_increase(&self.race).abilities.wisdom;
 
-                    dbg!(&self.abilities);
+                    msg = format!(
+                        "Str:{:>2} Dex:{:>2} Cha:{:>2} Con:{:>2} Int:{:>2} Wis:{:>2}\n",
+                        &self.abilities.strength,
+                        &self.abilities.dexterity,
+                        &self.abilities.charisma,
+                        &self.abilities.constitution,
+                        &self.abilities.intellect,
+                        &self.abilities.wisdom
+                    );
 
                     println!("Roll stats:\n");
-                    println!("{}",textwrap::fill("  You can choose to use the default stat values or to roll random new ones.",COLUMN_WIDTH));
+                    msg = format!("{}\n\nYou can choose to use the default stat values or to roll random new ones.",msg);
 
                     let mut stats: Vec<u32> = vec![15, 14, 13, 12, 10, 8];
-                    println!("Default stats are {:?}", stats);
+                    msg = format!("{}\n\nThe default stats are {:?}", msg, stats);
+
+                    screen.set_msg(&msg);
+                    screen.draw();
 
                     if pick_yes_or_no("Roll your own stats?") {
                         roll_stats(&mut stats);
                     }
 
-                    println!("Using stats {:?}", stats);
+                    screen.set_msg(&format!("{}\n\nUsing stats {:?}", msg, stats));
+                    screen.draw();
+                    pause();
 
                     let mut abilities: Vec<&str> = vec![
                         "strength",
@@ -209,11 +244,29 @@ impl Character {
                     ];
 
                     while !abilities.is_empty() {
-                        println!("Choose ability to assign stat to:");
+                        msg = format!(
+                            "Str:{:>2} Dex:{:>2} Cha:{:>2} Con:{:>2} Int:{:>2} Wis:{:>2}\n",
+                            &self.abilities.strength,
+                            &self.abilities.dexterity,
+                            &self.abilities.charisma,
+                            &self.abilities.constitution,
+                            &self.abilities.intellect,
+                            &self.abilities.wisdom
+                        );
+
+                        msg = format!("{}\n\nChoose ability to assign stat to:", msg);
 
                         for (count, ability) in abilities.iter().enumerate() {
-                            println!("{:>2}) {}", count + 1, ability);
+                            msg = format!(
+                                "{}\n{:>2}) {}",
+                                msg,
+                                count + 1,
+                                ability.to_case(Case::Title)
+                            );
                         }
+
+                        screen.set_msg(&msg);
+                        screen.draw();
 
                         let number = pick_number(
                             "Choose ability, leave blank for random.",
@@ -222,14 +275,29 @@ impl Character {
                         ) - 1;
 
                         let ability = abilities[number as usize];
-                        
-                        abilities.remove(number as usize);
-                        println!("{}", ability);
 
-                    println!("Choose stat value {:?}", stats);
+                        abilities.remove(number as usize);
+
+                        msg = format!(
+                            "Str:{:>2} Dex:{:>2} Cha:{:>2} Con:{:>2} Int:{:>2} Wis:{:>2}\n",
+                            &self.abilities.strength,
+                            &self.abilities.dexterity,
+                            &self.abilities.charisma,
+                            &self.abilities.constitution,
+                            &self.abilities.intellect,
+                            &self.abilities.wisdom
+                        );
+                        msg = format!(
+                            "{}\n\n{}\n\nChoose stat value {:?}",
+                            msg,
+                            ability.to_case(Case::Title),
+                            stats
+                        );
                         for (count, stat) in stats.iter().enumerate() {
-                            println!("{:>2}) {}", count + 1, stat);
+                            msg = format!("{}\n{:>2}) {}", msg, count + 1, stat);
                         }
+                        screen.set_msg(&msg);
+                        screen.draw();
 
                         let number = pick_number(
                             "Choose stat, leave blank for random.",
@@ -238,39 +306,50 @@ impl Character {
                         ) - 1;
 
                         let stat = stats[number as usize];
-                        
+
                         stats.remove(number as usize);
 
                         if ability == "strength" {
                             self.abilities.strength += stat;
                         }
                         if ability == "dexterity" {
-                        self.abilities.dexterity += stat;
+                            self.abilities.dexterity += stat;
                         }
                         if ability == "charisma" {
-                        self.abilities.charisma += stat;
+                            self.abilities.charisma += stat;
                         }
                         if ability == "constitution" {
-                        self.abilities.constitution += stat;
+                            self.abilities.constitution += stat;
                         }
                         if ability == "intellect" {
-                        self.abilities.intellect += stat;
+                            self.abilities.intellect += stat;
                         }
                         if ability == "wisdom" {
-                        self.abilities.wisdom += stat;
+                            self.abilities.wisdom += stat;
                         }
-                        
-                    dbg!(&self.abilities);
                     }
 
+                    msg = format!(
+                        "Str:{:>2} Dex:{:>2} Cha:{:>2} Con:{:>2} Int:{:>2} Wis:{:>2}\n",
+                        &self.abilities.strength,
+                        &self.abilities.dexterity,
+                        &self.abilities.charisma,
+                        &self.abilities.constitution,
+                        &self.abilities.intellect,
+                        &self.abilities.wisdom
+                    );
+                    screen.set_msg(&msg);
+                    screen.draw();
                     pause();
 
                     m.transition(ChooseEquipment).as_enum()
                 }
                 EquipmentByChooseEquipment(m) => {
-                    clear();
+                    let mut msg: String;
 
-                    println!("Choose equipment:");
+                    screen.set_header("Character Creation - Equipment - Weapon");
+
+                    msg = "Choose equipment:".to_string();
 
                     let mut weapon_list: String = "".to_string();
                     for (count, weapon_key) in weapons.keys().iter().enumerate() {
@@ -286,11 +365,15 @@ impl Character {
                             weapons.value(&weapon_key).unwrap().detail_name().trim()
                         );
                     }
-                    for line in
-                        textwrap::wrap_columns(&weapon_list, 3, COLUMN_WIDTH, "", "", "").iter()
-                    {
-                        println!("{}", line);
-                    }
+                    msg = format!(
+                        "{}\n{}",
+                        msg,
+                        textwrap::wrap_columns(&weapon_list, 3, COLUMN_WIDTH, "", "", "")
+                            .join("\n")
+                    );
+
+                    screen.set_msg(&msg);
+                    screen.draw();
 
                     let number = pick_number(
                         "Choose weapon, leave blank for random.",
@@ -298,13 +381,13 @@ impl Character {
                         weapons.keys().len() as u32,
                     ) - 1;
 
-                    println!(
-                        "{}",
-                        weapons
+                    screen.set_msg(
+                        &weapons
                             .value(&weapons.keys()[number as usize])
                             .unwrap()
-                            .details()
+                            .details(),
                     );
+                    screen.draw();
 
                     if pick_yes_or_no("Use this weapon?") {
                         self.weapons.push(
@@ -359,6 +442,7 @@ impl Character {
                     }
                 }
                 FinishedByDone(_) => {
+                    screen.set_header(&original_header);
                     break;
                 }
             }
@@ -406,14 +490,13 @@ impl Character {
         }
         //Run through class to check for weapon proficiencies
         for weapon_proficiency in classes.weapon_proficiencies(&self.class).iter() {
-            if weapons.value(weapon_key).unwrap().name() == weapon_proficiency.to_string()
-                || weapons.value(weapon_key).unwrap().proficiency()
-                    == weapon_proficiency.to_string()
+            if &weapons.value(weapon_key).unwrap().name() == weapon_proficiency
+                || &weapons.value(weapon_key).unwrap().proficiency() == weapon_proficiency
             {
                 return true;
             }
         }
 
-        return false;
+        false
     }
 }

@@ -1,7 +1,6 @@
 use crate::COLUMN_WIDTH;
 use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
-use textwrap;
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
 struct WeaponProperties {
@@ -280,5 +279,4 @@ impl Weapons {
         }
         None
     }
-
 }

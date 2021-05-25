@@ -2,7 +2,6 @@ use crate::basics::{Abilities, Alignment};
 use crate::COLUMN_WIDTH;
 use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
-use textwrap;
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct RaceAbilities {

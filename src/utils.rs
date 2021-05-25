@@ -1,6 +1,9 @@
+use crate::COLUMN_WIDTH;
+use crate::ROW_HEIGHT;
 use rand::Rng;
 use regex::Regex;
 use std::io::{stdin, stdout, Read, Write};
+use unicode_segmentation::UnicodeSegmentation;
 
 pub fn d(num: u32) -> u32 {
     if num == 0 {
@@ -22,7 +25,9 @@ pub fn pause() {
 }
 
 pub fn pick_yes_or_no(msg: &str) -> bool {
-    println!("{} Y/n", msg);
+    let mut stdout = stdout();
+    print!("{} (Y/n) ", msg);
+    stdout.flush().unwrap();
     let mut my_yes_or_no_str = String::new();
     stdin().read_line(&mut my_yes_or_no_str).unwrap();
 
@@ -35,11 +40,13 @@ pub fn pick_yes_or_no(msg: &str) -> bool {
 }
 
 pub fn pick_number(msg: &str, low: u32, high: u32) -> u32 {
+    let mut stdout = stdout();
     loop {
         if !msg.is_empty() {
             print!("{} ", msg);
         }
-        println!("{}-{}", low, high);
+        print!("({}-{}) ", low, high);
+        stdout.flush().unwrap();
         let mut my_number_str = String::new();
         stdin().read_line(&mut my_number_str).unwrap();
 
@@ -53,4 +60,14 @@ pub fn pick_number(msg: &str, low: u32, high: u32) -> u32 {
             }
         }
     }
+}
+
+pub fn count_newlines(msg: &str) -> u32 {
+    let mut count = 0;
+    for c in msg.graphemes(true) {
+        if c == "\n" {
+            count += 1;
+        }
+    }
+    count
 }

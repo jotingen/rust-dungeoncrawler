@@ -1,7 +1,6 @@
 use crate::COLUMN_WIDTH;
 use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
-use textwrap;
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 struct Class {

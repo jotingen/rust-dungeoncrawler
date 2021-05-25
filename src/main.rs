@@ -1,15 +1,18 @@
 const COLUMN_WIDTH: usize = 80;
+const ROW_HEIGHT: usize = 25;
 
 mod basics;
 mod character;
 mod classes;
 mod races;
+mod screen;
 mod utils;
 mod weapons;
 
 use crate::character::Character;
 use crate::classes::Classes;
 use crate::races::Races;
+use crate::screen::Screen;
 use crate::utils::*;
 use crate::weapons::Weapons;
 use sm::sm;
@@ -38,6 +41,9 @@ sm! {
 use crate::GameState::{Variant::*, *};
 
 fn main() {
+    //Load screen
+    let mut screen: Screen = Screen::new();
+
     //Load races
     let races: Races = Races::new();
 
@@ -53,19 +59,21 @@ fn main() {
     loop {
         sm = match sm {
             InitialIdle(m) => {
-                clear();
+                screen.set_header("Dungeon Crawler");
 
-                println!("Dungeon Crawler\n\n");
+                screen.set_msg("Welcome to Dungeon Crawler");
+                screen.draw();
+                pause();
 
                 if true {
-                    println!("No savegame found, starting new game..\n\n");
-
+                    screen.set_msg("No savegame found, starting new game...");
+                    screen.draw();
                     pause();
 
                     m.transition(CreateCharacter).as_enum()
                 } else {
-                    println!("Loading game..\n\n");
-
+                    screen.set_msg("Loading game...");
+                    screen.draw();
                     pause();
 
                     m.transition(LoadGame).as_enum()
@@ -76,7 +84,7 @@ fn main() {
 
             CharacterByCreateCharacter(m) => {
                 clear();
-                character.character_creation(&races, &classes, &weapons);
+                character.character_creation(&mut screen,&races, &classes, &weapons);
                 m.transition(LaunchGame).as_enum()
             }
 
@@ -89,7 +97,10 @@ fn main() {
             }
 
             FinishedByDone(_) => {
-                println! {"Done"};
+                    screen.set_msg("Thanks for playing");
+                    screen.draw();
+                    pause();
+
                 break;
             }
         }
