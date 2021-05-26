@@ -1,7 +1,7 @@
 use rand::Rng;
 
 use crate::basics::{Abilities, Alignment, Gender};
-use crate::COLUMN_WIDTH;
+use crate::screen::COLUMN_WIDTH;
 use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
 

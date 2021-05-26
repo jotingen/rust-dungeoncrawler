@@ -1,5 +1,5 @@
-const COLUMN_WIDTH: usize = 80;
-const ROW_HEIGHT: usize = 25;
+pub const COLUMN_WIDTH: usize = 80;
+pub const ROW_HEIGHT: usize = 25;
 
 use crate::utils::*;
 

@@ -1,5 +1,3 @@
-const COLUMN_WIDTH: usize = 80;
-
 mod basics;
 mod character;
 mod classes;
