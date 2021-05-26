@@ -1,5 +1,4 @@
 const COLUMN_WIDTH: usize = 80;
-const ROW_HEIGHT: usize = 25;
 
 mod basics;
 mod character;

@@ -1,4 +1,6 @@
-use crate::basics::{Abilities, Alignment};
+use rand::Rng;
+
+use crate::basics::{Abilities, Alignment, Gender};
 use crate::COLUMN_WIDTH;
 use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
@@ -212,6 +214,79 @@ impl Races {
         names.virtue.sort();
 
         names
+    }
+
+    pub fn generate_name(&self, key: &str, gender: Gender) -> String {
+        let names = self.names(key);
+        let mut name_str: String;
+
+        name_str = "".to_string();
+
+        let mut rng = rand::thread_rng();
+        for name_type in names.order.iter() {
+            if name_type == "childhood" && !names.child.is_empty() {
+                name_str = format!(
+                    "{} {}",
+                    name_str,
+                    names.child[rng.gen_range(0..names.child.len())]
+                );
+            }
+            if name_type == "first" {
+                if gender == Gender::M && !names.male.is_empty() {
+                    name_str = format!(
+                        "{} {}",
+                        name_str,
+                        names.male[rng.gen_range(0..names.male.len())]
+                    );
+                }
+                if gender == Gender::F && !names.female.is_empty() {
+                    name_str = format!(
+                        "{} {}",
+                        name_str,
+                        names.female[rng.gen_range(0..names.female.len())]
+                    );
+                }
+            }
+            if name_type == "clan" && !names.clan.is_empty() {
+                name_str = format!(
+                    "{} {}",
+                    name_str,
+                    names.clan[rng.gen_range(0..names.clan.len())]
+                );
+            }
+            if name_type == "family" && !names.family.is_empty() {
+                name_str = format!(
+                    "{} {}",
+                    name_str,
+                    names.family[rng.gen_range(0..names.family.len())]
+                );
+            }
+            if name_type == "surname" && !names.surname.is_empty() {
+                name_str = format!(
+                    "{} {}",
+                    name_str,
+                    names.surname[rng.gen_range(0..names.surname.len())]
+                );
+            }
+            if name_type == "nickname" && !names.nickname.is_empty() {
+                name_str = format!(
+                    "{} {}",
+                    name_str,
+                    names.nickname[rng.gen_range(0..names.nickname.len())]
+                );
+            }
+            if name_type == "virtue" && !names.virtue.is_empty() {
+                name_str = format!(
+                    "{} {}",
+                    name_str,
+                    names.virtue[rng.gen_range(0..names.virtue.len())]
+                );
+            }
+
+            dbg!(&name_type, &name_str);
+        }
+
+        name_str.trim().to_string()
     }
 
     pub fn ability_score_increase(&self, key: &str) -> RaceAbilities {

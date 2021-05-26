@@ -28,7 +28,7 @@ impl Default for Alignment {
     }
 }
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq)]
 pub enum Gender {
     M, //Male
     F, //Female

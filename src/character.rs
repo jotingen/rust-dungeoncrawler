@@ -34,7 +34,7 @@ sm! {
         }
 
         ChooseName {
-            Equipment => Name
+            Equipment, Name => Name
         }
 
         ChooseSummary {
@@ -401,15 +401,32 @@ impl Character {
                     }
                 }
                 NameByChooseName(m) => {
-                    clear();
+                    let mut name: String;
 
-                    println!("Choose name:");
+                    screen.set_header("Character Creation - Name");
 
-                    self.name = "Boaty McBoatface".to_string();
+                    screen.set_msg(
+                        "Type in a desired name, or leave blank for a randomly generated one",
+                    );
+                    screen.set_footer_height(2);
+                    screen.draw();
+                    name = enter_string("Enter name:\n");
+                    name = name.trim().to_string();
 
-                    pause();
+                    if name.is_empty() {
+                        name = races.generate_name(&self.race, self.gender.clone());
+                    }
 
-                    m.transition(ChooseSummary).as_enum()
+                    screen.set_msg(&name);
+                    screen.set_footer_height(1);
+                    screen.draw();
+
+                    if pick_yes_or_no("Use this name?") {
+                        self.name = name;
+                        m.transition(ChooseSummary).as_enum()
+                    } else {
+                        m.transition(ChooseName).as_enum()
+                    }
                 }
                 SummaryByChooseSummary(m) => {
                     clear();

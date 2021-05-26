@@ -1,5 +1,3 @@
-use crate::COLUMN_WIDTH;
-use crate::ROW_HEIGHT;
 use rand::Rng;
 use regex::Regex;
 use std::io::{stdin, stdout, Read, Write};
@@ -37,6 +35,18 @@ pub fn pick_yes_or_no(msg: &str) -> bool {
         return true;
     }
     false
+}
+
+pub fn enter_string(msg: &str) -> String {
+    let mut stdout = stdout();
+    if !msg.is_empty() {
+        print!("{}", msg);
+    }
+    stdout.flush().unwrap();
+    let mut my_str = String::new();
+    stdin().read_line(&mut my_str).unwrap();
+
+    my_str
 }
 
 pub fn pick_number(msg: &str, low: u32, high: u32) -> u32 {
