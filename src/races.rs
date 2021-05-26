@@ -282,8 +282,6 @@ impl Races {
                     names.virtue[rng.gen_range(0..names.virtue.len())]
                 );
             }
-
-            dbg!(&name_type, &name_str);
         }
 
         name_str.trim().to_string()
