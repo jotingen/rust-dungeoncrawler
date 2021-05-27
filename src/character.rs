@@ -429,28 +429,48 @@ impl Character {
                     }
                 }
                 SummaryByChooseSummary(m) => {
-                    clear();
+                    let mut msg: String = "".to_string();
 
-                    println!("Character Summary:");
-
-                    //name
-
-                    //race
-
-                    //age
                     self.age = 25;
-
-                    //class
-
-                    //alignment
                     self.alignment = Alignment::N;
 
-                    //ability_score_base
-                    dbg!(races.ability_score_increase(&self.race));
+                    screen.set_header("Character Creation - Summary");
 
-                    dbg!(&self);
+                    msg = format!("{}Name: {}\n\n", msg, &self.name);
 
-                    pause();
+                    msg = format!("{}Gender: {:?}\n\n", msg, &self.gender);
+
+                    msg = format!("{}Race: {}\n\n", msg, &races.detail_race(&self.race).trim());
+
+                    msg = format!(
+                        "{}Class: {}\n\n",
+                        msg,
+                        &classes.detail_class(&self.class).trim()
+                    );
+
+                    msg = format!("{}Alignment: {:?}\n\n", msg, &self.alignment);
+
+                    msg = format!(
+                        "{}Str:{:>2} Dex:{:>2} Cha:{:>2} Con:{:>2} Int:{:>2} Wis:{:>2}\n\n",
+                        msg,
+                        &self.abilities.strength,
+                        &self.abilities.dexterity,
+                        &self.abilities.charisma,
+                        &self.abilities.constitution,
+                        &self.abilities.intellect,
+                        &self.abilities.wisdom
+                    );
+
+                    let mut weapons_str: Vec<String> = Vec::new();
+                    for weapon in self.weapons.iter() {
+                        weapons_str.push(weapon.detail_name());
+                    }
+                    msg = format!("{}Weapons: {}\n\n", msg, weapons_str.join(", "));
+
+                    msg = format!("{}Armor: {}\n\n", msg, "-");
+
+                    screen.set_msg(&msg);
+                    screen.draw();
 
                     if pick_yes_or_no("Use this character?") {
                         m.transition(Done).as_enum()
