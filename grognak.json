@@ -1,0 +1,43 @@
+{
+  "character": {
+    "name": "Grognak",
+    "gender": "M",
+    "race": "dragonborn",
+    "age": 25,
+    "class": "fighter",
+    "alignment": "N",
+    "abilities": {
+      "strength": 17,
+      "dexterity": 14,
+      "charisma": 9,
+      "constitution": 13,
+      "intellect": 10,
+      "wisdom": 12
+    },
+    "weapons": [
+      {
+        "weapon": "warhammer",
+        "proficiency": "martial",
+        "class": "melee",
+        "cost": 1500,
+        "damage": "1d8 bludgeoning",
+        "weight": 2.0,
+        "properties": {
+          "finesse": false,
+          "heavy": false,
+          "light": false,
+          "loading": false,
+          "ammunition": false,
+          "range_normal": 0,
+          "range_max": 0,
+          "reach": false,
+          "special": false,
+          "thrown": false,
+          "two_handed": false,
+          "versatile": true,
+          "versatile_dmg": "1d10"
+        }
+      }
+    ]
+  }
+}
