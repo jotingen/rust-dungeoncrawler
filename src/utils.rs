@@ -1,6 +1,6 @@
 use rand::Rng;
 use regex::Regex;
-use std::io::{stdin, stdout, Read, Write};
+use std::io::{stdin, stdout, Write};
 use unicode_segmentation::UnicodeSegmentation;
 
 pub fn d(num: u32) -> u32 {
@@ -19,7 +19,8 @@ pub fn pause() {
     let mut stdout = stdout();
     print!("Press Enter to continue...");
     stdout.flush().unwrap();
-    stdin().read_exact(&mut [0]).unwrap();
+    let mut tmp = String::new();
+    stdin().read_line(&mut tmp).unwrap();
 }
 
 pub fn pick_yes_or_no(msg: &str) -> bool {

@@ -59,19 +59,16 @@ fn main() {
                 screen.set_header("Dungeon Crawler");
 
                 screen.set_msg("Welcome to Dungeon Crawler");
-                screen.draw();
-                pause();
+                screen.draw_display();
 
                 if true {
                     screen.set_msg("No savegame found, starting new game...");
-                    screen.draw();
-                    pause();
+                    screen.draw_display();
 
                     m.transition(CreateCharacter).as_enum()
                 } else {
                     screen.set_msg("Loading game...");
-                    screen.draw();
-                    pause();
+                    screen.draw_display();
 
                     m.transition(LoadGame).as_enum()
                 }
@@ -95,8 +92,7 @@ fn main() {
 
             FinishedByDone(_) => {
                     screen.set_msg("Thanks for playing");
-                    screen.draw();
-                    pause();
+                    screen.draw_display();
 
                 break;
             }

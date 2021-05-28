@@ -3,11 +3,24 @@ pub const ROW_HEIGHT: usize = 25;
 
 use crate::utils::*;
 
+enum ScreenType {
+    Display,
+    ChooseYesNo,
+    ChooseNumber,
+    EnterString,
+}
+impl Default for ScreenType {
+    fn default() -> Self {
+        ScreenType::Display
+    }
+}
+
 #[derive(Default)]
 pub struct Screen {
     header: String,
     footer_height: u32,
     msg: String,
+    screen_type: ScreenType,
 }
 
 impl Screen {
@@ -34,7 +47,35 @@ impl Screen {
         self.msg = msg.to_string();
     }
 
-    pub fn draw(&self) {
+    pub fn draw_display(&mut self) {
+        self.screen_type = ScreenType::Display;
+        self.set_footer_height(1);
+        self.draw();
+        pause();
+    }
+
+    pub fn draw_pick_yes_or_no(&mut self, msg: &str) -> bool {
+        self.screen_type = ScreenType::ChooseYesNo;
+        self.set_footer_height(count_newlines(&msg));
+        self.draw();
+        pick_yes_or_no(&msg)
+    }
+
+    pub fn draw_pick_a_number(&mut self, msg: &str, low: u32, high: u32) -> u32 {
+        self.screen_type = ScreenType::ChooseNumber;
+        self.set_footer_height(count_newlines(&msg));
+        self.draw();
+        pick_number(&msg, low, high)
+    }
+
+    pub fn draw_enter_string(&mut self, msg: &str) -> String {
+        self.screen_type = ScreenType::EnterString;
+        self.set_footer_height(count_newlines(&msg));
+        self.draw();
+        enter_string(&msg)
+    }
+
+    fn draw(&self) {
         let mut position = 0;
         let header_formatted = textwrap::fill(
             &self.header,

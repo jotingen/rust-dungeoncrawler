@@ -95,8 +95,7 @@ impl Character {
                     screen.set_header("Character Creation");
 
                     screen.set_msg("Starting character creation...");
-                    screen.draw();
-                    pause();
+                    screen.draw_display();
 
                     m.transition(ChooseGender).as_enum()
                 }
@@ -106,18 +105,16 @@ impl Character {
                                      1) Male\n\
                                      2) Female";
                     screen.set_msg(msg);
-                    screen.draw();
 
-                    let number = pick_number("Choose number, leave blank for random.", 1, 2) - 1;
+                    let number = screen.draw_pick_a_number("Choose number, leave blank for random.", 1, 2) - 1;
 
                     screen.set_msg(&format!(
                         "{}\n\n{}",
                         msg,
                         if number == 0 { "M" } else { "F" }
                     ));
-                    screen.draw();
 
-                    if pick_yes_or_no("Use this gender?") {
+                    if screen.draw_pick_yes_or_no("Use this gender?") {
                         self.gender = if number == 0 { Gender::M } else { Gender::F };
                         m.transition(ChooseRace).as_enum()
                     } else {
@@ -137,18 +134,16 @@ impl Character {
                         );
                     }
                     screen.set_msg(&msg.strip_prefix('\n').unwrap());
-                    screen.draw();
 
-                    let number = pick_number(
+                    let number = screen.draw_pick_a_number(
                         "Choose race, leave blank for random.",
                         1,
                         races.keys().len() as u32,
                     ) - 1;
 
                     screen.set_msg(&races.details(&races.keys()[number as usize]));
-                    screen.draw();
 
-                    if pick_yes_or_no("Use this race?") {
+                    if screen.draw_pick_yes_or_no("Use this race?") {
                         self.race = races.keys()[number as usize].to_string();
                         m.transition(ChooseClass).as_enum()
                     } else {
@@ -168,18 +163,16 @@ impl Character {
                         );
                     }
                     screen.set_msg(&msg.strip_prefix('\n').unwrap());
-                    screen.draw();
 
-                    let number = pick_number(
+                    let number = screen.draw_pick_a_number(
                         "Choose class, leave blank for random.",
                         1,
                         classes.keys().len() as u32,
                     ) - 1;
 
                     screen.set_msg(&classes.details(&classes.keys()[number as usize]));
-                    screen.draw();
 
-                    if pick_yes_or_no("Use this class?") {
+                    if screen.draw_pick_yes_or_no("Use this class?") {
                         self.class = classes.keys()[number as usize].to_string();
                         m.transition(ChooseStats).as_enum()
                     } else {
@@ -224,15 +217,13 @@ impl Character {
                     msg = format!("{}\n\nThe default stats are {:?}", msg, stats);
 
                     screen.set_msg(&msg);
-                    screen.draw();
 
-                    if pick_yes_or_no("Roll your own stats?") {
+                    if screen.draw_pick_yes_or_no("Roll your own stats?") {
                         roll_stats(&mut stats);
                     }
 
                     screen.set_msg(&format!("{}\n\nUsing stats {:?}", msg, stats));
-                    screen.draw();
-                    pause();
+                    screen.draw_display();
 
                     let mut abilities: Vec<&str> = vec![
                         "strength",
@@ -266,9 +257,8 @@ impl Character {
                         }
 
                         screen.set_msg(&msg);
-                        screen.draw();
 
-                        let number = pick_number(
+                        let number = screen.draw_pick_a_number(
                             "Choose ability, leave blank for random.",
                             1,
                             abilities.len() as u32,
@@ -297,9 +287,8 @@ impl Character {
                             msg = format!("{}\n{:>2}) {}", msg, count + 1, stat);
                         }
                         screen.set_msg(&msg);
-                        screen.draw();
 
-                        let number = pick_number(
+                        let number = screen.draw_pick_a_number(
                             "Choose stat, leave blank for random.",
                             1,
                             stats.len() as u32,
@@ -339,8 +328,7 @@ impl Character {
                         &self.abilities.wisdom
                     );
                     screen.set_msg(&msg);
-                    screen.draw();
-                    pause();
+                    screen.draw_display();
 
                     m.transition(ChooseEquipment).as_enum()
                 }
@@ -373,9 +361,8 @@ impl Character {
                     );
 
                     screen.set_msg(&msg);
-                    screen.draw();
 
-                    let number = pick_number(
+                    let number = screen.draw_pick_a_number(
                         "Choose weapon, leave blank for random.",
                         1,
                         weapons.keys().len() as u32,
@@ -387,9 +374,8 @@ impl Character {
                             .unwrap()
                             .details(),
                     );
-                    screen.draw();
 
-                    if pick_yes_or_no("Use this weapon?") {
+                    if screen.draw_pick_yes_or_no("Use this weapon?") {
                         self.weapons.push(
                             weapons
                                 .weapon(&weapons.keys()[number as usize].to_string())
@@ -408,9 +394,7 @@ impl Character {
                     screen.set_msg(
                         "Type in a desired name, or leave blank for a randomly generated one",
                     );
-                    screen.set_footer_height(2);
-                    screen.draw();
-                    name = enter_string("Enter name:\n");
+                    name = screen.draw_enter_string("Enter name:\n");
                     name = name.trim().to_string();
 
                     if name.is_empty() {
@@ -418,10 +402,8 @@ impl Character {
                     }
 
                     screen.set_msg(&name);
-                    screen.set_footer_height(1);
-                    screen.draw();
 
-                    if pick_yes_or_no("Use this name?") {
+                    if screen.draw_pick_yes_or_no("Use this name?") {
                         self.name = name;
                         m.transition(ChooseSummary).as_enum()
                     } else {
@@ -470,9 +452,8 @@ impl Character {
                     msg = format!("{}Armor: {}\n\n", msg, "-");
 
                     screen.set_msg(&msg);
-                    screen.draw();
 
-                    if pick_yes_or_no("Use this character?") {
+                    if screen.draw_pick_yes_or_no("Use this character?") {
                         m.transition(Done).as_enum()
                     } else {
                         m.transition(ChooseGender).as_enum()
