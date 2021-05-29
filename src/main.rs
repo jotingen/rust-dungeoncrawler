@@ -2,6 +2,7 @@ mod basics;
 mod character;
 mod classes;
 mod game;
+mod levels;
 mod races;
 mod screen;
 mod utils;
@@ -83,7 +84,14 @@ fn main() {
                 }
             }
 
-            LoadByLoadGame(m) => m.transition(LaunchGame).as_enum(),
+            LoadByLoadGame(m) => {
+                game.load(&save_file);
+                println!("{}",&game.levels.level(0).map());
+                pause();
+                println!("{}",&game.levels.level(1).map());
+                pause();
+                m.transition(LaunchGame).as_enum()
+            },
 
             CharacterByCreateCharacter(m) => {
                 clear();
