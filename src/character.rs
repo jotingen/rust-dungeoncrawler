@@ -106,7 +106,9 @@ impl Character {
                                      2) Female";
                     screen.set_msg(msg);
 
-                    let number = screen.draw_pick_a_number("Choose number, leave blank for random.", 1, 2) - 1;
+                    let number =
+                        screen.draw_pick_a_number("Choose number, leave blank for random.", 1, 2)
+                            - 1;
 
                     screen.set_msg(&format!(
                         "{}\n\n{}",

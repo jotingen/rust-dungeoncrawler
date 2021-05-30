@@ -46,7 +46,11 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     //Process save file name
-    let save_file: String = if args.len() == 2 {args[1].to_string()} else {"default_save.json".to_string()};
+    let save_file: String = if args.len() == 2 {
+        args[1].to_string()
+    } else {
+        "default_save.json".to_string()
+    };
 
     //Load screen
     let mut screen: Screen = Screen::new();
@@ -77,7 +81,10 @@ fn main() {
 
                     m.transition(LoadGame).as_enum()
                 } else {
-                    screen.set_msg(&format!("No savegame found, starting new game using '{}'", save_file));
+                    screen.set_msg(&format!(
+                        "No savegame found, starting new game using '{}'",
+                        save_file
+                    ));
                     screen.draw_display();
 
                     m.transition(CreateCharacter).as_enum()
@@ -86,16 +93,17 @@ fn main() {
 
             LoadByLoadGame(m) => {
                 game.load(&save_file);
-                println!("{}",&game.levels.level(0).map());
+                println!("{}", &game.levels.level(0).map());
                 pause();
-                println!("{}",&game.levels.level(1).map());
+                println!("{}", &game.levels.level(1).map());
                 pause();
                 m.transition(LaunchGame).as_enum()
-            },
+            }
 
             CharacterByCreateCharacter(m) => {
                 clear();
-                game.character.character_creation(&mut screen,&races, &classes, &weapons);
+                game.character
+                    .character_creation(&mut screen, &races, &classes, &weapons);
                 game.save(&save_file);
                 m.transition(LaunchGame).as_enum()
             }
@@ -109,8 +117,8 @@ fn main() {
             }
 
             FinishedByDone(_) => {
-                    screen.set_msg("Thanks for playing");
-                    screen.draw_display();
+                screen.set_msg("Thanks for playing");
+                screen.draw_display();
 
                 break;
             }
