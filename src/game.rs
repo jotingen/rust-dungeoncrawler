@@ -1,8 +1,6 @@
 use crate::character::Character;
 use crate::levels::Levels;
 use crate::screen::Screen;
-use crate::screen::COLUMN_WIDTH;
-use crate::utils::*;
 use serde::{Deserialize, Serialize};
 use sm::sm;
 use std::fs;
@@ -22,12 +20,23 @@ sm! {
 }
 use crate::game::GameState::{Variant::*, *};
 
-#[derive(Serialize, Deserialize, Debug, Default)]
+#[derive(Serialize, Deserialize, Debug)]
 struct Position {
-    level_number: u32,
+    level_number: i32,
     x: u32,
     y: u32,
 }
+
+impl Default for Position {
+    fn default() -> Self {
+        Position {
+            level_number: -1,
+            x: 0,
+            y: 0,
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, Default)]
 #[serde(default)]
 pub struct Game {
@@ -67,6 +76,16 @@ impl Game {
                     m.transition(ChooseNavigate).as_enum()
                 }
                 NavigateByChooseNavigate(m) => {
+                    //Generate level 0, set position
+                    if self.position.level_number == -1 {
+                        self.position.level_number = 0;
+                        self.levels.level(self.position.level_number as usize);
+                        let (position_x, position_y) = self
+                            .levels
+                            .level_start_position(self.position.level_number as usize);
+                        self.position.x = position_x as u32;
+                        self.position.y = position_y as u32;
+                    }
                     screen.set_map(
                         self.levels
                             .level(self.position.level_number as usize)
@@ -76,10 +95,22 @@ impl Game {
                     );
                     let input_char = screen.draw_enter_char("Move: w/a/s/d Quit: q");
 
-                    if input_char == 'w' && self.position.y != 0 {
+                    if input_char == 'w'
+                        && self.position.y != 0
+                        && self
+                            .levels
+                            .level(self.position.level_number as usize)
+                            .can_move_to(self.position.x as usize, (self.position.y - 1) as usize)
+                    {
                         self.position.y -= 1;
                     }
-                    if input_char == 'a' && self.position.x != 0 {
+                    if input_char == 'a'
+                        && self.position.x != 0
+                        && self
+                            .levels
+                            .level(self.position.level_number as usize)
+                            .can_move_to((self.position.x - 1) as usize, self.position.y as usize)
+                    {
                         self.position.x -= 1;
                     }
                     if input_char == 's'
@@ -88,6 +119,11 @@ impl Game {
                                 .levels
                                 .level(self.position.level_number as usize)
                                 .height() as u32
+                                - 1
+                        && self
+                            .levels
+                            .level(self.position.level_number as usize)
+                            .can_move_to(self.position.x as usize, (self.position.y + 1) as usize)
                     {
                         self.position.y += 1;
                     }
@@ -97,6 +133,11 @@ impl Game {
                                 .levels
                                 .level(self.position.level_number as usize)
                                 .width() as u32
+                                - 1
+                        && self
+                            .levels
+                            .level(self.position.level_number as usize)
+                            .can_move_to((self.position.x + 1) as usize, self.position.y as usize)
                     {
                         self.position.x += 1;
                     }

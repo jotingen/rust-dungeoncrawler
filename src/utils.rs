@@ -51,6 +51,7 @@ pub fn enter_string(msg: &str) -> String {
     my_str
 }
 
+//TODO Make this a seperate thread, instead of stalling the game for input
 #[allow(clippy::never_loop)]
 pub fn enter_char(msg: &str) -> char {
     let mut stdout = stdout();

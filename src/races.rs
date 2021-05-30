@@ -138,6 +138,7 @@ impl Races {
         (None, None)
     }
 
+    #[allow(dead_code)]
     pub fn race(&self, key: &str) -> String {
         let (race_opt, subrace_opt) = self.value(key);
         let race: &Race = race_opt.unwrap();

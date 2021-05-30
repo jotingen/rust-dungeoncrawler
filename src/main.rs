@@ -12,7 +12,6 @@ use crate::classes::Classes;
 use crate::game::Game;
 use crate::races::Races;
 use crate::screen::Screen;
-use crate::utils::*;
 use crate::weapons::Weapons;
 use sm::sm;
 use std::env;

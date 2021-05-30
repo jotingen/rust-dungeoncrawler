@@ -3,12 +3,12 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 enum Tile {
-    Empty,
-    Stone,
+    Floor,
+    Wall,
 }
 impl Default for Tile {
     fn default() -> Self {
-        Tile::Stone
+        Tile::Wall
     }
 }
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -24,7 +24,7 @@ impl Level {
         //Start small, grow quickly, then stablize
         //y = a / (1 + b e-kx ), k > 0
         let a: f32 = 1000.0;
-        let b: f32 = 100.0;
+        let b: f32 = 20.0;
         let k: f32 = 0.75;
         let one: f32 = 1.0;
         let e: f32 = one.exp();
@@ -35,7 +35,7 @@ impl Level {
         let mut level: Level = Level {
             x: dimension_x,
             y: dimension_y,
-            tiles: vec![vec![Tile::Stone; dimension_x]; dimension_y],
+            tiles: vec![vec![Tile::Wall; dimension_x]; dimension_y],
         };
 
         let mut rng = rand::thread_rng();
@@ -61,7 +61,7 @@ impl Level {
             //Check for any empty spaces within and around room
             for x in room_pos_x - 1..=room_pos_x + room_dimension_x + 1 {
                 for y in room_pos_y - 1..=room_pos_y + room_dimension_y + 1 {
-                    if level.tiles[y][x] != Tile::Stone {
+                    if level.tiles[y][x] != Tile::Wall {
                         return false;
                     }
                 }
@@ -83,7 +83,7 @@ impl Level {
                         && pos_y <= y
                         && pos_y + dimension_y > y
                     {
-                        *tile = Tile::Empty;
+                        *tile = Tile::Floor;
                     }
                 }
             }
@@ -106,13 +106,13 @@ impl Level {
             }
 
             //Doorway is on stone
-            if level.tiles[pos_y][pos_x] != Tile::Stone {
+            if level.tiles[pos_y][pos_x] != Tile::Wall {
                 return false;
             }
 
             //Doorway on top
-            if level.tiles[pos_y + 1][pos_x] != Tile::Stone
-                && level.tiles[pos_y - 1][pos_x] == Tile::Stone
+            if level.tiles[pos_y + 1][pos_x] != Tile::Wall
+                && level.tiles[pos_y - 1][pos_x] == Tile::Wall
             {
                 //Check if room can fit on top
 
@@ -149,8 +149,8 @@ impl Level {
             }
 
             //Doorway on bottom
-            if level.tiles[pos_y - 1][pos_x] != Tile::Stone
-                && level.tiles[pos_y + 1][pos_x] == Tile::Stone
+            if level.tiles[pos_y - 1][pos_x] != Tile::Wall
+                && level.tiles[pos_y + 1][pos_x] == Tile::Wall
             {
                 //Check if room can fit on bottom
 
@@ -187,8 +187,8 @@ impl Level {
             }
 
             //Doorway on left
-            if level.tiles[pos_y][pos_x + 1] != Tile::Stone
-                && level.tiles[pos_y][pos_x - 1] == Tile::Stone
+            if level.tiles[pos_y][pos_x + 1] != Tile::Wall
+                && level.tiles[pos_y][pos_x - 1] == Tile::Wall
             {
                 //Check if room can fit on left
 
@@ -225,9 +225,9 @@ impl Level {
             }
 
             //Doorway on right
-            if level.tiles[pos_y][pos_x - 1] != Tile::Stone
-                && level.tiles[pos_y][pos_x + 1] == Tile::Stone
-                && level.tiles[pos_y][pos_x + 2] == Tile::Stone
+            if level.tiles[pos_y][pos_x - 1] != Tile::Wall
+                && level.tiles[pos_y][pos_x + 1] == Tile::Wall
+                && level.tiles[pos_y][pos_x + 2] == Tile::Wall
             {
                 //Check if room can fit on right
 
@@ -326,6 +326,10 @@ impl Level {
         level
     }
 
+    pub fn can_move_to(&self, x: usize, y: usize) -> bool {
+        self.tiles[y][x] != Tile::Wall
+    }
+
     pub fn width(&self) -> usize {
         self.x
     }
@@ -336,30 +340,20 @@ impl Level {
 
     pub fn map_vec(&self) -> Vec<Vec<char>> {
             let mut map_vec = vec![vec![' '; self.x]; self.y];
+            #[allow(clippy::needless_range_loop)]
             for y in 0..self.y {
                 for x in 0..self.x {
-                    if self.tiles[y][x] == Tile::Stone {
-                        map_vec[y][x] = '@';
+                    if self.tiles[y][x] == Tile::Floor {
+                        map_vec[y][x] = '.';
+                    }
+                    if self.tiles[y][x] == Tile::Wall {
+                        map_vec[y][x] = '#';
                     }
                 }
             }
             map_vec
     }
 
-    pub fn map(&self) -> String {
-        let mut map_str = "".to_string();
-        for tile_row in self.tiles.iter() {
-            for tile in tile_row {
-                if *tile == Tile::Stone {
-                    map_str = format!("{}{}", map_str, "@");
-                } else {
-                    map_str = format!("{}{}", map_str, " ");
-                }
-            }
-            map_str = format!("{}\n", map_str);
-        }
-        map_str
-    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -368,10 +362,6 @@ pub struct Levels {
 }
 
 impl Levels {
-    pub fn new() -> Levels {
-        Levels { level: Vec::new() }
-    }
-
     pub fn level(&mut self, level_number: usize) -> &Level {
         if level_number >= self.level.len() {
             for number in self.level.len()..level_number + 1 {
@@ -380,5 +370,8 @@ impl Levels {
             }
         }
         &self.level[level_number]
+    }
+    pub fn level_start_position(&mut self, level_number:usize) -> (usize, usize) {
+        (self.level(level_number).width()/2, self.level(level_number).height()/2)
     }
 }

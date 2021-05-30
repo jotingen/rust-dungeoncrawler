@@ -68,11 +68,11 @@ impl Screen {
                     || y >= map_vec.len() as i32
                     || x >= map_vec[y as usize].len() as i32
                 {
-                    msg_string = format!("{}X", msg_string);
+                    msg_string = format!("{} ", msg_string);
                 } else {
                     //Draw Pat player position
                     if x as u32 == position_x && y as u32 == position_y {
-                        msg_string = format!("{}{}", msg_string, 'P');
+                        msg_string = format!("{}{}", msg_string, '@');
                     } else {
                         msg_string = format!("{}{}", msg_string, map_vec[y as usize][x as usize]);
                     }
@@ -175,7 +175,7 @@ impl Screen {
         }
         if msg_linecount - position < msg_area {
             for _ in 1..(msg_area + position - msg_linecount) {
-                println!(".");
+                println!();
             }
         }
 

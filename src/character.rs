@@ -74,12 +74,6 @@ fn roll_stats(rolls: &mut Vec<u32>) {
 }
 
 impl Character {
-    pub fn new() -> Character {
-        Character {
-            ..Default::default()
-        }
-    }
-
     pub fn character_creation(
         &mut self,
         screen: &mut Screen,
