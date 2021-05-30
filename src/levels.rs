@@ -16,6 +16,7 @@ pub struct Level {
     x: usize,
     y: usize,
     tiles: Vec<Vec<Tile>>,
+    seen: Vec<Vec<bool>>,
 }
 
 impl Level {
@@ -36,6 +37,7 @@ impl Level {
             x: dimension_x,
             y: dimension_y,
             tiles: vec![vec![Tile::Wall; dimension_x]; dimension_y],
+            seen: vec![vec![false; dimension_x]; dimension_y],
         };
 
         let mut rng = rand::thread_rng();
@@ -337,23 +339,6 @@ impl Level {
     pub fn height(&self) -> usize {
         self.y
     }
-
-    pub fn map_vec(&self) -> Vec<Vec<char>> {
-            let mut map_vec = vec![vec![' '; self.x]; self.y];
-            #[allow(clippy::needless_range_loop)]
-            for y in 0..self.y {
-                for x in 0..self.x {
-                    if self.tiles[y][x] == Tile::Floor {
-                        map_vec[y][x] = '.';
-                    }
-                    if self.tiles[y][x] == Tile::Wall {
-                        map_vec[y][x] = '#';
-                    }
-                }
-            }
-            map_vec
-    }
-
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -371,7 +356,64 @@ impl Levels {
         }
         &self.level[level_number]
     }
-    pub fn level_start_position(&mut self, level_number:usize) -> (usize, usize) {
-        (self.level(level_number).width()/2, self.level(level_number).height()/2)
+    pub fn level_start_position(&mut self, level_number: usize) -> (usize, usize) {
+        (
+            self.level(level_number).width() / 2,
+            self.level(level_number).height() / 2,
+        )
+    }
+
+    //Generate map vector with symbols
+    //Update seen vector within here
+    pub fn map_vec(
+        &mut self,
+        level_number: usize,
+        player_pos_x: usize,
+        player_pos_y: usize,
+    ) -> Vec<Vec<char>> {
+        //Make sure level has been generated
+        let _ = self.level(level_number);
+        let mut map_vec =
+            vec![vec![' '; self.level[level_number].width()]; self.level[level_number].height()];
+
+        //Determine what we can see
+        //Assume for now
+        // Can see through walls
+        // Can see in a 9x9 square
+        let mut map_visible =
+            vec![vec![false; self.level[level_number].width()]; self.level[level_number].height()];
+
+        #[allow(clippy::needless_range_loop)]
+        for y in 0..self.level[level_number].height() {
+            for x in 0..self.level[level_number].width() {
+                if (y as i32 - player_pos_y as i32).abs() <= 4
+                    && (x as i32 - player_pos_x as i32).abs() <= 4
+                {
+                    map_visible[y][x] = true;
+                    self.level[level_number].seen[y][x] = true;
+                }
+            }
+        }
+
+        #[allow(clippy::needless_range_loop)]
+        for y in 0..self.level[level_number].height() {
+            for x in 0..self.level[level_number].width() {
+                if self.level[level_number].tiles[y][x] == Tile::Floor {
+                    if map_visible[y][x] {
+                        map_vec[y][x] = '.';
+                    } else if self.level[level_number].seen[y][x] {
+                        map_vec[y][x] = 'x';
+                    }
+                }
+                if self.level[level_number].tiles[y][x] == Tile::Wall {
+                    if map_visible[y][x] {
+                        map_vec[y][x] = '#';
+                    } else if self.level[level_number].seen[y][x] {
+                        map_vec[y][x] = 'X';
+                    }
+                }
+            }
+        }
+        map_vec
     }
 }

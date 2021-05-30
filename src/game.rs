@@ -88,8 +88,7 @@ impl Game {
                     }
                     screen.set_map(
                         self.levels
-                            .level(self.position.level_number as usize)
-                            .map_vec(),
+                            .map_vec(self.position.level_number as usize,self.position.x as usize, self.position.y as usize),
                         self.position.x,
                         self.position.y,
                     );

@@ -80,7 +80,8 @@ impl Screen {
             }
             msg_string = format!("{}\n", msg_string);
         }
-        self.msg = msg_string.trim().to_string();
+        msg_string.pop(); //Remove trailing newline
+        self.msg = msg_string;
     }
 
     pub fn draw_display(&mut self) {
