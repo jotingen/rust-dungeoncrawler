@@ -1,6 +1,7 @@
+use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
 use rand::Rng;
 use regex::Regex;
-use std::io::{stdin, stdout, Write};
+use std::io::{self, stdin, stdout, Read, Write};
 use unicode_segmentation::UnicodeSegmentation;
 
 pub fn d(num: u32) -> u32 {
@@ -48,6 +49,27 @@ pub fn enter_string(msg: &str) -> String {
     stdin().read_line(&mut my_str).unwrap();
 
     my_str
+}
+
+#[allow(clippy::never_loop)]
+pub fn enter_char(msg: &str) -> char {
+    let mut stdout = stdout();
+    if !msg.is_empty() {
+        print!("{}", msg);
+    }
+    stdout.flush().unwrap();
+    enable_raw_mode().unwrap();
+    let mut my_char: char = ' ';
+    for b in io::stdin().bytes() {
+        my_char = b.unwrap() as char;
+        //Clippy does not like returning from here
+        //but I only want a character, without 
+        //this it seems to keep polling for characters
+        disable_raw_mode().unwrap();
+        return my_char;
+    }
+    disable_raw_mode().unwrap();
+    my_char
 }
 
 pub fn pick_number(msg: &str, low: u32, high: u32) -> u32 {

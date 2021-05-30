@@ -24,8 +24,8 @@ impl Level {
         //Start small, grow quickly, then stablize
         //y = a / (1 + b e-kx ), k > 0
         let a: f32 = 1000.0;
-        let b: f32 = 20.0;
-        let k: f32 = 0.5;
+        let b: f32 = 100.0;
+        let k: f32 = 0.75;
         let one: f32 = 1.0;
         let e: f32 = one.exp();
         let dimension_y = (a / (1.0 + b * e.powf(-k * level_number as f32))).round() as usize;
@@ -324,6 +324,26 @@ impl Level {
         }
 
         level
+    }
+
+    pub fn width(&self) -> usize {
+        self.x
+    }
+
+    pub fn height(&self) -> usize {
+        self.y
+    }
+
+    pub fn map_vec(&self) -> Vec<Vec<char>> {
+            let mut map_vec = vec![vec![' '; self.x]; self.y];
+            for y in 0..self.y {
+                for x in 0..self.x {
+                    if self.tiles[y][x] == Tile::Stone {
+                        map_vec[y][x] = '@';
+                    }
+                }
+            }
+            map_vec
     }
 
     pub fn map(&self) -> String {

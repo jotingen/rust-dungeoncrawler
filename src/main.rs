@@ -93,15 +93,10 @@ fn main() {
 
             LoadByLoadGame(m) => {
                 game.load(&save_file);
-                println!("{}", &game.levels.level(0).map());
-                pause();
-                println!("{}", &game.levels.level(1).map());
-                pause();
                 m.transition(LaunchGame).as_enum()
             }
 
             CharacterByCreateCharacter(m) => {
-                clear();
                 game.character
                     .character_creation(&mut screen, &races, &classes, &weapons);
                 game.save(&save_file);
@@ -109,9 +104,7 @@ fn main() {
             }
 
             GameByLaunchGame(m) => {
-                clear();
-
-                pause();
+                game.run(&mut screen);
 
                 m.transition(Done).as_enum()
             }
