@@ -1,6 +1,8 @@
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 
+use crate::utils::*;
+
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 enum Tile {
     Floor,
@@ -379,18 +381,45 @@ impl Levels {
         //Determine what we can see
         //Assume for now
         // Can see through walls
-        // Can see in a 9x9 square
+        // Can see in a radius-5 circle
         let mut map_visible =
             vec![vec![false; self.level[level_number].width()]; self.level[level_number].height()];
 
         #[allow(clippy::needless_range_loop)]
         for y in 0..self.level[level_number].height() {
             for x in 0..self.level[level_number].width() {
-                if (y as i32 - player_pos_y as i32).abs() <= 4
-                    && (x as i32 - player_pos_x as i32).abs() <= 4
-                {
-                    map_visible[y][x] = true;
-                    self.level[level_number].seen[y][x] = true;
+                let distance: i32 = (0.5 * (x as i32 - player_pos_x as i32).pow(2) as f32
+                    + (y as i32 - player_pos_y as i32).pow(2) as f32)
+                    .sqrt()
+                    .round() as i32;
+                if distance <= 10 {
+                    let line_vec = vec_between_points(
+                        player_pos_x as i32,
+                        player_pos_y as i32,
+                        x as i32,
+                        y as i32,
+                    );
+                    //dbg!((player_pos_x,player_pos_y),(x,y));
+                    for (line_vec_x, line_vec_y) in line_vec {
+                        //dbg!((line_vec_x,line_vec_y),&self.level[level_number].tiles[y][x]);
+                        if line_vec_x <= 0
+                            || line_vec_y <= 0
+                            || line_vec_x as usize >= self.level[level_number].x
+                            || line_vec_y as usize >= self.level[level_number].y
+                        {
+                            break;
+                        }
+                        map_visible[line_vec_y as usize][line_vec_x as usize] = true;
+                        self.level[level_number].seen[line_vec_y as usize][line_vec_x as usize] =
+                            true;
+                        if self.level[level_number].tiles[line_vec_y as usize][line_vec_x as usize]
+                            == Tile::Wall
+                        {
+                            //dbg!("BROKE");
+                            break;
+                        }
+                    }
+                    //pause();
                 }
             }
         }
@@ -405,12 +434,9 @@ impl Levels {
                         map_vec[y][x] = 'x';
                     }
                 }
-                if self.level[level_number].tiles[y][x] == Tile::Wall {
-                    if map_visible[y][x] {
-                        map_vec[y][x] = '#';
-                    } else if self.level[level_number].seen[y][x] {
-                        map_vec[y][x] = 'X';
-                    }
+                if self.level[level_number].tiles[y][x] == Tile::Wall && (map_visible[y][x] 
+                    || self.level[level_number].seen[y][x]) {
+                    map_vec[y][x] = '#';
                 }
             }
         }
