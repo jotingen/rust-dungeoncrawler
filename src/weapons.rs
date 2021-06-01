@@ -262,7 +262,10 @@ impl Weapons {
         keys
     }
 
-    pub fn value(&self, key: &str) -> Option<&Weapon> {
+    pub fn value(
+        &self,
+        key: &str,
+    ) -> Option<&Weapon> {
         for weapon in &self.weapons {
             if weapon.weapon == key {
                 return Some(weapon);
@@ -271,7 +274,10 @@ impl Weapons {
         None
     }
 
-    pub fn weapon(&self, key: &str) -> Option<Weapon> {
+    pub fn weapon(
+        &self,
+        key: &str,
+    ) -> Option<Weapon> {
         for weapon in self.weapons.iter() {
             if weapon.weapon == key {
                 return Some(weapon.clone());

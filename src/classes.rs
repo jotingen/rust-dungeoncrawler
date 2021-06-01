@@ -33,7 +33,10 @@ impl Classes {
         keys
     }
 
-    fn value(&self, key: &str) -> Option<&Class> {
+    fn value(
+        &self,
+        key: &str,
+    ) -> Option<&Class> {
         for class in &self.classes {
             if class.class == key {
                 return Some(class);
@@ -42,39 +45,66 @@ impl Classes {
         None
     }
 
-    pub fn class(&self, key: &str) -> String {
+    pub fn class(
+        &self,
+        key: &str,
+    ) -> String {
         self.value(key).unwrap().class.clone()
     }
 
-    pub fn description(&self, key: &str) -> String {
+    pub fn description(
+        &self,
+        key: &str,
+    ) -> String {
         self.value(key).unwrap().description.clone()
     }
 
-    pub fn hit_die(&self, key: &str) -> u8 {
+    pub fn hit_die(
+        &self,
+        key: &str,
+    ) -> u8 {
         self.value(key).unwrap().hit_die
     }
 
-    pub fn primary_ability(&self, key: &str) -> Vec<String> {
+    pub fn primary_ability(
+        &self,
+        key: &str,
+    ) -> Vec<String> {
         self.value(key).unwrap().primary_ability.clone()
     }
 
-    pub fn saving_throw_proficiencies(&self, key: &str) -> Vec<String> {
+    pub fn saving_throw_proficiencies(
+        &self,
+        key: &str,
+    ) -> Vec<String> {
         self.value(key).unwrap().saving_throw_proficiencies.clone()
     }
 
-    pub fn armor_proficiencies(&self, key: &str) -> Vec<String> {
+    pub fn armor_proficiencies(
+        &self,
+        key: &str,
+    ) -> Vec<String> {
         self.value(key).unwrap().armor_proficiencies.clone()
     }
 
-    pub fn weapon_proficiencies(&self, key: &str) -> Vec<String> {
+    pub fn weapon_proficiencies(
+        &self,
+        key: &str,
+    ) -> Vec<String> {
         self.value(key).unwrap().weapon_proficiencies.clone()
     }
 
-    pub fn detail_class(&self, key: &str) -> String {
+    pub fn detail_class(
+        &self,
+        key: &str,
+    ) -> String {
         format!("{}\n", self.class(key).to_case(Case::Title))
     }
 
-    fn detail_description(&self, key: &str) -> String {
+    fn detail_description(
+        &self,
+        key: &str,
+    ) -> String {
         format!(
             "{}\n",
             textwrap::fill(
@@ -86,7 +116,10 @@ impl Classes {
         )
     }
 
-    fn detail_hit_die(&self, key: &str) -> String {
+    fn detail_hit_die(
+        &self,
+        key: &str,
+    ) -> String {
         let hit_die = self.hit_die(key);
         let mut hit_die_str: String;
 
@@ -97,7 +130,10 @@ impl Classes {
         hit_die_str
     }
 
-    fn detail_primary_ability(&self, key: &str) -> String {
+    fn detail_primary_ability(
+        &self,
+        key: &str,
+    ) -> String {
         let primary_ability = self.primary_ability(key);
         let mut primary_ability_str: String;
 
@@ -119,7 +155,10 @@ impl Classes {
         primary_ability_str
     }
 
-    fn detail_saving_throw_proficiencies(&self, key: &str) -> String {
+    fn detail_saving_throw_proficiencies(
+        &self,
+        key: &str,
+    ) -> String {
         let saving_throw_proficiencies = self.saving_throw_proficiencies(key);
         let mut saving_throw_proficiencies_str: String;
 
@@ -141,7 +180,10 @@ impl Classes {
         saving_throw_proficiencies_str
     }
 
-    fn detail_armor_proficiencies(&self, key: &str) -> String {
+    fn detail_armor_proficiencies(
+        &self,
+        key: &str,
+    ) -> String {
         let armor_proficiencies = self.armor_proficiencies(key);
         let mut armor_proficiencies_str: String;
 
@@ -163,7 +205,10 @@ impl Classes {
         armor_proficiencies_str
     }
 
-    fn detail_weapon_proficiencies(&self, key: &str) -> String {
+    fn detail_weapon_proficiencies(
+        &self,
+        key: &str,
+    ) -> String {
         let weapon_proficiencies = self.weapon_proficiencies(key);
         let mut weapon_proficiencies_str: String;
 
@@ -185,7 +230,10 @@ impl Classes {
         weapon_proficiencies_str
     }
 
-    pub fn details(&self, key: &str) -> String {
+    pub fn details(
+        &self,
+        key: &str,
+    ) -> String {
         [
             self.detail_class(key),
             self.detail_description(key),

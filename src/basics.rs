@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+///Struct containing the 6 different abilities
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct Abilities {
     pub strength: u32,
@@ -10,6 +11,9 @@ pub struct Abilities {
     pub wisdom: u32,
 }
 
+///Enum containing the 9 different alignments
+///
+///Defaults to N
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub enum Alignment {
     LG, //Lawful good
@@ -28,6 +32,9 @@ impl Default for Alignment {
     }
 }
 
+///Enum containing 2 genders
+///
+///Defaults to M
 #[derive(Clone, Serialize, Deserialize, Debug, PartialEq)]
 pub enum Gender {
     M, //Male

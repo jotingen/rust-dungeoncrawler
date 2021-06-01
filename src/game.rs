@@ -1,6 +1,7 @@
 use crate::character::Character;
 use crate::levels::Levels;
 use crate::screen::Screen;
+use crate::utils::*;
 use serde::{Deserialize, Serialize};
 use sm::sm;
 use std::fs;
@@ -23,8 +24,8 @@ use crate::game::GameState::{Variant::*, *};
 #[derive(Serialize, Deserialize, Debug)]
 struct Position {
     level_number: i32,
-    x: u32,
-    y: u32,
+    x: i32,
+    y: i32,
 }
 
 impl Default for Position {
@@ -52,17 +53,26 @@ impl Game {
         }
     }
 
-    pub fn save(&self, file: &str) {
+    pub fn save(
+        &self,
+        file: &str,
+    ) {
         let game_str = serde_json::to_string_pretty(&self).unwrap();
         fs::write(file, game_str).expect("Unable to save file");
     }
 
-    pub fn load(&mut self, file: &str) {
+    pub fn load(
+        &mut self,
+        file: &str,
+    ) {
         let game_str = fs::read_to_string(&file).expect("Unable to open file");
         *self = serde_json::from_str(&game_str).unwrap();
     }
 
-    pub fn run(&mut self, screen: &mut Screen) {
+    pub fn run(
+        &mut self,
+        screen: &mut Screen,
+    ) {
         let mut sm = Machine::new(Idle).as_enum();
         let original_header = screen.get_header();
         loop {
@@ -80,15 +90,20 @@ impl Game {
                     if self.position.level_number == -1 {
                         self.position.level_number = 0;
                         self.levels.level(self.position.level_number as usize);
-                        let (position_x, position_y) = self
+                        let position_p = self
                             .levels
                             .level_start_position(self.position.level_number as usize);
-                        self.position.x = position_x as u32;
-                        self.position.y = position_y as u32;
+                        self.position.x = position_p.x;
+                        self.position.y = position_p.y;
                     }
                     screen.set_map(
-                        self.levels
-                            .map_vec(self.position.level_number as usize,self.position.x as usize, self.position.y as usize),
+                        self.levels.map_vec(
+                            self.position.level_number as usize,
+                            &Point {
+                                x: self.position.x,
+                                y: self.position.y,
+                            },
+                        ),
                         self.position.x,
                         self.position.y,
                     );
@@ -117,7 +132,7 @@ impl Game {
                             != self
                                 .levels
                                 .level(self.position.level_number as usize)
-                                .height() as u32
+                                .height() as i32
                                 - 1
                         && self
                             .levels
@@ -131,7 +146,7 @@ impl Game {
                             != self
                                 .levels
                                 .level(self.position.level_number as usize)
-                                .width() as u32
+                                .width() as i32
                                 - 1
                         && self
                             .levels

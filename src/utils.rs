@@ -4,6 +4,17 @@ use regex::Regex;
 use std::io::{self, stdin, stdout, Read, Write};
 use unicode_segmentation::UnicodeSegmentation;
 
+///Struct indicating a point on the game grid
+///
+///Can attempt to draw below point 0, so i32 are used
+pub struct Point {
+    pub x: i32,
+    pub y: i32,
+}
+
+///Dice roll
+///
+///Returns random number, size of dice is provided
 pub fn d(num: u32) -> u32 {
     if num == 0 {
         return 0;
@@ -12,10 +23,12 @@ pub fn d(num: u32) -> u32 {
     rng.gen_range(1..(num + 1))
 }
 
+///Clears the console
 pub fn clear() {
     print!("{esc}c", esc = 27 as char);
 }
 
+///Prompts user to press enter to continue
 pub fn pause() {
     let mut stdout = stdout();
     print!("Press Enter to continue...");
@@ -24,6 +37,9 @@ pub fn pause() {
     stdin().read_line(&mut tmp).unwrap();
 }
 
+///Prompts user to pick yes or not
+///
+///If an empty response is given, assumes yes
 pub fn pick_yes_or_no(msg: &str) -> bool {
     let mut stdout = stdout();
     print!("{} (Y/n) ", msg);
@@ -39,6 +55,7 @@ pub fn pick_yes_or_no(msg: &str) -> bool {
     false
 }
 
+///Prompts user to enter a string
 pub fn enter_string(msg: &str) -> String {
     let mut stdout = stdout();
     if !msg.is_empty() {
@@ -51,6 +68,7 @@ pub fn enter_string(msg: &str) -> String {
     my_str
 }
 
+///Prompts user to enter a character
 //TODO Make this a seperate thread, instead of stalling the game for input
 #[allow(clippy::never_loop)]
 pub fn enter_char(msg: &str) -> char {
@@ -64,7 +82,7 @@ pub fn enter_char(msg: &str) -> char {
     for b in io::stdin().bytes() {
         my_char = b.unwrap() as char;
         //Clippy does not like returning from here
-        //but I only want a character, without 
+        //but I only want a character, without
         //this it seems to keep polling for characters
         disable_raw_mode().unwrap();
         return my_char;
@@ -73,7 +91,15 @@ pub fn enter_char(msg: &str) -> char {
     my_char
 }
 
-pub fn pick_number(msg: &str, low: u32, high: u32) -> u32 {
+///Prompts user to pick a number in a given range
+///
+///If an empty string is given, a random number is chosen
+///If a non-number is given, the user is reprompted
+pub fn pick_number(
+    msg: &str,
+    low: u32,
+    high: u32,
+) -> u32 {
     let mut stdout = stdout();
     loop {
         if !msg.is_empty() {
@@ -96,6 +122,7 @@ pub fn pick_number(msg: &str, low: u32, high: u32) -> u32 {
     }
 }
 
+///Counts the number of newlines in a string
 pub fn count_newlines(msg: &str) -> u32 {
     let mut count = 0;
     for c in msg.graphemes(true) {
@@ -106,64 +133,82 @@ pub fn count_newlines(msg: &str) -> u32 {
     count
 }
 
-pub fn vec_between_points_low(x0: i32, y0: i32, x1: i32, y1:i32) -> Vec<(i32, i32)> {
-    let dx = x1 - x0;
-    let mut dy = y1 - y0;
+/// Generates a vector of points from (x0,y0) to (x1,y1)
+///
+/// Taken from Wikipedia: [https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm]()
+pub fn vec_between_points(
+    p0: &Point,
+    p1: &Point,
+) -> Vec<Point> {
+    if (p1.y - p0.y).abs() < (p1.x - p0.x).abs() {
+        if p0.x > p1.x {
+            vec_between_points_low(p1, p0)
+                .into_iter()
+                .rev()
+                .collect()
+        } else {
+            vec_between_points_low(p0, p1)
+        }
+    } else if p0.y > p1.y {
+        vec_between_points_high(p1, p0)
+            .into_iter()
+            .rev()
+            .collect()
+    } else {
+        vec_between_points_high(p0, p1)
+    }
+}
+
+fn vec_between_points_low(
+    p0: &Point,
+    p1: &Point,
+) -> Vec<Point> {
+    let dx = p1.x - p0.x;
+    let mut dy = p1.y - p0.y;
     let mut yi = 1;
     if dy < 0 {
         yi = -1;
         dy = -dy;
     }
-    let mut diff = (2*dy)-dx;
-    let mut y = y0;
+    let mut diff = (2 * dy) - dx;
+    let mut y = p0.y;
 
-    let mut line: Vec<(i32,i32)> = Vec::new();
-    for x in x0..=x1 {
-        line.push((x,y));
-        if diff>0 {
+    let mut line: Vec<Point> = Vec::new();
+    for x in p0.x..=p1.x {
+        line.push(Point{x, y});
+        if diff > 0 {
             y += yi;
-            diff += 2*(dy-dx);
+            diff += 2 * (dy - dx);
         } else {
-            diff += 2*dy;
+            diff += 2 * dy;
         }
     }
     line
 }
 
-pub fn vec_between_points_high(x0: i32, y0: i32, x1: i32, y1:i32) -> Vec<(i32, i32)> {
-    let mut dx = x1 - x0;
-    let dy = y1 - y0;
+fn vec_between_points_high(
+    p0: &Point,
+    p1: &Point,
+) -> Vec<Point> {
+    let mut dx = p1.x - p0.x;
+    let dy = p1.y - p0.y;
     let mut xi = 1;
     if dx < 0 {
         xi = -1;
         dx = -dx;
     }
-    let mut diff = (2*dx)-dy;
-    let mut x = x0;
+    let mut diff = (2 * dx) - dy;
+    let mut x = p0.x;
 
-    let mut line: Vec<(i32,i32)> = Vec::new();
-    for y in y0..=y1 {
-        line.push((x,y));
-        if diff>0 {
+    let mut line: Vec<Point> = Vec::new();
+    for y in p0.y..=p1.y {
+        line.push(Point{x, y});
+        if diff > 0 {
             x += xi;
-            diff += 2*(dx-dy);
+            diff += 2 * (dx - dy);
         } else {
-            diff += 2*dx;
+            diff += 2 * dx;
         }
     }
     line
-}
-
-pub fn vec_between_points(x0: i32, y0: i32, x1: i32, y1:i32) -> Vec<(i32, i32)> {
-    if (y1-y0).abs() < (x1-x0).abs() {
-        if x0 > x1 {
-            vec_between_points_low(x1,y1,x0,y0).into_iter().rev().collect()
-        } else {
-            vec_between_points_low(x0,y0,x1,y1)
-        }
-    } else if y0 > y1 {
-        vec_between_points_high(x1,y1,x0,y0).into_iter().rev().collect()
-    } else {
-        vec_between_points_high(x0,y0,x1,y1)
-    }
 }

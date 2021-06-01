@@ -35,19 +35,33 @@ impl Screen {
         self.header.clone()
     }
 
-    pub fn set_header(&mut self, header: &str) {
+    pub fn set_header(
+        &mut self,
+        header: &str,
+    ) {
         self.header = header.to_string();
     }
 
-    pub fn set_footer_height(&mut self, footer_height: u32) {
+    pub fn set_footer_height(
+        &mut self,
+        footer_height: u32,
+    ) {
         self.footer_height = footer_height;
     }
 
-    pub fn set_msg(&mut self, msg: &str) {
+    pub fn set_msg(
+        &mut self,
+        msg: &str,
+    ) {
         self.msg = msg.to_string();
     }
 
-    pub fn set_map(&mut self, map_vec: Vec<Vec<char>>, position_x: u32, position_y: u32) {
+    pub fn set_map(
+        &mut self,
+        map_vec: Vec<Vec<char>>,
+        position_x: i32,
+        position_y: i32,
+    ) {
         //Generate top coorinate of map, may be negative
         //Assume header/footer are one line, cut off later if not
         let msg_area_width = COLUMN_WIDTH;
@@ -71,7 +85,7 @@ impl Screen {
                     msg_string = format!("{} ", msg_string);
                 } else {
                     //Draw Pat player position
-                    if x as u32 == position_x && y as u32 == position_y {
+                    if x == position_x && y == position_y {
                         msg_string = format!("{}{}", msg_string, '@');
                     } else {
                         msg_string = format!("{}{}", msg_string, map_vec[y as usize][x as usize]);
@@ -91,28 +105,42 @@ impl Screen {
         pause();
     }
 
-    pub fn draw_pick_yes_or_no(&mut self, msg: &str) -> bool {
+    pub fn draw_pick_yes_or_no(
+        &mut self,
+        msg: &str,
+    ) -> bool {
         self.screen_type = ScreenType::ChooseYesNo;
         self.set_footer_height(count_newlines(&msg));
         self.draw();
         pick_yes_or_no(&msg)
     }
 
-    pub fn draw_pick_a_number(&mut self, msg: &str, low: u32, high: u32) -> u32 {
+    pub fn draw_pick_a_number(
+        &mut self,
+        msg: &str,
+        low: u32,
+        high: u32,
+    ) -> u32 {
         self.screen_type = ScreenType::ChooseNumber;
         self.set_footer_height(count_newlines(&msg));
         self.draw();
         pick_number(&msg, low, high)
     }
 
-    pub fn draw_enter_string(&mut self, msg: &str) -> String {
+    pub fn draw_enter_string(
+        &mut self,
+        msg: &str,
+    ) -> String {
         self.screen_type = ScreenType::EnterString;
         self.set_footer_height(count_newlines(&msg));
         self.draw();
         enter_string(&msg)
     }
 
-    pub fn draw_enter_char(&mut self, msg: &str) -> char {
+    pub fn draw_enter_char(
+        &mut self,
+        msg: &str,
+    ) -> char {
         self.screen_type = ScreenType::EnterString;
         self.set_footer_height(count_newlines(&msg));
         self.draw();

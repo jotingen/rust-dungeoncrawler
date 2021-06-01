@@ -122,7 +122,10 @@ impl Races {
         keys
     }
 
-    fn value(&self, key: &str) -> (Option<&Race>, Option<&SubRace>) {
+    fn value(
+        &self,
+        key: &str,
+    ) -> (Option<&Race>, Option<&SubRace>) {
         for race in &self.races {
             if race.race == key {
                 return (Some(race), None);
@@ -139,7 +142,10 @@ impl Races {
     }
 
     #[allow(dead_code)]
-    pub fn race(&self, key: &str) -> String {
+    pub fn race(
+        &self,
+        key: &str,
+    ) -> String {
         let (race_opt, subrace_opt) = self.value(key);
         let race: &Race = race_opt.unwrap();
         let race_str: String;
@@ -153,7 +159,10 @@ impl Races {
         race_str
     }
 
-    pub fn description(&self, key: &str) -> String {
+    pub fn description(
+        &self,
+        key: &str,
+    ) -> String {
         let (race_opt, subrace_opt) = self.value(key);
         let race = race_opt.unwrap();
         let mut description_str: String;
@@ -168,7 +177,10 @@ impl Races {
         description_str
     }
 
-    pub fn names(&self, key: &str) -> RaceNames {
+    pub fn names(
+        &self,
+        key: &str,
+    ) -> RaceNames {
         let (race_opt, subrace_opt) = self.value(key);
         let race = race_opt.unwrap();
         let mut names = RaceNames {
@@ -217,7 +229,11 @@ impl Races {
         names
     }
 
-    pub fn generate_name(&self, key: &str, gender: Gender) -> String {
+    pub fn generate_name(
+        &self,
+        key: &str,
+        gender: Gender,
+    ) -> String {
         let names = self.names(key);
         let mut name_str: String;
 
@@ -288,7 +304,10 @@ impl Races {
         name_str.trim().to_string()
     }
 
-    pub fn ability_score_increase(&self, key: &str) -> RaceAbilities {
+    pub fn ability_score_increase(
+        &self,
+        key: &str,
+    ) -> RaceAbilities {
         let (race_opt, subrace_opt) = self.value(key);
         let race = race_opt.unwrap();
         let mut ability_score_increase = race.ability_score_increase.clone();
@@ -317,35 +336,50 @@ impl Races {
         ability_score_increase
     }
 
-    pub fn age(&self, key: &str) -> RaceAge {
+    pub fn age(
+        &self,
+        key: &str,
+    ) -> RaceAge {
         let (race_opt, _) = self.value(key);
         let race = race_opt.unwrap();
 
         race.age.clone()
     }
 
-    pub fn alignment(&self, key: &str) -> RaceAlignment {
+    pub fn alignment(
+        &self,
+        key: &str,
+    ) -> RaceAlignment {
         let (race_opt, _) = self.value(key);
         let race = race_opt.unwrap();
 
         race.alignment.clone()
     }
 
-    pub fn size(&self, key: &str) -> RaceSize {
+    pub fn size(
+        &self,
+        key: &str,
+    ) -> RaceSize {
         let (race_opt, _) = self.value(key);
         let race = race_opt.unwrap();
 
         race.size.clone()
     }
 
-    pub fn speed(&self, key: &str) -> RaceSpeed {
+    pub fn speed(
+        &self,
+        key: &str,
+    ) -> RaceSpeed {
         let (race_opt, _) = self.value(key);
         let race = race_opt.unwrap();
 
         race.speed.clone()
     }
 
-    pub fn modifiers(&self, key: &str) -> Vec<RaceModifier> {
+    pub fn modifiers(
+        &self,
+        key: &str,
+    ) -> Vec<RaceModifier> {
         let (race_opt, subrace_opt) = self.value(key);
         let race = race_opt.unwrap();
         let mut modifiers: Vec<RaceModifier>;
@@ -359,7 +393,10 @@ impl Races {
         modifiers
     }
 
-    pub fn languages(&self, key: &str) -> Vec<String> {
+    pub fn languages(
+        &self,
+        key: &str,
+    ) -> Vec<String> {
         let (race_opt, _) = self.value(key);
         let race = race_opt.unwrap();
         let mut languages: Vec<String>;
@@ -370,7 +407,10 @@ impl Races {
         languages
     }
 
-    pub fn detail_race(&self, key: &str) -> String {
+    pub fn detail_race(
+        &self,
+        key: &str,
+    ) -> String {
         let (race_opt, subrace_opt) = self.value(key);
         let race: &Race = race_opt.unwrap();
         let race_str: String;
@@ -388,7 +428,10 @@ impl Races {
         race_str
     }
 
-    fn detail_description(&self, key: &str) -> String {
+    fn detail_description(
+        &self,
+        key: &str,
+    ) -> String {
         format!(
             "{}\n",
             textwrap::fill(
@@ -400,7 +443,10 @@ impl Races {
         )
     }
 
-    fn detail_names(&self, key: &str) -> String {
+    fn detail_names(
+        &self,
+        key: &str,
+    ) -> String {
         let names = self.names(key);
         let mut names_str: String;
 
@@ -537,7 +583,10 @@ impl Races {
         names_str
     }
 
-    fn detail_ability_score_increase(&self, key: &str) -> String {
+    fn detail_ability_score_increase(
+        &self,
+        key: &str,
+    ) -> String {
         let ability_score_increase = self.ability_score_increase(key);
         let mut ability_score_increase_str: String;
 
@@ -568,7 +617,10 @@ impl Races {
         ability_score_increase_str
     }
 
-    fn detail_age(&self, key: &str) -> String {
+    fn detail_age(
+        &self,
+        key: &str,
+    ) -> String {
         let age = self.age(key);
         let mut age_str: String;
 
@@ -593,7 +645,10 @@ impl Races {
         age_str
     }
 
-    fn detail_alignment(&self, key: &str) -> String {
+    fn detail_alignment(
+        &self,
+        key: &str,
+    ) -> String {
         let alignment = self.alignment(key);
         let mut alignment_str: String;
 
@@ -615,7 +670,10 @@ impl Races {
         alignment_str
     }
 
-    fn detail_size(&self, key: &str) -> String {
+    fn detail_size(
+        &self,
+        key: &str,
+    ) -> String {
         let size = self.size(key);
         let mut size_str: String;
 
@@ -640,7 +698,10 @@ impl Races {
         size_str
     }
 
-    fn detail_speed(&self, key: &str) -> String {
+    fn detail_speed(
+        &self,
+        key: &str,
+    ) -> String {
         let speed = self.speed(key);
         let mut speed_str: String;
 
@@ -662,7 +723,10 @@ impl Races {
         speed_str
     }
 
-    fn detail_modifiers(&self, key: &str) -> String {
+    fn detail_modifiers(
+        &self,
+        key: &str,
+    ) -> String {
         let modifiers = self.modifiers(key);
         let mut modifiers_str: String;
 
@@ -685,7 +749,10 @@ impl Races {
         modifiers_str
     }
 
-    fn detail_languages(&self, key: &str) -> String {
+    fn detail_languages(
+        &self,
+        key: &str,
+    ) -> String {
         let languages = self.languages(key);
         let mut languages_str: String;
 
@@ -706,7 +773,10 @@ impl Races {
         languages_str
     }
 
-    pub fn details(&self, key: &str) -> String {
+    pub fn details(
+        &self,
+        key: &str,
+    ) -> String {
         [
             self.detail_race(key),
             self.detail_description(key),
