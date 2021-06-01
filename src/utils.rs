@@ -1,7 +1,9 @@
+use crossterm::event::{poll, read, Event, KeyCode, KeyEvent};
 use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
 use rand::Rng;
 use regex::Regex;
-use std::io::{self, stdin, stdout, Read, Write};
+use std::io::{stdin, stdout, Write};
+use std::time::Duration;
 use unicode_segmentation::UnicodeSegmentation;
 
 ///Struct indicating a point on the game grid
@@ -69,7 +71,6 @@ pub fn enter_string(msg: &str) -> String {
 }
 
 ///Prompts user to enter a character
-//TODO Make this a seperate thread, instead of stalling the game for input
 #[allow(clippy::never_loop)]
 pub fn enter_char(msg: &str) -> char {
     let mut stdout = stdout();
@@ -79,13 +80,17 @@ pub fn enter_char(msg: &str) -> char {
     stdout.flush().unwrap();
     enable_raw_mode().unwrap();
     let mut my_char: char = ' ';
-    for b in io::stdin().bytes() {
-        my_char = b.unwrap() as char;
-        //Clippy does not like returning from here
-        //but I only want a character, without
-        //this it seems to keep polling for characters
-        disable_raw_mode().unwrap();
-        return my_char;
+
+    if poll(Duration::from_millis(1_000)).unwrap() {
+        if let Event::Key(KeyEvent {
+            code: KeyCode::Char(c),
+            ..
+        }) = read().unwrap()
+        {
+            my_char = c;
+            disable_raw_mode().unwrap();
+            return my_char;
+        }
     }
     disable_raw_mode().unwrap();
     my_char
@@ -142,18 +147,12 @@ pub fn vec_between_points(
 ) -> Vec<Point> {
     if (p1.y - p0.y).abs() < (p1.x - p0.x).abs() {
         if p0.x > p1.x {
-            vec_between_points_low(p1, p0)
-                .into_iter()
-                .rev()
-                .collect()
+            vec_between_points_low(p1, p0).into_iter().rev().collect()
         } else {
             vec_between_points_low(p0, p1)
         }
     } else if p0.y > p1.y {
-        vec_between_points_high(p1, p0)
-            .into_iter()
-            .rev()
-            .collect()
+        vec_between_points_high(p1, p0).into_iter().rev().collect()
     } else {
         vec_between_points_high(p0, p1)
     }
@@ -175,7 +174,7 @@ fn vec_between_points_low(
 
     let mut line: Vec<Point> = Vec::new();
     for x in p0.x..=p1.x {
-        line.push(Point{x, y});
+        line.push(Point { x, y });
         if diff > 0 {
             y += yi;
             diff += 2 * (dy - dx);
@@ -202,7 +201,7 @@ fn vec_between_points_high(
 
     let mut line: Vec<Point> = Vec::new();
     for y in p0.y..=p1.y {
-        line.push(Point{x, y});
+        line.push(Point { x, y });
         if diff > 0 {
             x += xi;
             diff += 2 * (dx - dy);
