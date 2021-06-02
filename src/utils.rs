@@ -33,7 +33,6 @@ pub fn clear() {
 ///Prompts user to press enter to continue
 pub fn pause() {
     let mut stdout = stdout();
-    print!("Press Enter to continue...");
     stdout.flush().unwrap();
     let mut tmp = String::new();
     stdin().read_line(&mut tmp).unwrap();
@@ -42,9 +41,8 @@ pub fn pause() {
 ///Prompts user to pick yes or not
 ///
 ///If an empty response is given, assumes yes
-pub fn pick_yes_or_no(msg: &str) -> bool {
+pub fn pick_yes_or_no() -> bool {
     let mut stdout = stdout();
-    print!("{} (Y/n) ", msg);
     stdout.flush().unwrap();
     let mut my_yes_or_no_str = String::new();
     stdin().read_line(&mut my_yes_or_no_str).unwrap();
@@ -58,11 +56,8 @@ pub fn pick_yes_or_no(msg: &str) -> bool {
 }
 
 ///Prompts user to enter a string
-pub fn enter_string(msg: &str) -> String {
+pub fn enter_string() -> String {
     let mut stdout = stdout();
-    if !msg.is_empty() {
-        print!("{}", msg);
-    }
     stdout.flush().unwrap();
     let mut my_str = String::new();
     stdin().read_line(&mut my_str).unwrap();
@@ -72,11 +67,8 @@ pub fn enter_string(msg: &str) -> String {
 
 ///Prompts user to enter a character
 #[allow(clippy::never_loop)]
-pub fn enter_char(msg: &str) -> char {
+pub fn enter_char() -> char {
     let mut stdout = stdout();
-    if !msg.is_empty() {
-        print!("{}", msg);
-    }
     stdout.flush().unwrap();
     enable_raw_mode().unwrap();
     let mut my_char: char = ' ';
@@ -101,16 +93,11 @@ pub fn enter_char(msg: &str) -> char {
 ///If an empty string is given, a random number is chosen
 ///If a non-number is given, the user is reprompted
 pub fn pick_number(
-    msg: &str,
     low: u32,
     high: u32,
 ) -> u32 {
     let mut stdout = stdout();
     loop {
-        if !msg.is_empty() {
-            print!("{} ", msg);
-        }
-        print!("({}-{}) ", low, high);
         stdout.flush().unwrap();
         let mut my_number_str = String::new();
         stdin().read_line(&mut my_number_str).unwrap();

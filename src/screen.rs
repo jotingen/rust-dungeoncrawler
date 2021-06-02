@@ -23,7 +23,7 @@ impl Default for ScreenType {
 #[derive(Default)]
 pub struct Screen {
     header: String,
-    footer_height: u32,
+    footer: String,
     msg: String,
     screen_type: ScreenType,
     buffer: Vec<Vec<char>>,
@@ -33,8 +33,8 @@ impl Screen {
     pub fn new() -> Screen {
         clear();
         stdout().execute(Hide).unwrap();
+        stdout().flush().unwrap();
         Screen {
-            footer_height: 1,
             buffer: vec![vec![' '; COLUMN_WIDTH]; ROW_HEIGHT],
             ..Default::default()
         }
@@ -51,11 +51,11 @@ impl Screen {
         self.header = header.to_string();
     }
 
-    pub fn set_footer_height(
+    pub fn set_footer(
         &mut self,
-        footer_height: u32,
+        footer: &str,
     ) {
-        self.footer_height = footer_height;
+        self.footer = footer.to_string();
     }
 
     pub fn set_msg(
@@ -109,7 +109,7 @@ impl Screen {
 
     pub fn draw_display(&mut self) {
         self.screen_type = ScreenType::Display;
-        self.set_footer_height(1);
+        self.set_footer("Press Enter to continue...");
         self.draw();
         pause();
     }
@@ -119,9 +119,9 @@ impl Screen {
         msg: &str,
     ) -> bool {
         self.screen_type = ScreenType::ChooseYesNo;
-        self.set_footer_height(count_newlines(&msg));
+        self.set_footer(&format!("{} (Y/n)",&msg));
         self.draw();
-        pick_yes_or_no(&msg)
+        pick_yes_or_no()
     }
 
     pub fn draw_pick_a_number(
@@ -131,9 +131,9 @@ impl Screen {
         high: u32,
     ) -> u32 {
         self.screen_type = ScreenType::ChooseNumber;
-        self.set_footer_height(count_newlines(&msg));
+        self.set_footer(&format!("{} {}-{} ",&msg, low, high));
         self.draw();
-        pick_number(&msg, low, high)
+        pick_number(low, high)
     }
 
     pub fn draw_enter_string(
@@ -141,9 +141,9 @@ impl Screen {
         msg: &str,
     ) -> String {
         self.screen_type = ScreenType::EnterString;
-        self.set_footer_height(count_newlines(&msg));
+        self.set_footer(&msg);
         self.draw();
-        enter_string(&msg)
+        enter_string()
     }
 
     pub fn draw_enter_char(
@@ -151,9 +151,9 @@ impl Screen {
         msg: &str,
     ) -> char {
         self.screen_type = ScreenType::EnterString;
-        self.set_footer_height(count_newlines(&msg));
+        self.set_footer(&msg);
         self.draw();
-        enter_char(&msg)
+        enter_char()
     }
 
     fn draw(&mut self) {
@@ -168,8 +168,8 @@ impl Screen {
             .split('\n')
             .map(|s| s.to_string())
             .collect();
-
         let header_linecount = count_newlines(&header_formatted);
+
         let msg_formatted = strip_trailing_newline(&textwrap::fill(
             &self.msg,
             textwrap::Options::new(COLUMN_WIDTH)
@@ -179,14 +179,25 @@ impl Screen {
         .to_string();
         let msg_formatted_vec: Vec<String> =
             msg_formatted.split('\n').map(|s| s.to_string()).collect();
-
         let msg_linecount = count_newlines(&msg_formatted);
+        
+        let footer_formatted = textwrap::fill(
+            &self.footer,
+            textwrap::Options::new(COLUMN_WIDTH)
+                .initial_indent("")
+                .subsequent_indent(""),
+        );
+        let footer_formatted_vec: Vec<String> = footer_formatted
+            .split('\n')
+            .map(|s| s.to_string())
+            .collect();
+        let footer_linecount = count_newlines(&footer_formatted);
 
         let msg_area = ROW_HEIGHT as u32
                           - header_linecount //Header
                           - 1 //Spacer
                           - 1 //Bottom Spacer
-                          - self.footer_height; //Footer
+                          - footer_linecount; //Footer
 
         //While the message is too big for the current area, need to do scrolling
         let mut buffer_new: Vec<Vec<char>>;
@@ -259,6 +270,12 @@ impl Screen {
         buffer_column = ROW_HEIGHT - 2;
         buffer_new[buffer_column] = vec!['-'; COLUMN_WIDTH];
 
+        buffer_column = ROW_HEIGHT - 1;
+        for footer_formatted in footer_formatted_vec.iter() {
+            buffer_new[buffer_column].splice(0..footer_formatted.len(), footer_formatted.chars());
+            buffer_column += 1;
+        }
+
         #[allow(clippy::clippy::needless_range_loop)]
         for row in 0..ROW_HEIGHT {
             for col in 0..COLUMN_WIDTH {
@@ -272,6 +289,7 @@ impl Screen {
         stdout()
             .execute(MoveTo(0, (ROW_HEIGHT - 1) as u16))
             .unwrap();
+        stdout().execute(Hide).unwrap();
         stdout().flush().unwrap();
     }
 }
