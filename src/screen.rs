@@ -2,6 +2,11 @@ pub const COLUMN_WIDTH: usize = 80;
 pub const ROW_HEIGHT: usize = 25;
 
 use crate::utils::*;
+use crossterm::{
+    cursor::{Hide, MoveTo},
+    ExecutableCommand,
+};
+use std::io::{stdout, Write};
 
 enum ScreenType {
     Display,
@@ -21,12 +26,16 @@ pub struct Screen {
     footer_height: u32,
     msg: String,
     screen_type: ScreenType,
+    buffer: Vec<Vec<char>>,
 }
 
 impl Screen {
     pub fn new() -> Screen {
+        clear();
+        stdout().execute(Hide).unwrap();
         Screen {
             footer_height: 1,
+            buffer: vec![vec![' '; COLUMN_WIDTH]; ROW_HEIGHT],
             ..Default::default()
         }
     }
@@ -75,7 +84,7 @@ impl Screen {
         let top_pos_y: i32 = position_y as i32 - msg_area_height as i32 / 2;
 
         let mut msg_string = "".to_string();
-        for y in top_pos_y..=top_pos_y + msg_area_height as i32 {
+        for y in top_pos_y..top_pos_y + msg_area_height as i32 {
             for x in top_pos_x..top_pos_x + msg_area_width as i32 {
                 if y < 0
                     || x < 0
@@ -147,7 +156,7 @@ impl Screen {
         enter_char(&msg)
     }
 
-    fn draw(&self) {
+    fn draw(&mut self) {
         let mut position = 0;
         let header_formatted = textwrap::fill(
             &self.header,
@@ -155,14 +164,19 @@ impl Screen {
                 .initial_indent("")
                 .subsequent_indent(""),
         );
+        let header_formatted_vec: Vec<String> = header_formatted
+            .split('\n')
+            .map(|s| s.to_string())
+            .collect();
 
         let header_linecount = count_newlines(&header_formatted);
-        let msg_formatted = textwrap::fill(
+        let msg_formatted = strip_trailing_newline(&textwrap::fill(
             &self.msg,
             textwrap::Options::new(COLUMN_WIDTH)
                 .initial_indent("")
                 .subsequent_indent(""),
-        );
+        ))
+        .to_string();
         let msg_formatted_vec: Vec<String> =
             msg_formatted.split('\n').map(|s| s.to_string()).collect();
 
@@ -175,39 +189,89 @@ impl Screen {
                           - self.footer_height; //Footer
 
         //While the message is too big for the current area, need to do scrolling
+        let mut buffer_new: Vec<Vec<char>>;
+        let mut buffer_column;
         while msg_linecount - position > msg_area {
-            clear();
+            buffer_new = vec![vec![' '; COLUMN_WIDTH]; ROW_HEIGHT];
+            buffer_column = 0;
 
-            println!("{}", header_formatted);
+            for header_formatted in header_formatted_vec.iter() {
+                buffer_new[buffer_column]
+                    .splice(0..header_formatted.len(), header_formatted.chars());
+                buffer_column += 1;
+            }
 
-            println!("{}", "-".repeat(COLUMN_WIDTH));
+            buffer_new[buffer_column] = vec!['-'; COLUMN_WIDTH];
+            buffer_column += 1;
 
             for n in 0..msg_area - 1 {
-                println!("{}", msg_formatted_vec[(n + position) as usize]);
+                buffer_new[buffer_column].splice(
+                    0..msg_formatted_vec[(n + position) as usize].len(),
+                    msg_formatted_vec[(n + position) as usize].chars(),
+                );
+                buffer_column += 1;
             }
             position += (msg_area * 3) / 4;
 
-            println!("...");
-            println!("{}", "-".repeat(COLUMN_WIDTH));
+            buffer_new[buffer_column].splice(0..3, vec!['.'; 3]);
+
+            buffer_column = ROW_HEIGHT - 2;
+            buffer_new[buffer_column] = vec!['-'; COLUMN_WIDTH];
+
+            #[allow(clippy::clippy::needless_range_loop)]
+            for row in 0..ROW_HEIGHT {
+                for col in 0..COLUMN_WIDTH {
+                    if self.buffer[row][col] != buffer_new[row][col] {
+                        self.buffer[row][col] = buffer_new[row][col];
+                        stdout().execute(MoveTo(col as u16, row as u16)).unwrap();
+                        stdout().write_all(&[self.buffer[row][col] as u8]).unwrap();
+                    }
+                }
+            }
+            stdout()
+                .execute(MoveTo(0, (ROW_HEIGHT - 1) as u16))
+                .unwrap();
+            stdout().flush().unwrap();
+
             pause();
         }
 
         //At this point the message can fit into the current area, just print and add spacing
-        clear();
+        buffer_new = vec![vec![' '; COLUMN_WIDTH]; ROW_HEIGHT];
+        buffer_column = 0;
 
-        println!("{}", header_formatted);
+        for header_formatted in header_formatted_vec.iter() {
+            buffer_new[buffer_column].splice(0..header_formatted.len(), header_formatted.chars());
+            buffer_column += 1;
+        }
 
-        println!("{}", "-".repeat(COLUMN_WIDTH));
+        buffer_new[buffer_column] = vec!['-'; COLUMN_WIDTH];
+        buffer_column += 1;
 
         for n in 0..(msg_formatted_vec.len() - position as usize) {
-            println!("{}", msg_formatted_vec[n + position as usize]);
-        }
-        if msg_linecount - position < msg_area {
-            for _ in 1..(msg_area + position - msg_linecount) {
-                println!();
-            }
+            buffer_new[buffer_column].splice(
+                0..msg_formatted_vec[n + position as usize].len(),
+                msg_formatted_vec[n + position as usize].chars(),
+            );
+            buffer_column += 1;
         }
 
-        println!("{}", "-".repeat(COLUMN_WIDTH));
+        buffer_column = ROW_HEIGHT - 2;
+        buffer_new[buffer_column] = vec!['-'; COLUMN_WIDTH];
+
+        #[allow(clippy::clippy::needless_range_loop)]
+        for row in 0..ROW_HEIGHT {
+            for col in 0..COLUMN_WIDTH {
+                if self.buffer[row][col] != buffer_new[row][col] {
+                    self.buffer[row][col] = buffer_new[row][col];
+                    stdout().execute(MoveTo(col as u16, row as u16)).unwrap();
+                    stdout().write_all(&[self.buffer[row][col] as u8]).unwrap();
+                }
+            }
+        }
+        stdout()
+            .execute(MoveTo(0, (ROW_HEIGHT - 1) as u16))
+            .unwrap();
+        stdout().flush().unwrap();
     }
 }

@@ -211,3 +211,9 @@ fn vec_between_points_high(
     }
     line
 }
+
+pub fn strip_trailing_newline(input: &str) -> &str {
+    return input.strip_suffix("\r\n")
+           .or_else(|| input.strip_suffix("\n"))
+           .unwrap_or(&input);
+}
