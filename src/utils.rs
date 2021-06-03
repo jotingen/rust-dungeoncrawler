@@ -116,7 +116,7 @@ pub fn pick_number(
 
 ///Counts the number of newlines in a string
 pub fn count_newlines(msg: &str) -> u32 {
-    let mut count = 0;
+    let mut count = 1;
     for c in msg.graphemes(true) {
         if c == "\n" {
             count += 1;

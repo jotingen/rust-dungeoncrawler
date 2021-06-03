@@ -119,7 +119,7 @@ impl Screen {
         msg: &str,
     ) -> bool {
         self.screen_type = ScreenType::ChooseYesNo;
-        self.set_footer(&format!("{} (Y/n)",&msg));
+        self.set_footer(&format!("{} (Y/n)", &msg));
         self.draw();
         pick_yes_or_no()
     }
@@ -131,7 +131,7 @@ impl Screen {
         high: u32,
     ) -> u32 {
         self.screen_type = ScreenType::ChooseNumber;
-        self.set_footer(&format!("{} {}-{} ",&msg, low, high));
+        self.set_footer(&format!("{} {}-{} ", &msg, low, high));
         self.draw();
         pick_number(low, high)
     }
@@ -157,7 +157,14 @@ impl Screen {
     }
 
     fn draw(&mut self) {
+        //New buffer
+        let mut buffer_new: Vec<Vec<char>>;
+        let mut buffer_column;
+
+        //Position of message box
         let mut position = 0;
+
+        //Process Header
         let header_formatted = textwrap::fill(
             &self.header,
             textwrap::Options::new(COLUMN_WIDTH)
@@ -170,6 +177,7 @@ impl Screen {
             .collect();
         let header_line_count = count_newlines(&header_formatted);
 
+        //Process Message
         let msg_formatted = strip_trailing_newline(&textwrap::fill(
             &self.msg,
             textwrap::Options::new(COLUMN_WIDTH)
@@ -180,7 +188,8 @@ impl Screen {
         let msg_formatted_vec: Vec<String> =
             msg_formatted.split('\n').map(|s| s.to_string()).collect();
         let msg_line_count = count_newlines(&msg_formatted);
-        
+
+        //Process Footer
         let footer_formatted = textwrap::fill(
             &self.footer,
             textwrap::Options::new(COLUMN_WIDTH)
@@ -193,6 +202,7 @@ impl Screen {
             .collect();
         let footer_line_count = count_newlines(&footer_formatted);
 
+        //Determine area available for message
         let msg_area = ROW_HEIGHT as u32
                           - header_line_count //Header
                           - 1 //Spacer
@@ -200,22 +210,45 @@ impl Screen {
                           - footer_line_count; //Footer
 
         //While the message is too big for the current area, need to do scrolling
-        let mut buffer_new: Vec<Vec<char>>;
-        let mut buffer_column;
         while msg_line_count - position > msg_area {
+            //Initialize new buffer
             buffer_new = vec![vec![' '; COLUMN_WIDTH]; ROW_HEIGHT];
             buffer_column = 0;
 
+            //Process temp footer
+            let footer_formatted = textwrap::fill(
+                "Press enter to continue",
+                textwrap::Options::new(COLUMN_WIDTH)
+                    .initial_indent("")
+                    .subsequent_indent(""),
+            );
+            let footer_formatted_vec: Vec<String> = footer_formatted
+                .split('\n')
+                .map(|s| s.to_string())
+                .collect();
+            let footer_line_count = count_newlines(&footer_formatted);
+
+            //Determine temp area available for message
+            let msg_area = ROW_HEIGHT as u32
+                          - header_line_count //Header
+                          - 1 //Spacer
+                          - 1 //Ellipses
+                          - 1 //Bottom Spacer
+                          - footer_line_count; //Footer
+
+            //Insert header
             for header_formatted in header_formatted_vec.iter() {
                 buffer_new[buffer_column]
                     .splice(0..header_formatted.len(), header_formatted.chars());
                 buffer_column += 1;
             }
 
+            //Insert seperator
             buffer_new[buffer_column] = vec!['-'; COLUMN_WIDTH];
             buffer_column += 1;
 
-            for n in 0..msg_area - 1 {
+            //Insert message
+            for n in 0..msg_area {
                 buffer_new[buffer_column].splice(
                     0..msg_formatted_vec[(n + position) as usize].len(),
                     msg_formatted_vec[(n + position) as usize].chars(),
@@ -224,11 +257,22 @@ impl Screen {
             }
             position += (msg_area * 3) / 4;
 
+            //Insert ellipsis
             buffer_new[buffer_column].splice(0..3, vec!['.'; 3]);
+            buffer_column += 1;
 
-            buffer_column = ROW_HEIGHT - 2;
+            //Insert seperator
             buffer_new[buffer_column] = vec!['-'; COLUMN_WIDTH];
+            buffer_column += 1;
 
+            //Insert footer
+            for footer_formatted in footer_formatted_vec.iter() {
+                buffer_new[buffer_column]
+                    .splice(0..footer_formatted.len(), footer_formatted.chars());
+                buffer_column += 1;
+            }
+
+            //Update buffer/stdout with modified cells
             #[allow(clippy::clippy::needless_range_loop)]
             for row in 0..ROW_HEIGHT {
                 for col in 0..COLUMN_WIDTH {
@@ -239,11 +283,16 @@ impl Screen {
                     }
                 }
             }
+
+            //Move curser to footer
             stdout()
                 .execute(MoveTo(0, (ROW_HEIGHT - 1) as u16))
                 .unwrap();
+
+            //Flush changes
             stdout().flush().unwrap();
 
+            //Wait for enter
             pause();
         }
 
