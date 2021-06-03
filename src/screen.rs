@@ -300,14 +300,17 @@ impl Screen {
         buffer_new = vec![vec![' '; COLUMN_WIDTH]; ROW_HEIGHT];
         buffer_column = 0;
 
+        //Insert header
         for header_formatted in header_formatted_vec.iter() {
             buffer_new[buffer_column].splice(0..header_formatted.len(), header_formatted.chars());
             buffer_column += 1;
         }
 
+        //Insert seperator
         buffer_new[buffer_column] = vec!['-'; COLUMN_WIDTH];
         buffer_column += 1;
 
+        //Insert message
         for n in 0..(msg_formatted_vec.len() - position as usize) {
             buffer_new[buffer_column].splice(
                 0..msg_formatted_vec[n + position as usize].len(),
@@ -316,15 +319,23 @@ impl Screen {
             buffer_column += 1;
         }
 
-        buffer_column = ROW_HEIGHT - 2;
-        buffer_new[buffer_column] = vec!['-'; COLUMN_WIDTH];
+        //Move to end of message
+        buffer_column = (ROW_HEIGHT as u32
+                        - 1 //Bottom Spacer
+                        - footer_line_count //Footer
+                        - 1) as usize;
 
-        buffer_column = ROW_HEIGHT - 1;
+        //Insert seperator
+        buffer_new[buffer_column] = vec!['-'; COLUMN_WIDTH];
+        buffer_column += 1;
+
+        //Insert footer
         for footer_formatted in footer_formatted_vec.iter() {
             buffer_new[buffer_column].splice(0..footer_formatted.len(), footer_formatted.chars());
             buffer_column += 1;
         }
 
+        //Update buffer/stdout with modified cells
         #[allow(clippy::clippy::needless_range_loop)]
         for row in 0..ROW_HEIGHT {
             for col in 0..COLUMN_WIDTH {
@@ -335,10 +346,14 @@ impl Screen {
                 }
             }
         }
+
+        //Move curser to footer
         stdout()
             .execute(MoveTo(0, (ROW_HEIGHT - 1) as u16))
             .unwrap();
         stdout().execute(Hide).unwrap();
+
+        //Flush changes
         stdout().flush().unwrap();
     }
 }
