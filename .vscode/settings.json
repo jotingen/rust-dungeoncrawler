@@ -1,0 +1,11 @@
+{
+    "terminal.integrated.cursorWidth": 0,
+    "cSpell.words": [
+        "clippy",
+        "codegen",
+        "crossterm",
+        "dungeoncrawler",
+        "serde",
+        "textwrap"
+    ]
+}

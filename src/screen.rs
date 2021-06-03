@@ -71,7 +71,7 @@ impl Screen {
         position_x: i32,
         position_y: i32,
     ) {
-        //Generate top coorinate of map, may be negative
+        //Generate top coordinate of map, may be negative
         //Assume header/footer are one line, cut off later if not
         let msg_area_width = COLUMN_WIDTH;
         let msg_area_height = ROW_HEIGHT as u32
@@ -168,7 +168,7 @@ impl Screen {
             .split('\n')
             .map(|s| s.to_string())
             .collect();
-        let header_linecount = count_newlines(&header_formatted);
+        let header_line_count = count_newlines(&header_formatted);
 
         let msg_formatted = strip_trailing_newline(&textwrap::fill(
             &self.msg,
@@ -179,7 +179,7 @@ impl Screen {
         .to_string();
         let msg_formatted_vec: Vec<String> =
             msg_formatted.split('\n').map(|s| s.to_string()).collect();
-        let msg_linecount = count_newlines(&msg_formatted);
+        let msg_line_count = count_newlines(&msg_formatted);
         
         let footer_formatted = textwrap::fill(
             &self.footer,
@@ -191,18 +191,18 @@ impl Screen {
             .split('\n')
             .map(|s| s.to_string())
             .collect();
-        let footer_linecount = count_newlines(&footer_formatted);
+        let footer_line_count = count_newlines(&footer_formatted);
 
         let msg_area = ROW_HEIGHT as u32
-                          - header_linecount //Header
+                          - header_line_count //Header
                           - 1 //Spacer
                           - 1 //Bottom Spacer
-                          - footer_linecount; //Footer
+                          - footer_line_count; //Footer
 
         //While the message is too big for the current area, need to do scrolling
         let mut buffer_new: Vec<Vec<char>>;
         let mut buffer_column;
-        while msg_linecount - position > msg_area {
+        while msg_line_count - position > msg_area {
             buffer_new = vec![vec![' '; COLUMN_WIDTH]; ROW_HEIGHT];
             buffer_column = 0;
 
