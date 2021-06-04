@@ -7,6 +7,8 @@ use crate::utils::*;
 enum Tile {
     Floor,
     Wall,
+    StairDown,
+    StairUp,
 }
 impl Default for Tile {
     fn default() -> Self {
@@ -20,6 +22,8 @@ pub struct Level {
     y: usize,
     tiles: Vec<Vec<Tile>>,
     seen: Vec<Vec<bool>>,
+    stair_down_location: Point,
+    stair_up_location: Point,
 }
 
 impl Level {
@@ -46,6 +50,11 @@ impl Level {
             y: height,
             tiles: vec![vec![Tile::Wall; width]; height],
             seen: vec![vec![false; width]; height],
+            stair_down_location: Point { x: 0, y: 0 }, //TMP
+            stair_up_location: Point {
+                x: width as i32 / 2,
+                y: height as i32 / 2,
+            },
         };
 
         let mut rng = rand::thread_rng();
@@ -129,7 +138,7 @@ impl Level {
             } else {
                 rng.gen_range(20..50)
             };
-     
+
             //Hallway on top
             if level.tiles[pos_y + 1][pos_x] != Tile::Wall
                 && level.tiles[pos_y - 1][pos_x] == Tile::Wall
@@ -188,7 +197,7 @@ impl Level {
                 }
                 let room_pos_y: usize = pos_y + hallway_length;
 
-                if room_collision(level, pos_x, pos_y - 1, 1, hallway_length+1)
+                if room_collision(level, pos_x, pos_y - 1, 1, hallway_length + 1)
                     && room_collision(
                         level,
                         room_pos_x,
@@ -260,7 +269,7 @@ impl Level {
                 if level.x <= room_dimension_x + pos_x + hallway_length {
                     return false;
                 }
-                let room_pos_x: usize = pos_x + hallway_length+1;
+                let room_pos_x: usize = pos_x + hallway_length + 1;
 
                 //Pick random Y offset and see if it can fit
                 let pos_y_offset = rng.gen_range(0..room_dimension_y);
@@ -269,7 +278,7 @@ impl Level {
                 }
                 let room_pos_y: usize = pos_y - pos_y_offset;
 
-                if room_collision(level, pos_x + 1, pos_y, hallway_length+1, 1)
+                if room_collision(level, pos_x + 1, pos_y, hallway_length + 1, 1)
                     && room_collision(
                         level,
                         room_pos_x,
@@ -278,7 +287,7 @@ impl Level {
                         room_dimension_y,
                     )
                 {
-                    empty_out_area(level, pos_x, pos_y, hallway_length+1, 1);
+                    empty_out_area(level, pos_x, pos_y, hallway_length + 1, 1);
                     empty_out_area(
                         level,
                         room_pos_x,
@@ -350,6 +359,38 @@ impl Level {
             }
         }
 
+        //Build stairs up if not level 0
+        if level_number != 0 {
+            level.tiles[level.stair_up_location.y as usize][level.stair_up_location.x as usize] =
+                Tile::StairUp;
+        }
+
+        //Build stairs down somewhere
+        //Must have one, keep looping until we find space
+        loop {
+            let stairway_down_pos_x: usize = rng.gen_range(2..=width - 2);
+            let stairway_down_pos_y: usize = rng.gen_range(2..=height - 2);
+
+            //Want a 3x3 empty space
+            if level.tiles[stairway_down_pos_y - 1][stairway_down_pos_x - 1] == Tile::Floor
+                && level.tiles[stairway_down_pos_y - 1][stairway_down_pos_x] == Tile::Floor
+                && level.tiles[stairway_down_pos_y - 1][stairway_down_pos_x + 1] == Tile::Floor
+                && level.tiles[stairway_down_pos_y][stairway_down_pos_x - 1] == Tile::Floor
+                && level.tiles[stairway_down_pos_y][stairway_down_pos_x] == Tile::Floor
+                && level.tiles[stairway_down_pos_y][stairway_down_pos_x + 1] == Tile::Floor
+                && level.tiles[stairway_down_pos_y + 1][stairway_down_pos_x - 1] == Tile::Floor
+                && level.tiles[stairway_down_pos_y + 1][stairway_down_pos_x] == Tile::Floor
+                && level.tiles[stairway_down_pos_y + 1][stairway_down_pos_x + 1] == Tile::Floor
+            {
+                level.stair_down_location = Point {
+                    x: stairway_down_pos_x as i32,
+                    y: stairway_down_pos_y as i32,
+                };
+                level.tiles[stairway_down_pos_y][stairway_down_pos_x] = Tile::StairDown;
+                break;
+            }
+        }
+
         level
     }
 
@@ -367,6 +408,22 @@ impl Level {
 
     pub fn height(&self) -> usize {
         self.y
+    }
+
+    pub fn is_stair_down_at(
+        &self,
+        x: usize,
+        y: usize,
+    ) -> bool {
+        self.tiles[y][x] == Tile::StairDown
+    }
+
+    pub fn is_stair_up_at(
+        &self,
+        x: usize,
+        y: usize,
+    ) -> bool {
+        self.tiles[y][x] == Tile::StairUp
     }
 
     ///Generate map vector with symbols
@@ -432,6 +489,12 @@ impl Level {
                         map_vec[y][x] = ':';
                     }
                 }
+                if self.tiles[y][x] == Tile::StairUp && (map_visible[y][x] || self.seen[y][x]) {
+                    map_vec[y][x] = '<';
+                }
+                if self.tiles[y][x] == Tile::StairDown && (map_visible[y][x] || self.seen[y][x]) {
+                    map_vec[y][x] = '>';
+                }
                 if self.tiles[y][x] == Tile::Wall && (map_visible[y][x] || self.seen[y][x]) {
                     map_vec[y][x] = '#';
                 }
@@ -468,6 +531,17 @@ impl Levels {
         Point {
             x: self.level(level_number).width() as i32 / 2,
             y: self.level(level_number).height() as i32 / 2,
+        }
+    }
+
+    ///Get the exit position of the level
+    pub fn level_exit_position(
+        &mut self,
+        level_number: usize,
+    ) -> Point {
+        Point {
+            x: self.level(level_number).stair_down_location.x,
+            y: self.level(level_number).stair_down_location.y,
         }
     }
 

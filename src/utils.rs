@@ -2,6 +2,7 @@ use crossterm::event::{poll, read, Event, KeyCode, KeyEvent};
 use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
 use rand::Rng;
 use regex::Regex;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::io::{stdin, stdout, Write};
 use std::time::Duration;
@@ -10,6 +11,7 @@ use unicode_segmentation::UnicodeSegmentation;
 ///Struct indicating a point on the game grid
 ///
 ///Can attempt to draw below point 0, so i32 are used
+#[derive(Debug, Default, Serialize, Deserialize)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
@@ -72,7 +74,7 @@ pub fn enter_char(timeout_ms: u64) -> char {
     let mut stdout = stdout();
     stdout.flush().unwrap();
     enable_raw_mode().unwrap();
-    let mut my_char: char = ' ';
+    let mut my_char: char = '~'; //Unused character
 
     if poll(Duration::from_millis(timeout_ms)).unwrap() {
         if let Event::Key(KeyEvent {
@@ -201,9 +203,10 @@ fn vec_between_points_high(
 }
 
 pub fn strip_trailing_newline(input: &str) -> &str {
-    return input.strip_suffix("\r\n")
-           .or_else(|| input.strip_suffix("\n"))
-           .unwrap_or(&input);
+    return input
+        .strip_suffix("\r\n")
+        .or_else(|| input.strip_suffix("\n"))
+        .unwrap_or(&input);
 }
 
 //Generate a pretty timestamp
@@ -214,7 +217,7 @@ pub struct CompoundTime {
     m: u32,
     s: u32,
 }
- 
+
 macro_rules! reduce {
     ($s: ident, $(($from: ident, $to: ident, $factor: expr)),+) => {{
         $(
@@ -223,25 +226,39 @@ macro_rules! reduce {
         )+
     }}
 }
- 
+
 impl CompoundTime {
     #[inline]
-    pub fn new(seconds: u32) -> Self{
-        let mut ct = CompoundTime {d: 0, h: 0, m: 0, s: seconds, };
+    pub fn new(seconds: u32) -> Self {
+        let mut ct = CompoundTime {
+            d: 0,
+            h: 0,
+            m: 0,
+            s: seconds,
+        };
         ct.balance();
         ct
     }
- 
+
     #[inline]
     pub fn balance(&mut self) {
-        reduce!(self, (s, m, 60), (m, h, 60),
-                      (h, d, 24));
+        reduce!(self, (s, m, 60), (m, h, 60), (h, d, 24));
     }
 }
 
 impl fmt::Display for CompoundTime {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(
+        &self,
+        f: &mut fmt::Formatter,
+    ) -> fmt::Result {
         //Round seconds to nearet 10 to make it less noisy
-        write!(f, "Day {:02} Time: {:02}:{:02}:{:02}", self.d, self.h, self.m, self.s-self.s%10)
+        write!(
+            f,
+            "Day {:02} Time: {:02}:{:02}:{:02}",
+            self.d,
+            self.h,
+            self.m,
+            self.s - self.s % 10
+        )
     }
 }

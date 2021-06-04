@@ -40,6 +40,13 @@ impl Screen {
         }
     }
 
+    pub fn force_refresh(&mut self) {
+        clear();
+        stdout().execute(Hide).unwrap();
+        stdout().flush().unwrap();
+        self.buffer = vec![vec![' '; COLUMN_WIDTH]; ROW_HEIGHT];
+    }
+
     pub fn get_header(&self) -> String {
         self.header.clone()
     }

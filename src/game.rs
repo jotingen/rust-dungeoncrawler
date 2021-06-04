@@ -122,7 +122,8 @@ impl Game {
                         self.position.x,
                         self.position.y,
                     );
-                    let input_char = screen.draw_enter_char("Move: w/a/s/d Quit: q", 100);
+                    let input_char =
+                        screen.draw_enter_char("Move: w/a/s/d Interact: <space> Quit: q", 100);
 
                     if input_char == 'w'
                         && self.position.y != 0
@@ -169,6 +170,47 @@ impl Game {
                             .can_move_to((self.position.x + 1) as usize, self.position.y as usize)
                     {
                         self.position.x += 1;
+                    }
+                    //Interact
+                    if input_char == ' '
+                    {
+                        //Note: Use if else to avoid going down/up stairs, and for other future possible collisions
+
+                        //Stairs Down
+                        if self
+                            .levels
+                            .level(self.position.level_number as usize)
+                            .is_stair_down_at(self.position.x as usize, self.position.y as usize)
+                        {
+                            self.position.level_number += 1;
+                            self.levels.level(self.position.level_number as usize); //Make sure level has been generated
+                            let position_p = self
+                                .levels
+                                .level_start_position(self.position.level_number as usize);
+                            self.position.x = position_p.x;
+                            self.position.y = position_p.y;
+                        }
+
+                        //Stairs Up
+                        else if self
+                            .levels
+                            .level(self.position.level_number as usize)
+                            .is_stair_up_at(self.position.x as usize, self.position.y as usize)
+                            && self.position.level_number > 0
+                        {
+                            self.position.level_number -= 1;
+                            self.levels.level(self.position.level_number as usize);
+                            let position_p = self
+                                .levels
+                                .level_exit_position(self.position.level_number as usize);
+                            self.position.x = position_p.x;
+                            self.position.y = position_p.y;
+                        }
+                    }
+                    //force refresh
+                    if input_char == 'r'
+                    {
+                        screen.force_refresh();
                     }
 
                     //If it hasn't been 100ms since the start of the step, repeatedly read and toss keyboard input
