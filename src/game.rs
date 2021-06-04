@@ -102,7 +102,7 @@ impl Game {
                     //Get timsetamp at start of frame
                     let step_start_time = SystemTime::now()
                         .duration_since(UNIX_EPOCH)
-                        .expect("Time wnet backwards")
+                        .expect("Time went backwards")
                         .as_millis();
 
                     screen.set_header(&format!(
@@ -175,7 +175,7 @@ impl Game {
                     loop {
                         let ms_since_step_start = SystemTime::now()
                             .duration_since(UNIX_EPOCH)
-                            .expect("Time wnet backwards")
+                            .expect("Time went backwards")
                             .as_millis()
                             - step_start_time;
 
