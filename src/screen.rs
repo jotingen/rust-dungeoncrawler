@@ -156,12 +156,11 @@ impl Screen {
     pub fn draw_enter_char(
         &mut self,
         msg: &str,
-        timeout_ms: u64
     ) -> char {
         self.screen_type = ScreenType::EnterString;
         self.set_footer(&msg);
         self.draw();
-        enter_char(timeout_ms)
+        enter_char()
     }
 
     fn draw(&mut self) {

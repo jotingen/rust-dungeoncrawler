@@ -5,7 +5,6 @@ use crate::utils::*;
 use serde::{Deserialize, Serialize};
 use sm::sm;
 use std::fs;
-use std::time::{SystemTime, UNIX_EPOCH};
 
 sm! {
     GameState {
@@ -99,12 +98,6 @@ impl Game {
                         self.position.y = position_p.y;
                     }
 
-                    //Get timsetamp at start of frame
-                    let step_start_time = SystemTime::now()
-                        .duration_since(UNIX_EPOCH)
-                        .expect("Time went backwards")
-                        .as_millis();
-
                     screen.set_header(&format!(
                         "{} - {} - L{}",
                         self.character.name,
@@ -123,7 +116,7 @@ impl Game {
                         self.position.y,
                     );
                     let input_char =
-                        screen.draw_enter_char("Move: w/a/s/d Interact: <space> Quit: q", 100);
+                        screen.draw_enter_char("Move: w/a/s/d Interact: <space> Quit: q");
 
                     if input_char == 'w'
                         && self.position.y != 0
@@ -211,20 +204,6 @@ impl Game {
                     if input_char == 'r'
                     {
                         screen.force_refresh();
-                    }
-
-                    //If it hasn't been 100ms since the start of the step, repeatedly read and toss keyboard input
-                    loop {
-                        let ms_since_step_start = SystemTime::now()
-                            .duration_since(UNIX_EPOCH)
-                            .expect("Time went backwards")
-                            .as_millis()
-                            - step_start_time;
-
-                        if ms_since_step_start >= 100 {
-                            break;
-                        }
-                        enter_char(100 - ms_since_step_start as u64);
                     }
 
                     self.time += 1;

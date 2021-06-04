@@ -1,11 +1,9 @@
-use crossterm::event::{poll, read, Event, KeyCode, KeyEvent};
 use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
 use rand::Rng;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::fmt;
-use std::io::{stdin, stdout, Write};
-use std::time::Duration;
+use std::io::{self, stdin, stdout, Read, Write};
 use unicode_segmentation::UnicodeSegmentation;
 
 ///Struct indicating a point on the game grid
@@ -70,22 +68,19 @@ pub fn enter_string() -> String {
 
 ///Prompts user to enter a character
 #[allow(clippy::never_loop)]
-pub fn enter_char(timeout_ms: u64) -> char {
+pub fn enter_char() -> char {
     let mut stdout = stdout();
     stdout.flush().unwrap();
     enable_raw_mode().unwrap();
     let mut my_char: char = '~'; //Unused character
 
-    if poll(Duration::from_millis(timeout_ms)).unwrap() {
-        if let Event::Key(KeyEvent {
-            code: KeyCode::Char(c),
-            ..
-        }) = read().unwrap()
-        {
-            my_char = c;
-            disable_raw_mode().unwrap();
-            return my_char;
-        }
+    for b in io::stdin().bytes() {
+        my_char = b.unwrap() as char;
+        //Clippy does not like returning from here
+        //but I only want a character, without
+        //this it seems to keep polling for characters
+        disable_raw_mode().unwrap();
+        return my_char;
     }
     disable_raw_mode().unwrap();
     my_char
