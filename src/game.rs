@@ -5,6 +5,7 @@ use crate::utils::*;
 use serde::{Deserialize, Serialize};
 use sm::sm;
 use std::fs;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 sm! {
     GameState {
@@ -44,6 +45,7 @@ pub struct Game {
     pub character: Character,
     pub levels: Levels,
     position: Position,
+    time: u32,
 }
 
 impl Game {
@@ -96,6 +98,19 @@ impl Game {
                         self.position.x = position_p.x;
                         self.position.y = position_p.y;
                     }
+
+                    //Get timsetamp at start of frame
+                    let step_start_time = SystemTime::now()
+                        .duration_since(UNIX_EPOCH)
+                        .expect("Time wnet backwards")
+                        .as_millis();
+
+                    screen.set_header(&format!(
+                        "{} - {} - L{}",
+                        self.character.name,
+                        CompoundTime::new(self.time).to_string(),
+                        self.position.level_number
+                    ));
                     screen.set_map(
                         self.levels.map_vec(
                             self.position.level_number as usize,
@@ -107,7 +122,7 @@ impl Game {
                         self.position.x,
                         self.position.y,
                     );
-                    let input_char = screen.draw_enter_char("Move: w/a/s/d Quit: q");
+                    let input_char = screen.draw_enter_char("Move: w/a/s/d Quit: q", 100);
 
                     if input_char == 'w'
                         && self.position.y != 0
@@ -155,6 +170,22 @@ impl Game {
                     {
                         self.position.x += 1;
                     }
+
+                    //If it hasn't been 100ms since the start of the step, repeatedly read and toss keyboard input
+                    loop {
+                        let ms_since_step_start = SystemTime::now()
+                            .duration_since(UNIX_EPOCH)
+                            .expect("Time wnet backwards")
+                            .as_millis()
+                            - step_start_time;
+
+                        if ms_since_step_start >= 100 {
+                            break;
+                        }
+                        enter_char(100 - ms_since_step_start as u64);
+                    }
+
+                    self.time += 1;
 
                     if input_char == 'q' {
                         m.transition(Done).as_enum()

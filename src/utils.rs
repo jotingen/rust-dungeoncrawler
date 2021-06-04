@@ -2,6 +2,7 @@ use crossterm::event::{poll, read, Event, KeyCode, KeyEvent};
 use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
 use rand::Rng;
 use regex::Regex;
+use std::fmt;
 use std::io::{stdin, stdout, Write};
 use std::time::Duration;
 use unicode_segmentation::UnicodeSegmentation;
@@ -67,13 +68,13 @@ pub fn enter_string() -> String {
 
 ///Prompts user to enter a character
 #[allow(clippy::never_loop)]
-pub fn enter_char() -> char {
+pub fn enter_char(timeout_ms: u64) -> char {
     let mut stdout = stdout();
     stdout.flush().unwrap();
     enable_raw_mode().unwrap();
     let mut my_char: char = ' ';
 
-    if poll(Duration::from_millis(1_000)).unwrap() {
+    if poll(Duration::from_millis(timeout_ms)).unwrap() {
         if let Event::Key(KeyEvent {
             code: KeyCode::Char(c),
             ..
@@ -203,4 +204,44 @@ pub fn strip_trailing_newline(input: &str) -> &str {
     return input.strip_suffix("\r\n")
            .or_else(|| input.strip_suffix("\n"))
            .unwrap_or(&input);
+}
+
+//Generate a pretty timestamp
+// Taken from Rosetta Code: https://rosettacode.org/wiki/Convert_seconds_to_compound_duration#Rust
+pub struct CompoundTime {
+    d: u32,
+    h: u32,
+    m: u32,
+    s: u32,
+}
+ 
+macro_rules! reduce {
+    ($s: ident, $(($from: ident, $to: ident, $factor: expr)),+) => {{
+        $(
+            $s.$to += $s.$from / $factor;
+            $s.$from %= $factor;
+        )+
+    }}
+}
+ 
+impl CompoundTime {
+    #[inline]
+    pub fn new(seconds: u32) -> Self{
+        let mut ct = CompoundTime {d: 0, h: 0, m: 0, s: seconds, };
+        ct.balance();
+        ct
+    }
+ 
+    #[inline]
+    pub fn balance(&mut self) {
+        reduce!(self, (s, m, 60), (m, h, 60),
+                      (h, d, 24));
+    }
+}
+
+impl fmt::Display for CompoundTime {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        //Round seconds to nearet 10 to make it less noisy
+        write!(f, "Day {:02} Time: {:02}:{:02}:{:02}", self.d, self.h, self.m, self.s-self.s%10)
+    }
 }
