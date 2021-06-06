@@ -1,33 +1,35 @@
 use rand::Rng;
 use serde::{Deserialize, Serialize};
-
 use crate::utils::*;
-
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-enum Tile {
+enum TileType {
     Floor,
     Wall,
     StairDown,
     StairUp,
 }
-impl Default for Tile {
+impl Default for TileType {
     fn default() -> Self {
-        Tile::Wall
+        TileType::Wall
     }
 }
 
+#[derive(Serialize, Deserialize, Debug, Default, Clone)]
+struct Tile {
+  tile: TileType,
+  seen: bool, 
+}
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Level {
-    x: usize,
-    y: usize,
+    columns: usize,
+    rows: usize,
     tiles: Vec<Vec<Tile>>,
-    seen: Vec<Vec<bool>>,
-    stair_down_location: Point,
-    stair_up_location: Point,
+    exit: Point,
+    entrance: Point,
 }
 
 impl Level {
-    fn generate(level_number: usize) -> Level {
+    pub fn new(level_number: usize) -> Level {
         ///Generate level dimensions based on level number
         fn generate_width_and_height(level_number: usize) -> (usize, usize) {
             //Start small, grow quickly, then stablize
@@ -46,14 +48,13 @@ impl Level {
 
         //Create Level, full of unseen walls
         let mut level: Level = Level {
-            x: width,
-            y: height,
-            tiles: vec![vec![Tile::Wall; width]; height],
-            seen: vec![vec![false; width]; height],
-            stair_down_location: Point { x: 0, y: 0 }, //TMP
-            stair_up_location: Point {
-                x: width as i32 / 2,
-                y: height as i32 / 2,
+            columns: width,
+            rows: height,
+            tiles: vec![vec![Tile{tile:TileType::Wall, seen: false}; width]; height],
+            exit: Point { col: 0, row: 0 }, //TMP
+            entrance: Point {
+                col: width / 2,
+                row: height / 2,
             },
         };
 
@@ -72,8 +73,8 @@ impl Level {
             //Check for edge of world
             if room_pos_x < 1
                 || room_pos_y < 1
-                || room_pos_x + room_dimension_x >= level.x - 1
-                || room_pos_y + room_dimension_y >= level.y - 1
+                || room_pos_x + room_dimension_x >= level.columns - 1
+                || room_pos_y + room_dimension_y >= level.rows - 1
             {
                 return false;
             }
@@ -81,7 +82,7 @@ impl Level {
             //Check for any empty spaces within and around room
             for x in room_pos_x - 1..=room_pos_x + room_dimension_x + 1 {
                 for y in room_pos_y - 1..=room_pos_y + room_dimension_y + 1 {
-                    if level.tiles[y][x] != Tile::Wall {
+                    if level.tiles[y][x].tile != TileType::Wall {
                         return false;
                     }
                 }
@@ -103,7 +104,7 @@ impl Level {
                         && pos_y <= y
                         && pos_y + dimension_y > y
                     {
-                        *tile = Tile::Floor;
+                        tile.tile = TileType::Floor;
                     }
                 }
             }
@@ -121,12 +122,12 @@ impl Level {
             //Check for a valid hallway is somewhere on a wall of a room, with no room on the other side
 
             //Never allow a hallway within 2 tiles of the edge
-            if pos_x < 2 || pos_y < 2 || pos_x >= level.x - 2 || pos_y >= level.y - 2 {
+            if pos_x < 2 || pos_y < 2 || pos_x >= level.columns - 2 || pos_y >= level.rows - 2 {
                 return false;
             }
 
             //Hallway is on stone
-            if level.tiles[pos_y][pos_x] != Tile::Wall {
+            if level.tiles[pos_y][pos_x].tile != TileType::Wall {
                 return false;
             }
 
@@ -140,14 +141,14 @@ impl Level {
             };
 
             //Hallway on top
-            if level.tiles[pos_y + 1][pos_x] != Tile::Wall
-                && level.tiles[pos_y - 1][pos_x] == Tile::Wall
+            if level.tiles[pos_y + 1][pos_x].tile != TileType::Wall
+                && level.tiles[pos_y - 1][pos_x].tile == TileType::Wall
             {
                 //Check if room can fit on top
 
                 //Pick random X offset and see if it can fit
                 let pos_x_offset = rng.gen_range(0..room_dimension_x);
-                if pos_x <= pos_x_offset || pos_x + pos_x_offset >= level.x {
+                if pos_x <= pos_x_offset || pos_x + pos_x_offset >= level.columns {
                     return false;
                 }
                 let room_pos_x: usize = pos_x - pos_x_offset;
@@ -180,19 +181,19 @@ impl Level {
             }
 
             //Hallway on bottom
-            if level.tiles[pos_y - 1][pos_x] != Tile::Wall
-                && level.tiles[pos_y + 1][pos_x] == Tile::Wall
+            if level.tiles[pos_y - 1][pos_x].tile != TileType::Wall
+                && level.tiles[pos_y + 1][pos_x].tile == TileType::Wall
             {
                 //Check if room can fit on bottom
 
                 //Pick random X offset and see if it can fit
                 let pos_x_offset = rng.gen_range(0..room_dimension_x);
-                if pos_x <= pos_x_offset || pos_x + pos_x_offset >= level.x {
+                if pos_x <= pos_x_offset || pos_x + pos_x_offset >= level.columns {
                     return false;
                 }
                 let room_pos_x: usize = pos_x - pos_x_offset;
 
-                if level.y <= room_dimension_y + pos_y + hallway_length {
+                if level.rows <= room_dimension_y + pos_y + hallway_length {
                     return false;
                 }
                 let room_pos_y: usize = pos_y + hallway_length;
@@ -220,8 +221,8 @@ impl Level {
             }
 
             //Hallway on left
-            if level.tiles[pos_y][pos_x + 1] != Tile::Wall
-                && level.tiles[pos_y][pos_x - 1] == Tile::Wall
+            if level.tiles[pos_y][pos_x + 1].tile != TileType::Wall
+                && level.tiles[pos_y][pos_x - 1].tile == TileType::Wall
             {
                 //Check if room can fit on left
 
@@ -232,7 +233,7 @@ impl Level {
 
                 //Pick random Y offset and see if it can fit
                 let pos_y_offset = rng.gen_range(0..room_dimension_y);
-                if pos_y <= pos_y_offset || pos_y + pos_y_offset >= level.x {
+                if pos_y <= pos_y_offset || pos_y + pos_y_offset >= level.columns {
                     return false;
                 }
                 let room_pos_y: usize = pos_y - pos_y_offset;
@@ -260,20 +261,20 @@ impl Level {
             }
 
             //Hallway on right
-            if level.tiles[pos_y][pos_x - 1] != Tile::Wall
-                && level.tiles[pos_y][pos_x + 1] == Tile::Wall
-                && level.tiles[pos_y][pos_x + 2] == Tile::Wall
+            if level.tiles[pos_y][pos_x - 1].tile != TileType::Wall
+                && level.tiles[pos_y][pos_x + 1].tile == TileType::Wall
+                && level.tiles[pos_y][pos_x + 2].tile == TileType::Wall
             {
                 //Check if room can fit on right
 
-                if level.x <= room_dimension_x + pos_x + hallway_length {
+                if level.columns <= room_dimension_x + pos_x + hallway_length {
                     return false;
                 }
                 let room_pos_x: usize = pos_x + hallway_length + 1;
 
                 //Pick random Y offset and see if it can fit
                 let pos_y_offset = rng.gen_range(0..room_dimension_y);
-                if pos_y <= pos_y_offset || pos_y + pos_y_offset >= level.x {
+                if pos_y <= pos_y_offset || pos_y + pos_y_offset >= level.columns {
                     return false;
                 }
                 let room_pos_y: usize = pos_y - pos_y_offset;
@@ -361,8 +362,8 @@ impl Level {
 
         //Build stairs up if not level 0
         if level_number != 0 {
-            level.tiles[level.stair_up_location.y as usize][level.stair_up_location.x as usize] =
-                Tile::StairUp;
+            level.tiles[level.entrance.row as usize][level.entrance.col as usize].tile =
+                TileType::StairUp;
         }
 
         //Build stairs down somewhere
@@ -372,21 +373,21 @@ impl Level {
             let stairway_down_pos_y: usize = rng.gen_range(2..=height - 2);
 
             //Want a 3x3 empty space
-            if level.tiles[stairway_down_pos_y - 1][stairway_down_pos_x - 1] == Tile::Floor
-                && level.tiles[stairway_down_pos_y - 1][stairway_down_pos_x] == Tile::Floor
-                && level.tiles[stairway_down_pos_y - 1][stairway_down_pos_x + 1] == Tile::Floor
-                && level.tiles[stairway_down_pos_y][stairway_down_pos_x - 1] == Tile::Floor
-                && level.tiles[stairway_down_pos_y][stairway_down_pos_x] == Tile::Floor
-                && level.tiles[stairway_down_pos_y][stairway_down_pos_x + 1] == Tile::Floor
-                && level.tiles[stairway_down_pos_y + 1][stairway_down_pos_x - 1] == Tile::Floor
-                && level.tiles[stairway_down_pos_y + 1][stairway_down_pos_x] == Tile::Floor
-                && level.tiles[stairway_down_pos_y + 1][stairway_down_pos_x + 1] == Tile::Floor
+            if level.tiles[stairway_down_pos_y - 1][stairway_down_pos_x - 1].tile == TileType::Floor
+                && level.tiles[stairway_down_pos_y - 1][stairway_down_pos_x].tile == TileType::Floor
+                && level.tiles[stairway_down_pos_y - 1][stairway_down_pos_x + 1].tile == TileType::Floor
+                && level.tiles[stairway_down_pos_y][stairway_down_pos_x - 1].tile == TileType::Floor
+                && level.tiles[stairway_down_pos_y][stairway_down_pos_x].tile == TileType::Floor
+                && level.tiles[stairway_down_pos_y][stairway_down_pos_x + 1].tile == TileType::Floor
+                && level.tiles[stairway_down_pos_y + 1][stairway_down_pos_x - 1].tile == TileType::Floor
+                && level.tiles[stairway_down_pos_y + 1][stairway_down_pos_x].tile == TileType::Floor
+                && level.tiles[stairway_down_pos_y + 1][stairway_down_pos_x + 1].tile == TileType::Floor
             {
-                level.stair_down_location = Point {
-                    x: stairway_down_pos_x as i32,
-                    y: stairway_down_pos_y as i32,
+                level.exit = Point {
+                    col: stairway_down_pos_x,
+                    row: stairway_down_pos_y,
                 };
-                level.tiles[stairway_down_pos_y][stairway_down_pos_x] = Tile::StairDown;
+                level.tiles[stairway_down_pos_y][stairway_down_pos_x].tile = TileType::StairDown;
                 break;
             }
         }
@@ -396,26 +397,38 @@ impl Level {
 
     pub fn can_move_to(
         &self,
-        x: usize,
-        y: usize,
+        p: Point,
     ) -> bool {
-        self.tiles[y][x] != Tile::Wall
+        self.tiles[p.row][p.col].tile != TileType::Wall
     }
 
     pub fn width(&self) -> usize {
-        self.x
+        self.columns
     }
 
     pub fn height(&self) -> usize {
-        self.y
+        self.rows
     }
 
+    ///Get the initial starting position of the level
+    pub fn entrance(
+        &self,
+    ) -> Point {
+      self.entrance
+    }
+
+    ///Get the exit position of the level
+    pub fn exit(
+        &self,
+    ) -> Point {
+      self.exit
+    }
     pub fn is_stair_down_at(
         &self,
         x: usize,
         y: usize,
     ) -> bool {
-        self.tiles[y][x] == Tile::StairDown
+        self.tiles[y][x].tile == TileType::StairDown
     }
 
     pub fn is_stair_up_at(
@@ -423,7 +436,7 @@ impl Level {
         x: usize,
         y: usize,
     ) -> bool {
-        self.tiles[y][x] == Tile::StairUp
+        self.tiles[y][x].tile == TileType::StairUp
     }
 
     ///Generate map vector with symbols
@@ -445,33 +458,31 @@ impl Level {
 
         #[allow(clippy::needless_range_loop)]
         //Start check within a square box around the player
-        for y in (player_pos_p.y - view_distance)..=(player_pos_p.y + view_distance) as i32 {
-            for x in (player_pos_p.x - view_distance)..=(player_pos_p.x + view_distance) as i32 {
+        for row in if player_pos_p.row >= view_distance {player_pos_p.row - view_distance} else {0}..=(player_pos_p.row + view_distance) {
+            for col in if player_pos_p.col >= view_distance {player_pos_p.col - view_distance} else {0}..=(player_pos_p.col + view_distance) {
                 //If cell is out of range skip to the next one
                 //or if cell already visible skip to next one
-                if x < 0
-                    || y < 0
-                    || x as usize >= self.width()
-                    || y as usize >= self.height()
-                    || map_visible[y as usize][x as usize]
+                if col >= self.width()
+                    || row >= self.height()
+                    || map_visible[row][col]
                 {
                     continue;
                 }
 
                 //Determine if distance to cell is within view range radius
-                let distance: i32 = (0.5 * (x - player_pos_p.x).pow(2) as f32
-                    + (y - player_pos_p.y).pow(2) as f32)
+                let distance: usize = (0.5 * (col as i32 - player_pos_p.col as i32).pow(2) as f32
+                    + (row as i32 - player_pos_p.row as i32).pow(2) as f32)
                     .sqrt()
-                    .round() as i32;
+                    .round() as usize;
                 if distance <= view_distance {
                     //Walk through vector of points from player out to point
-                    for p in vec_between_points(player_pos_p, &Point { x, y }) {
+                    for p in vec_between_points(player_pos_p, &Point { col, row }) {
                         //Mark current point as both visible and seen
-                        map_visible[p.y as usize][p.x as usize] = true;
-                        self.seen[p.y as usize][p.x as usize] = true;
+                        map_visible[p.row as usize][p.col as usize] = true;
+                        self.tiles[p.row as usize][p.col as usize].seen = true;
 
                         //If we are at a wall, we can see no further
-                        if self.tiles[p.y as usize][p.x as usize] == Tile::Wall {
+                        if self.tiles[p.row as usize][p.col as usize].tile == TileType::Wall {
                             break;
                         }
                     }
@@ -482,20 +493,20 @@ impl Level {
         #[allow(clippy::needless_range_loop)]
         for y in 0..self.height() {
             for x in 0..self.width() {
-                if self.tiles[y][x] == Tile::Floor {
+                if self.tiles[y][x].tile == TileType::Floor {
                     if map_visible[y][x] {
                         map_vec[y][x] = '.';
-                    } else if self.seen[y][x] {
+                    } else if self.tiles[y][x].seen {
                         map_vec[y][x] = ':';
                     }
                 }
-                if self.tiles[y][x] == Tile::StairUp && (map_visible[y][x] || self.seen[y][x]) {
+                if self.tiles[y][x].tile == TileType::StairUp && (map_visible[y][x] || self.tiles[y][x].seen) {
                     map_vec[y][x] = '<';
                 }
-                if self.tiles[y][x] == Tile::StairDown && (map_visible[y][x] || self.seen[y][x]) {
+                if self.tiles[y][x].tile == TileType::StairDown && (map_visible[y][x] || self.tiles[y][x].seen) {
                     map_vec[y][x] = '>';
                 }
-                if self.tiles[y][x] == Tile::Wall && (map_visible[y][x] || self.seen[y][x]) {
+                if self.tiles[y][x].tile == TileType::Wall && (map_visible[y][x] || self.tiles[y][x].seen) {
                     map_vec[y][x] = '#';
                 }
             }
@@ -504,53 +515,3 @@ impl Level {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Default)]
-pub struct Levels {
-    level: Vec<Level>,
-}
-
-impl Levels {
-    pub fn level(
-        &mut self,
-        level_number: usize,
-    ) -> &mut Level {
-        if level_number >= self.level.len() {
-            for number in self.level.len()..level_number + 1 {
-                let new_level = Level::generate(number);
-                self.level.push(new_level)
-            }
-        }
-        &mut self.level[level_number]
-    }
-
-    ///Get the initial starting position of the level
-    pub fn level_start_position(
-        &mut self,
-        level_number: usize,
-    ) -> Point {
-        Point {
-            x: self.level(level_number).width() as i32 / 2,
-            y: self.level(level_number).height() as i32 / 2,
-        }
-    }
-
-    ///Get the exit position of the level
-    pub fn level_exit_position(
-        &mut self,
-        level_number: usize,
-    ) -> Point {
-        Point {
-            x: self.level(level_number).stair_down_location.x,
-            y: self.level(level_number).stair_down_location.y,
-        }
-    }
-
-    ///Generate map vector with symbols
-    pub fn map_vec(
-        &mut self,
-        level_number: usize,
-        player_pos_p: &Point,
-    ) -> Vec<Vec<char>> {
-        self.level(level_number).map_vec(player_pos_p)
-    }
-}

@@ -1,6 +1,6 @@
 use rand::Rng;
 
-use crate::basics::{Abilities, Alignment, Gender};
+use crate::actor::{Abilities, Alignment, Gender};
 use crate::screen::COLUMN_WIDTH;
 use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};

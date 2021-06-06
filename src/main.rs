@@ -1,18 +1,15 @@
-mod basics;
-mod character;
-mod classes;
+mod actor;
 mod game;
 mod levels;
-mod races;
 mod screen;
 mod utils;
-mod weapons;
+mod items;
 
-use crate::classes::Classes;
+use crate::actor::player::classes::Classes;
 use crate::game::Game;
-use crate::races::Races;
+use crate::actor::player::races::Races;
 use crate::screen::Screen;
-use crate::weapons::Weapons;
+use crate::items::weapons::Weapons;
 use sm::sm;
 use std::env;
 use std::path::Path;

@@ -1,4 +1,4 @@
-use crate::character::Character;
+use crate::actor::player::Character;
 use crate::levels::Levels;
 use crate::screen::Screen;
 use crate::utils::*;
@@ -94,8 +94,8 @@ impl Game {
                         let position_p = self
                             .levels
                             .level_start_position(self.position.level_number as usize);
-                        self.position.x = position_p.x;
-                        self.position.y = position_p.y;
+                        self.position.x = position_p.col as i32;
+                        self.position.y = position_p.row as i32;
                     }
 
                     screen.set_header(&format!(
@@ -108,8 +108,8 @@ impl Game {
                         self.levels.map_vec(
                             self.position.level_number as usize,
                             &Point {
-                                x: self.position.x,
-                                y: self.position.y,
+                                col: self.position.x as usize,
+                                row: self.position.y as usize,
                             },
                         ),
                         self.position.x,
@@ -123,7 +123,10 @@ impl Game {
                         && self
                             .levels
                             .level(self.position.level_number as usize)
-                            .can_move_to(self.position.x as usize, (self.position.y - 1) as usize)
+                            .can_move_to(Point {
+                                col: self.position.x as usize,
+                                row: (self.position.y - 1) as usize,
+                            })
                     {
                         self.position.y -= 1;
                     }
@@ -132,7 +135,10 @@ impl Game {
                         && self
                             .levels
                             .level(self.position.level_number as usize)
-                            .can_move_to((self.position.x - 1) as usize, self.position.y as usize)
+                            .can_move_to(Point {
+                                col: (self.position.x - 1) as usize,
+                                row: self.position.y as usize,
+                            })
                     {
                         self.position.x -= 1;
                     }
@@ -146,7 +152,10 @@ impl Game {
                         && self
                             .levels
                             .level(self.position.level_number as usize)
-                            .can_move_to(self.position.x as usize, (self.position.y + 1) as usize)
+                            .can_move_to(Point {
+                                col: self.position.x as usize,
+                                row: (self.position.y + 1) as usize,
+                            })
                     {
                         self.position.y += 1;
                     }
@@ -160,13 +169,15 @@ impl Game {
                         && self
                             .levels
                             .level(self.position.level_number as usize)
-                            .can_move_to((self.position.x + 1) as usize, self.position.y as usize)
+                            .can_move_to(Point {
+                                col: (self.position.x + 1) as usize,
+                                row: self.position.y as usize,
+                            })
                     {
                         self.position.x += 1;
                     }
                     //Interact
-                    if input_char == ' '
-                    {
+                    if input_char == ' ' {
                         //Note: Use if else to avoid going down/up stairs, and for other future possible collisions
 
                         //Stairs Down
@@ -180,10 +191,9 @@ impl Game {
                             let position_p = self
                                 .levels
                                 .level_start_position(self.position.level_number as usize);
-                            self.position.x = position_p.x;
-                            self.position.y = position_p.y;
+                            self.position.x = position_p.col as i32;
+                            self.position.y = position_p.row as i32;
                         }
-
                         //Stairs Up
                         else if self
                             .levels
@@ -196,13 +206,12 @@ impl Game {
                             let position_p = self
                                 .levels
                                 .level_exit_position(self.position.level_number as usize);
-                            self.position.x = position_p.x;
-                            self.position.y = position_p.y;
+                            self.position.x = position_p.col as i32;
+                            self.position.y = position_p.row as i32;
                         }
                     }
                     //force refresh
-                    if input_char == 'r'
-                    {
+                    if input_char == 'r' {
                         screen.force_refresh();
                     }
 

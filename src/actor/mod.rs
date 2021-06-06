@@ -1,3 +1,5 @@
+pub mod player;
+
 use serde::{Deserialize, Serialize};
 
 ///Struct containing the 6 different abilities

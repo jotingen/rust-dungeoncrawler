@@ -1,10 +1,13 @@
-use crate::basics::{Abilities, Alignment, Gender};
-use crate::classes::Classes;
-use crate::races::Races;
+pub mod classes;
+pub mod races;
+
+use crate::actor::{Abilities, Alignment, Gender};
+use crate::actor::player::classes::Classes;
+use crate::actor::player::races::Races;
 use crate::screen::Screen;
 use crate::screen::COLUMN_WIDTH;
 use crate::utils::*;
-use crate::weapons::{Weapon, Weapons};
+use crate::items::weapons::{Weapon, Weapons};
 use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
 use sm::sm;
@@ -46,7 +49,7 @@ sm! {
         }
     }
 }
-use crate::character::CharacterCreationState::{Variant::*, *};
+use crate::actor::player::CharacterCreationState::{Variant::*, *};
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Character {

@@ -7,12 +7,10 @@ use std::io::{self, stdin, stdout, Read, Write};
 use unicode_segmentation::UnicodeSegmentation;
 
 ///Struct indicating a point on the game grid
-///
-///Can attempt to draw below point 0, so i32 are used
-#[derive(Debug, Default, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Default, Serialize, Deserialize)]
 pub struct Point {
-    pub x: i32,
-    pub y: i32,
+    pub col: usize,
+    pub row: usize,
 }
 
 ///Dice roll
@@ -130,13 +128,13 @@ pub fn vec_between_points(
     p0: &Point,
     p1: &Point,
 ) -> Vec<Point> {
-    if (p1.y - p0.y).abs() < (p1.x - p0.x).abs() {
-        if p0.x > p1.x {
+    if (p1.row as i32 - p0.row as i32).abs() < (p1.col as i32 - p0.col as i32).abs() {
+        if p0.col > p1.col {
             vec_between_points_low(p1, p0).into_iter().rev().collect()
         } else {
             vec_between_points_low(p0, p1)
         }
-    } else if p0.y > p1.y {
+    } else if p0.row > p1.row {
         vec_between_points_high(p1, p0).into_iter().rev().collect()
     } else {
         vec_between_points_high(p0, p1)
@@ -147,19 +145,19 @@ fn vec_between_points_low(
     p0: &Point,
     p1: &Point,
 ) -> Vec<Point> {
-    let dx = p1.x - p0.x;
-    let mut dy = p1.y - p0.y;
-    let mut yi = 1;
+    let dx:i32 = p1.col as i32 - p0.col as i32;
+    let mut dy: i32 = p1.row as i32 - p0.row as i32;
+    let mut yi: i32 = 1;
     if dy < 0 {
         yi = -1;
         dy = -dy;
     }
     let mut diff = (2 * dy) - dx;
-    let mut y = p0.y;
+    let mut y: i32 = p0.row as i32;
 
     let mut line: Vec<Point> = Vec::new();
-    for x in p0.x..=p1.x {
-        line.push(Point { x, y });
+    for x in p0.col..=p1.col {
+        line.push(Point { col: x, row: y as usize});
         if diff > 0 {
             y += yi;
             diff += 2 * (dy - dx);
@@ -174,19 +172,19 @@ fn vec_between_points_high(
     p0: &Point,
     p1: &Point,
 ) -> Vec<Point> {
-    let mut dx = p1.x - p0.x;
-    let dy = p1.y - p0.y;
-    let mut xi = 1;
+    let mut dx: i32 = p1.col as i32 - p0.col as i32;
+    let dy: i32 = p1.row as i32 - p0.row as i32;
+    let mut xi: i32 = 1;
     if dx < 0 {
         xi = -1;
         dx = -dx;
     }
-    let mut diff = (2 * dx) - dy;
-    let mut x = p0.x;
+    let mut diff:i32 = (2 * dx) - dy;
+    let mut x:i32 = p0.col as i32;
 
     let mut line: Vec<Point> = Vec::new();
-    for y in p0.y..=p1.y {
-        line.push(Point { x, y });
+    for y in p0.row..=p1.row {
+        line.push(Point { col:x as usize, row: y });
         if diff > 0 {
             x += xi;
             diff += 2 * (dx - dy);
