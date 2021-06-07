@@ -2,9 +2,9 @@ pub mod player;
 
 use serde::{Deserialize, Serialize};
 
-///Struct containing the 6 different abilities
+///Struct containing the 6 different stats
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
-pub struct Abilities {
+pub struct Stats {
     pub strength: u32,
     pub dexterity: u32,
     pub charisma: u32,

@@ -1,6 +1,6 @@
 use rand::Rng;
 
-use crate::actor::{Abilities, Alignment, Gender};
+use crate::actor::{Stats, Alignment, Gender};
 use crate::screen::COLUMN_WIDTH;
 use convert_case::{Case, Casing};
 use serde::{Deserialize, Serialize};
@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct RaceAbilities {
     description: String,
-    pub abilities: Abilities,
+    pub abilities: Stats,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]

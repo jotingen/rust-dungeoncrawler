@@ -94,7 +94,7 @@ fn main() {
 
             CharacterByCreateCharacter(m) => {
                 game.character
-                    .character_creation(&mut screen, &races, &classes, &weapons);
+                    .new(&mut screen, &races, &classes, &weapons);
                 game.save(&save_file);
                 m.transition(LaunchGame).as_enum()
             }
