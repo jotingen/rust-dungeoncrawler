@@ -1,6 +1,9 @@
+mod step;
+
 use crate::actor::player::Character;
 use crate::levels::Levels;
 use crate::screen::Screen;
+use crate::game::step::*;
 use crate::utils::*;
 use serde::{Deserialize, Serialize};
 use sm::sm;
@@ -115,109 +118,13 @@ impl Game {
                         self.position.x,
                         self.position.y,
                     );
-                    let input_char =
-                        screen.draw_enter_char("Move: w/a/s/d Interact: <space> Quit: q");
 
-                    if input_char == 'w'
-                        && self.position.y != 0
-                        && self
-                            .levels
-                            .level(self.position.level_number as usize)
-                            .can_move_to(Point {
-                                col: self.position.x as usize,
-                                row: (self.position.y - 1) as usize,
-                            })
-                    {
-                        self.position.y -= 1;
-                    }
-                    if input_char == 'a'
-                        && self.position.x != 0
-                        && self
-                            .levels
-                            .level(self.position.level_number as usize)
-                            .can_move_to(Point {
-                                col: (self.position.x - 1) as usize,
-                                row: self.position.y as usize,
-                            })
-                    {
-                        self.position.x -= 1;
-                    }
-                    if input_char == 's'
-                        && self.position.y
-                            != self
-                                .levels
-                                .level(self.position.level_number as usize)
-                                .height() as i32
-                                - 1
-                        && self
-                            .levels
-                            .level(self.position.level_number as usize)
-                            .can_move_to(Point {
-                                col: self.position.x as usize,
-                                row: (self.position.y + 1) as usize,
-                            })
-                    {
-                        self.position.y += 1;
-                    }
-                    if input_char == 'd'
-                        && self.position.x
-                            != self
-                                .levels
-                                .level(self.position.level_number as usize)
-                                .width() as i32
-                                - 1
-                        && self
-                            .levels
-                            .level(self.position.level_number as usize)
-                            .can_move_to(Point {
-                                col: (self.position.x + 1) as usize,
-                                row: self.position.y as usize,
-                            })
-                    {
-                        self.position.x += 1;
-                    }
-                    //Interact
-                    if input_char == ' ' {
-                        //Note: Use if else to avoid going down/up stairs, and for other future possible collisions
-
-                        //Stairs Down
-                        if self
-                            .levels
-                            .level(self.position.level_number as usize)
-                            .is_stair_down_at(self.position.x as usize, self.position.y as usize)
-                        {
-                            self.position.level_number += 1;
-                            self.levels.level(self.position.level_number as usize); //Make sure level has been generated
-                            let position_p = self
-                                .levels
-                                .level_start_position(self.position.level_number as usize);
-                            self.position.x = position_p.col as i32;
-                            self.position.y = position_p.row as i32;
-                        }
-                        //Stairs Up
-                        else if self
-                            .levels
-                            .level(self.position.level_number as usize)
-                            .is_stair_up_at(self.position.x as usize, self.position.y as usize)
-                            && self.position.level_number > 0
-                        {
-                            self.position.level_number -= 1;
-                            self.levels.level(self.position.level_number as usize);
-                            let position_p = self
-                                .levels
-                                .level_exit_position(self.position.level_number as usize);
-                            self.position.x = position_p.col as i32;
-                            self.position.y = position_p.row as i32;
-                        }
-                    }
-                    //force refresh
-                    if input_char == 'r' {
-                        screen.force_refresh();
-                    }
+                    //Step through actor's actions
+                    let quit = step(self,screen);
 
                     self.time += 1;
 
-                    if input_char == 'q' {
+                    if quit {
                         m.transition(Done).as_enum()
                     } else {
                         m.transition(ChooseNavigate).as_enum()

@@ -7,7 +7,7 @@ use std::io::{self, stdin, stdout, Read, Write};
 use unicode_segmentation::UnicodeSegmentation;
 
 ///Struct indicating a point on the game grid
-#[derive(Copy, Clone, Debug, Default, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct Point {
     pub col: usize,
     pub row: usize,

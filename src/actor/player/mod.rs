@@ -20,6 +20,7 @@ pub struct Character {
     pub alignment: Alignment,
     pub abilities: Stats,
     pub weapons: Vec<Weapon>,
+    action_points: Option<u32>,
 }
 
 impl Character {
@@ -31,6 +32,24 @@ impl Character {
         weapons: &Weapons,
     ) -> Character {
         generate(screen, races, classes, weapons)
+    }
+
+    pub fn action_points(&self) -> u32 {
+        self.action_points.unwrap_or(0)
+    }
+
+    pub fn action_points_increment(&mut self, points: u32) {
+        match self.action_points.as_mut() {
+            Some(x) => *x += points,
+            None => self.action_points = Some(points),
+        }
+    }
+
+    pub fn action_points_decrement(&mut self, points: u32) {
+        match self.action_points.as_mut() {
+            Some(x) => *x -= points,
+            None => self.action_points = Some(0),
+        }
     }
 
     pub fn is_weapon_proficient(

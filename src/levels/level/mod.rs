@@ -38,9 +38,27 @@ impl Level {
 
     pub fn can_move_to(
         &self,
-        p: Point,
+        to: Point,
+        from: Point,
     ) -> bool {
-        self.tiles[p.row][p.col].tile != TileType::Wall
+        //Moving nowhere
+        if to == from {
+            return true;
+        //Moving  1 along row or col
+        } else if (to.col == from.col && (to.row as i32 - from.row as i32).abs() == 1)
+            || ((to.col as i32 - from.col as i32).abs() == 1 && to.row == from.row)
+        {
+            return self.tiles[to.row][to.col].tile != TileType::Wall;
+        //Moving diagonally
+        // one of the corner squares between the points must not be a wall
+        } else if (to.col as i32 - from.col as i32).abs() == 1
+            && (to.row as i32 - from.row as i32).abs() == 1
+        {
+            return (self.tiles[from.row][to.col].tile != TileType::Wall
+                || self.tiles[to.row][from.col].tile != TileType::Wall)
+                && self.tiles[to.row][to.col].tile != TileType::Wall;
+        }
+        false
     }
 
     pub fn width(&self) -> usize {
